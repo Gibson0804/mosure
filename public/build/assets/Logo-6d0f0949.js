@@ -1,0 +1,1 @@
+import{R as e}from"./vendor-react-4af8f23c.js";function n(){return e.createElement("a",{href:"/",style:{display:"flex",alignItems:"center",justifyContent:"center",height:"46px",color:"#000"}},e.createElement("img",{src:"/logo.png",width:60,height:60,style:{marginRight:"2px"}}),e.createElement("span",{style:{fontSize:"20px",fontWeight:"bold"}},"Mosure"))}export{n as L};

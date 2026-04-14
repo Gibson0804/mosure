@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - 分类文章</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            color: #1890ff;
+            margin-bottom: 10px;
+        }
+        
+        .back-link {
+            display: inline-block;
+            color: #1890ff;
+            text-decoration: none;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        .article-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .article-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .article-cover {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .article-cover span {
+            font-size: 48px;
+            color: #fff;
+        }
+        
+        .article-content {
+            padding: 20px;
+        }
+        
+        .article-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #1890ff;
+        }
+        
+        .article-excerpt {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #999;
+            font-size: 12px;
+        }
+        
+        .article-tags {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .tag {
+            background: #f0f0f0;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 40px;
+            color: #ff4d4f;
+        }
+        
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        @media (max-width: 768px) {
+            .article-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="/blog/" class="back-link">← 返回文章列表</a>
+            <h1 id="categoryTitle">分类文章</h1>
+            <p id="categoryDescription"></p>
+        </div>
+        
+        <div id="articleList" class="article-list">
+            <div class="loading">加载中...</div>
+        </div>
+    </div>
+
+    <script>
+        function getCategoryId() {
+            const pathParts = window.location.pathname.split('/');
+            return pathParts[pathParts.length - 1];
+        }
+        
+        async function loadCategory() {
+            const categoryId = getCategoryId();
+            
+            if (!categoryId) {
+                showError('分类 ID 无效');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/open/content/detail/blog_categories/${categoryId}`);
+                const result = await response.json();
+                
+                if (result.code === 200 && result.data) {
+                    document.getElementById('categoryTitle').textContent = result.data.name || '分类文章';
+                    document.getElementById('categoryDescription').textContent = result.data.description || '';
+                    loadArticles(categoryId);
+                } else {
+                    showError('分类不存在');
+                }
+            } catch (error) {
+                console.error('加载分类失败:', error);
+                showError('加载分类失败');
+            }
+        }
+        
+        async function loadArticles(categoryId) {
+            try {
+                const response = await fetch(`/open/content/find/blog_articles?category_id=${categoryId}&status=1`);
+                const result = await response.json();
+                
+                if (result.code === 200 && result.data) {
+                    const articles = result.data;
+                    renderArticles(articles);
+                } else {
+                    showEmpty('该分类下暂无文章');
+                }
+            } catch (error) {
+                console.error('加载文章失败:', error);
+                showError('加载文章失败');
+            }
+        }
+        
+        function renderArticles(articles) {
+            const container = document.getElementById('articleList');
+            
+            if (!articles || articles.length === 0) {
+                showEmpty('该分类下暂无文章');
+                return;
+            }
+            
+            container.innerHTML = articles.map(article => `
+                <div class="article-card" onclick="window.location.href='/blog/article/${article.id}'">
+                    <div class="article-cover">
+                        <span>📝</span>
+                    </div>
+                    <div class="article-content">
+                        <h2 class="article-title">${article.title || '无标题'}</h2>
+                        <p class="article-excerpt">${article.excerpt || '暂无摘要'}</p>
+                        <div class="article-meta">
+                            <span>${article.published_at || article.created_at || ''}</span>
+                            <div class="article-tags">
+                                ${article.tags ? article.tags.map(tag => `<span class="tag">${tag}</span>`).join('') : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function showError(message) {
+            document.getElementById('articleList').innerHTML = `<div class="error">${message}</div>`;
+        }
+        
+        function showEmpty(message) {
+            document.getElementById('articleList').innerHTML = `<div class="empty">${message}</div>`;
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadCategory);
+    </script>
+</body>
+</html>

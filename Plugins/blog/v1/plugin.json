@@ -1,0 +1,23 @@
+{
+  "id": "blog_v1",
+  "name": "Blog",
+  "version": "v1",
+  "description": "博客插件，提供博客文章管理功能",
+  "author": "Mosure Team",
+  "type": "template",
+  "icon": null,
+  "tags": ["blog", "article", "content"],
+  "has_frontend": true,
+  "has_src": false,
+  "api_scopes": ["content.read", "page.read", "media.read"],
+  "provides": {
+    "models": ["article", "category", "tag", "comment"],
+    "functions": {
+      "endpoints": ["article_stats"],
+      "hooks": ["on_article_view"],
+      "variables": [],
+      "schedules": []
+    },
+    "menus": ["blog"]
+  }
+}

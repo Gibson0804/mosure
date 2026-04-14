@@ -1,0 +1,26 @@
+{
+    "name": "标签",
+    "description": null,
+    "table_name": "article_tag",
+    "mold_type": "list",
+    "fields": [
+        {
+            "id": "input_0juljn6w",
+            "type": "input",
+            "field": "tag_name",
+            "label": "标签名"
+        },
+        {
+            "id": "colorPicker_orGfwL",
+            "type": "colorPicker",
+            "field": "tag_color",
+            "label": "标签颜色"
+        }
+    ],
+    "settings": [],
+    "subject_content": [],
+    "list_show_fields": [
+        "tag_name",
+        "tag_color"
+    ]
+}

@@ -1,0 +1,38 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "axios": "^1.6.2",
+        "laravel-vite-plugin": "^0.7.2",
+        "lodash": "^4.17.19",
+        "postcss": "^8.1.14",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "ts-loader": "^9.4.4",
+        "typescript": "^5.1.6",
+        "vite": "^4.0.0"
+    },
+    "dependencies": {
+        "@ant-design/icons": "^5.2.5",
+        "@inertiajs/react": "^1.0.16",
+        "@milkdown/crepe": "^7.18.0",
+        "@milkdown/kit": "^7.18.0",
+        "@milkdown/theme-nord": "^7.18.0",
+        "@monaco-editor/react": "^4.7.0",
+        "@types/react": "^18.2.15",
+        "amis": "^3.6.3",
+        "antd": "^5.7.2",
+        "form-render": "^2.3.6",
+        "monaco-editor": "^0.54.0",
+        "prismjs": "^1.30.0",
+        "quill-image-resize": "^3.0.9",
+        "react-markdown": "^10.1.0",
+        "react-quill": "^2.0.0",
+        "react-simple-code-editor": "^0.14.1",
+        "react-sortablejs": "^6.1.4",
+        "remark-gfm": "^4.0.1"
+    }
+}

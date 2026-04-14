@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security issue
+    url: https://gitee.com/gibson_0822/mosure/issues
+    about: 如为安全问题，请勿公开披露细节，建议先联系维护者

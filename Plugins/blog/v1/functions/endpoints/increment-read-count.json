@@ -1,0 +1,14 @@
+{
+    "name": "增加文章阅读量",
+    "slug": "increment-read-count",
+    "type": "endpoint",
+    "enabled": true,
+    "code": "<?php\n$articleId = $payload['article_id'] ?? null;\n\nif (!$articleId) {\n    return ['code' => 400, 'message' => 'Invalid article ID', 'data' => null];\n}\n\n$article = $db->table($prefix .'_mc_blog_article')->where('id', $articleId)->first();\n\nif (!$article) {\n    return ['code' => 404, 'message' => 'Article not found', 'data' => null];\n}\n\n$currentReadCount = $article->read_count ?? 0;\n$db->query($prefix . '_mc_blog_article')\n    ->where('id', $articleId)\n    ->update(['read_count' => $currentReadCount + 1]);\n\nreturn [\n    'code' => 200,\n    'message' => 'Read count updated',\n    'data' => [\n        'article_id' => $articleId,\n        'new_read_count' => $currentReadCount + 1\n    ]\n];",
+    "timeout_ms": 1000,
+    "max_mem_mb": 64,
+    "rate_limit": 100,
+    "input_schema": [],
+    "output_schema": [],
+    "http_method": "POST",
+    "remark": null
+}

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - 文章详情</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-card: #1a1a1a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a0a0a0;
+            --accent: #ff6b35;
+            --accent-secondary: #ffd166;
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --bg-card: #fafafa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.8;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin: 40px 0 32px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .back-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+            padding-left: 12px;
+        }
+
+        .back-link:hover::before {
+            width: 8px;
+        }
+
+        .article {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 60px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            opacity: 0.08;
+            border-radius: 50%;
+            filter: blur(80px);
+        }
+
+        .article-header {
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 6vw, 56px);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 32px;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 32px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .article-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .article-cover {
+            width: 100%;
+            height: 480px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            border-radius: 16px;
+            margin-bottom: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-cover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, var(--bg-card) 100%);
+            opacity: 0.6;
+        }
+
+        .article-cover span {
+            font-size: 120px;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+            opacity: 0.3;
+        }
+
+        .article-content {
+            font-size: 18px;
+            line-height: 1.9;
+            color: var(--text-primary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin: 48px 0 24px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .article-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .article-content p {
+            margin-bottom: 24px;
+            color: var(--text-secondary);
+        }
+
+        .article-content strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .article-content a {
+            color: var(--accent);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .article-content a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        .article-content ul, .article-content ol {
+            margin: 24px 0;
+            padding-left: 32px;
+            color: var(--text-secondary);
+        }
+
+        .article-content li {
+            margin-bottom: 12px;
+        }
+
+        .article-content blockquote {
+            border-left: 4px solid var(--accent);
+            padding: 24px 32px;
+            margin: 32px 0;
+            background: rgba(255, 107, 53, 0.05);
+            border-radius: 8px;
+            font-style: italic;
+            color: var(--text-primary);
+        }
+
+        .article-content code {
+            background: var(--bg-secondary);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: var(--accent);
+        }
+
+        .article-content pre {
+            background: var(--bg-secondary);
+            padding: 24px;
+            border-radius: 12px;
+            overflow-x: auto;
+            margin: 24px 0;
+            border: 1px solid var(--border);
+        }
+
+        .article-content pre code {
+            background: none;
+            padding: 0;
+            color: var(--text-primary);
+        }
+
+        .article-tags {
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-tags-title {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .tag-list {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 10px 24px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+            display: inline-block;
+        }
+
+        .tag:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .loading, .error {
+            text-align: center;
+            padding: 120px 40px;
+            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        .error {
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 24px;
+            }
+
+            .article {
+                padding: 32px;
+                border-radius: 16px;
+            }
+
+            .article-title {
+                font-size: 32px;
+            }
+
+            .article-cover {
+                height: 320px;
+            }
+
+            .article-content {
+                font-size: 16px;
+            }
+
+            .article-content h2 {
+                font-size: 26px;
+            }
+
+            .article-content h3 {
+                font-size: 22px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .article {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← 返回文章列表</a>
+        
+        <div id="articleDetail">
+            <div class="loading">加载中...</div>
+        </div>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="切换主题">
+        🌙
+    </button>
+
+    <script src="config.js"></script>
+    <script>
+        const headers = { 
+            'x-api-key': API_CONFIG.API_KEY 
+        };
+
+        let allTags = [];
+        
+        function getArticleId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+        
+        async function loadArticle() {
+            const articleId = getArticleId();
+            
+            if (!articleId) {
+                document.getElementById('articleDetail').innerHTML = '<div class="error">文章 ID 无效</div>';
+                return;
+            }
+
+            await loadAllTags();
+            
+            try {
+                const response = await fetch(`${API_CONFIG.BASE_URL}/open/content/detail/blog_article/${articleId}`, { 
+                    headers 
+                });
+                const result = await response.json();
+                
+                if (result.data) {
+                    renderArticle(result.data);
+                    await incrementReadCount(articleId);
+                } else {
+                    document.getElementById('articleDetail').innerHTML = '<div class="error">文章不存在</div>';
+                }
+            } catch (error) {
+                console.error('加载文章失败:', error);
+                document.getElementById('articleDetail').innerHTML = '<div class="error">加载失败</div>';
+            }
+        }
+
+        async function loadAllTags() {
+            try {
+                const response = await fetch(`${API_CONFIG.BASE_URL}/open/content/list/article_tag`, { 
+                    headers 
+                });
+                const result = await response.json();
+                
+                if (result.data && result.data.items) {
+                    allTags = result.data.items;
+                }
+            } catch (error) {
+                console.error('加载标签失败:', error);
+            }
+        }
+
+        async function incrementReadCount(articleId) {
+            try {
+                await fetch(`${API_CONFIG.BASE_URL}/open/func/increment-read-count`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': API_CONFIG.API_KEY
+                    },
+                    body: JSON.stringify({ article_id: articleId })
+                });
+            } catch (error) {
+                console.error('增加阅读量失败:', error);
+            }
+        }
+        
+        function renderArticle(article) {
+            const container = document.getElementById('articleDetail');
+            
+            let tagsHtml = '';
+            if (article.tags) {
+                const tagNames = article.tags.split(',').map(t => t.trim());
+                tagsHtml = tagNames.map(tagName => {
+                    const tag = allTags.find(t => t.tag_name === tagName);
+                    const tagId = tag ? tag.id : '';
+                    const tagColor = tag ? tag.tag_color : 'var(--accent)';
+                    return `<a href="index.html?tag=${tagId}" class="tag" style="background: ${tagColor}; color: white;">${tagName}</a>`;
+                }).join('');
+            } else {
+                tagsHtml = '<span style="color: var(--text-secondary);">暂无标签</span>';
+            }
+            
+            container.innerHTML = `
+                <div class="article">
+                    <div class="article-header">
+                        <h1 class="article-title">${article.title || '无标题'}</h1>
+                        <div class="article-meta">
+                            <div class="article-meta-item">
+                                <span>${article.publish_date || article.created_at || ''}</span>
+                            </div>
+                            <div class="article-meta-item">
+                                <span>${article.read_count || 0} 次浏览</span>
+                            </div>
+                            ${article.category ? `
+                                <div class="article-meta-item">
+                                    <span>${article.category}</span>
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                    
+                    ${article.cover_image ? `
+                        <div class="article-cover" style="background-image: url('${article.cover_image}'); background-size: cover; background-position: center;"></div>
+                    ` : `
+                        <div class="article-cover">
+                            <span>Article</span>
+                        </div>
+                    `}
+                    
+                    <div class="article-content">
+                        ${article.content || '暂无内容'}
+                    </div>
+                    
+                    <div class="article-tags">
+                        <div class="article-tags-title">标签</div>
+                        <div class="tag-list">
+                            ${tagsHtml}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            const themeToggle = document.getElementById('themeToggle');
+            
+            html.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'light' ? '🌙' : '☀️';
+            localStorage.setItem('theme', newTheme);
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            html.setAttribute('data-theme', savedTheme);
+            themeToggle.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            loadArticle();
+        });
+    </script>
+</body>
+</html>

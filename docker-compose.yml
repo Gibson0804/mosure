@@ -1,0 +1,112 @@
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: app
+    image: mosure_app
+    container_name: mosure_app
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    volumes:
+      - storage:/var/www/html/storage
+      - bootstrap_cache:/var/www/html/bootstrap/cache
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - mosure
+
+  queue:
+    image: mosure_app
+    container_name: mosure_queue
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    command: php artisan queue:work --sleep=3 --tries=3 --max-time=3600
+    depends_on:
+      app:
+        condition: service_started
+    volumes:
+      - storage:/var/www/html/storage
+      - bootstrap_cache:/var/www/html/bootstrap/cache
+    networks:
+      - mosure
+
+# 定时任务,如果不需要可以注释掉该项
+  cron:
+    image: mosure_app
+    container_name: mosure_cron
+    restart: unless-stopped
+    env_file:
+      - .env.docker
+    command: php artisan schedule:work
+    depends_on:
+      app:
+        condition: service_started
+    volumes:
+      - storage:/var/www/html/storage
+      - bootstrap_cache:/var/www/html/bootstrap/cache
+    networks:
+      - mosure
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: nginx
+    image: mosure_web
+    container_name: mosure_web
+    restart: unless-stopped
+    depends_on:
+      app:
+        condition: service_started
+    ports:
+      - "9445:80"
+    networks:
+      - mosure
+    volumes:
+      - storage:/var/www/html/storage
+
+  mysql:
+    image: mysql:8.4
+    container_name: mosure_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-mosure}
+      MYSQL_USER: ${DB_USERNAME:-mosure}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-secret}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root}
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mosure
+
+  redis:
+    image: redis:7
+    container_name: mosure_redis
+    restart: unless-stopped
+    command: redis-server --save 60 1 --loglevel warning
+    volumes:
+      - redis_data:/data
+    networks:
+      - mosure
+
+volumes:
+  mysql_data:
+  redis_data:
+  storage:
+  bootstrap_cache:
+
+networks:
+  mosure:
+    driver: bridge

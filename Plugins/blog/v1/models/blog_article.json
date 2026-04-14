@@ -1,0 +1,105 @@
+{
+    "id": 1,
+    "name": "文章",
+    "description": null,
+    "table_name": "blog_article",
+    "mold_type": "list",
+    "fields": [
+        {
+            "id": "input_123456",
+            "type": "input",
+            "field": "title",
+            "label": "文章标题"
+        },
+        {
+            "id": "textarea_789012",
+            "type": "textarea",
+            "field": "summary",
+            "label": "文章摘要"
+        },
+        {
+            "id": "richText_345678",
+            "type": "richText",
+            "field": "content",
+            "label": "文章正文"
+        },
+        {
+            "id": "select_901234",
+            "type": "radio",
+            "field": "category",
+            "label": "文章分类",
+            "options": [
+                "技术分享",
+                "生活随笔",
+                "读书笔记",
+                "旅行日记"
+            ],
+            "selected": false,
+            "optionsSource": "model",
+            "sourceModelSlug": "article_category",
+            "sourceFieldName": "category"
+        },
+        {
+            "id": "checkbox_567890",
+            "type": "checkbox",
+            "field": "tags",
+            "label": "文章标签",
+            "chosen": false,
+            "isPick": false,
+            "options": [
+                "Python",
+                "前端",
+                "生活",
+                "阅读",
+                "旅行",
+                "职场"
+            ],
+            "selected": false,
+            "optionsSource": "model",
+            "sourceModelSlug": "article_tag",
+            "sourceFieldName": "tag_name"
+        },
+        {
+            "id": "picUpload_112233",
+            "type": "picUpload",
+            "field": "cover_image",
+            "label": "文章封面"
+        },
+        {
+            "id": "datePicker_445566",
+            "type": "datePicker",
+            "field": "publish_date",
+            "label": "发布日期"
+        },
+        {
+            "id": "switch_001122",
+            "type": "switch",
+            "field": "is_top",
+            "label": "是否置顶"
+        },
+        {
+            "id": "numInput_334455",
+            "type": "numInput",
+            "field": "read_count",
+            "label": "阅读量"
+        },
+        {
+            "id": "textarea_667788",
+            "type": "textarea",
+            "field": "author_intro",
+            "label": "作者简介"
+        }
+    ],
+    "settings": [],
+    "subject_content": [],
+    "list_show_fields": [
+        "title",
+        "category",
+        "tags",
+        "cover_image",
+        "publish_date",
+        "publish_status",
+        "is_top",
+        "read_count"
+    ]
+}

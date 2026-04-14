@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - 搜索文章</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-card: #1a1a1a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a0a0a0;
+            --accent: #ff6b35;
+            --accent-secondary: #ffd166;
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --bg-card: #fafafa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .header {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            opacity: 0.1;
+            border-radius: 50%;
+            filter: blur(60px);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            margin-bottom: 32px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .search-container {
+            max-width: 700px;
+            position: relative;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 8px;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1);
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 16px 24px;
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .search-button {
+            padding: 16px 32px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .search-button:hover::before {
+            left: 100%;
+        }
+
+        .search-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+        }
+
+        .search-button:disabled {
+            background: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .search-tips {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 16px;
+            font-weight: 300;
+        }
+
+        .result-count {
+            padding: 24px 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .article-list {
+            display: grid;
+            gap: 32px;
+            padding: 40px 0;
+            position: relative;
+        }
+
+        .article-list::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 70%);
+            opacity: 0.05;
+            border-radius: 50%;
+            filter: blur(80px);
+            transform: translateX(-50%);
+        }
+
+        .article-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 0;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px var(--shadow);
+            border-color: var(--accent);
+        }
+
+        .article-card:hover::before {
+            opacity: 0.03;
+        }
+
+        .article-cover {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-cover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, var(--bg-card) 100%);
+            opacity: 0.8;
+        }
+
+        .article-cover span {
+            font-size: 64px;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        .article-content {
+            padding: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.3;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .article-excerpt {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .article-date {
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .article-tags {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tag {
+            background: rgba(255, 107, 53, 0.1);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            transition: all 0.3s;
+        }
+
+        .article-card:hover .tag {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .loading, .error, .empty {
+            text-align: center;
+            padding: 120px 40px;
+            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        .error {
+            color: var(--accent);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 24px;
+            }
+
+            .header {
+                padding: 40px 0;
+            }
+
+            .header h1 {
+                font-size: 48px;
+            }
+
+            .search-box {
+                flex-direction: column;
+                padding: 16px;
+            }
+
+            .search-button {
+                width: 100%;
+            }
+
+            .article-content {
+                padding: 24px;
+            }
+
+            .article-title {
+                font-size: 24px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .article-card {
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .article-card:nth-child(1) { animation-delay: 0.1s; }
+        .article-card:nth-child(2) { animation-delay: 0.2s; }
+        .article-card:nth-child(3) { animation-delay: 0.3s; }
+        .article-card:nth-child(4) { animation-delay: 0.4s; }
+        .article-card:nth-child(5) { animation-delay: 0.5s; }
+
+        .theme-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <a href="index.html" class="back-link">← 返回首页</a>
+                <h1>搜索文章</h1>
+                <div class="search-container">
+                    <div class="search-box">
+                        <input 
+                            type="text" 
+                            id="searchInput" 
+                            class="search-input" 
+                            placeholder="输入关键词搜索文章..."
+                            onkeypress="handleKeyPress(event)"
+                        >
+                        <button id="searchButton" class="search-button" onclick="search()">搜索</button>
+                    </div>
+                    <p class="search-tips">支持搜索文章标题</p>
+                </div>
+            </div>
+        </header>
+        
+        <div id="resultCount" class="result-count" style="display: none;"></div>
+        <div id="articleList" class="article-list">
+            <div class="empty">请输入关键词进行搜索</div>
+        </div>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="切换主题">
+        🌙
+    </button>
+
+    <script src="api-config.js"></script>
+    <script>
+        const headers = { 
+            'x-api-key': API_CONFIG.API_KEY 
+        };
+        
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                search();
+            }
+        }
+        
+        async function search() {
+            const keyword = document.getElementById('searchInput').value.trim();
+            const searchButton = document.getElementById('searchButton');
+            
+            if (!keyword) {
+                document.getElementById('articleList').innerHTML = '<div class="empty">请输入关键词进行搜索</div>';
+                document.getElementById('resultCount').style.display = 'none';
+                return;
+            }
+            
+            searchButton.disabled = true;
+            searchButton.textContent = '搜索中...';
+            document.getElementById('articleList').innerHTML = '<div class="loading">搜索中...</div>';
+            
+            try {
+                const response = await fetch(`${API_CONFIG.BASE_URL}/open/content/list/blog_article?page=1&page_size=10&sort=-created_at&filter[title][op]=like&filter[title][value]=${encodeURIComponent(keyword)}`, { 
+                    headers 
+                });
+                const result = await response.json();
+                
+                if (result.data && result.data.items) {
+                    const articles = result.data.items;
+                    renderArticles(articles, keyword);
+                } else {
+                    showEmpty(`未找到与"${keyword}"相关的文章`);
+                }
+            } catch (error) {
+                console.error('搜索失败:', error);
+                showError('搜索失败，请稍后重试');
+            } finally {
+                searchButton.disabled = false;
+                searchButton.textContent = '搜索';
+            }
+        }
+        
+        function renderArticles(articles, keyword) {
+            const container = document.getElementById('articleList');
+            
+            if (!articles || articles.length === 0) {
+                showEmpty(`未找到与"${keyword}"相关的文章`);
+                return;
+            }
+            
+            document.getElementById('resultCount').textContent = `找到 ${articles.length} 篇相关文章`;
+            document.getElementById('resultCount').style.display = 'block';
+            
+            container.innerHTML = articles.map((article, index) => `
+                <div class="article-card" onclick="window.location.href='article.html?id=${article.id}'" style="animation-delay: ${index * 0.1}s">
+                    ${article.cover_image 
+                        ? `<div class="article-cover" style="background-image: url('${article.cover_image}'); background-size: cover; background-position: center;"></div>`
+                        : `<div class="article-cover"><span>📝</span></div>`
+                    }
+                    <div class="article-content">
+                        <h2 class="article-title">${article.title || '无标题'}</h2>
+                        <p class="article-excerpt">${article.summary || '暂无摘要'}</p>
+                        <div class="article-meta">
+                            <span class="article-date">${article.publish_date || article.created_at || ''}</span>
+                            <div class="article-tags">
+                                ${article.tags ? `<span class="tag">${article.tags}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function showError(message) {
+            document.getElementById('articleList').innerHTML = `<div class="error">${message}</div>`;
+            document.getElementById('resultCount').style.display = 'none';
+        }
+        
+        function showEmpty(message) {
+            document.getElementById('articleList').innerHTML = `<div class="empty">${message}</div>`;
+            document.getElementById('resultCount').style.display = 'none';
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            const themeToggle = document.getElementById('themeToggle');
+            
+            html.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'light' ? 'Dark' : 'Light';
+            localStorage.setItem('theme', newTheme);
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            html.setAttribute('data-theme', savedTheme);
+            themeToggle.textContent = savedTheme === 'light' ? 'Dark' : 'Light';
+        }
+
+        document.addEventListener('DOMContentLoaded', initTheme);
+    </script>
+</body>
+</html>

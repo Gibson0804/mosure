@@ -1,0 +1,374 @@
+{
+    "list_models": {
+        "name": "list_models",
+        "description": "获取系统中所有内容模型的基础信息列表，结果包含 id\/name\/table_name\/mold_type。",
+        "params": [],
+        "service": "App\\Services\\MoldService",
+        "method": "getAllMold"
+    },
+    "content_update": {
+        "name": "content_update",
+        "description": "修改内容：根据模型ID和内容ID更新内容字段。",
+        "params": {
+            "moldId": {
+                "type": "integer",
+                "required": true,
+                "desc": "模型ID"
+            },
+            "contentId": {
+                "type": "integer",
+                "required": true,
+                "desc": "内容ID"
+            },
+            "contentInfo": {
+                "type": "object",
+                "required": true,
+                "desc": "内容字段键值对"
+            }
+        },
+        "service": "App\\Services\\ContentService",
+        "method": "editContent"
+    },
+    "content_create": {
+        "name": "content_create",
+        "description": "新增内容：根据模型ID创建一条内容记录。",
+        "params": {
+            "moldId": {
+                "type": "integer",
+                "required": true,
+                "desc": "模型ID"
+            },
+            "contentInfo": {
+                "type": "object",
+                "required": true,
+                "desc": "内容字段键值对"
+            }
+        },
+        "service": "App\\Services\\ContentService",
+        "method": "addContent"
+    },
+    "content_list": {
+        "name": "content_list",
+        "description": "查询内容列表：按表标识与筛选条件分页获取内容。isAllStatus为是否获取所有状态的内容，如果不是明确指定需要获取已发布内容，此字段要传true以获取所有状态的内容。",
+        "params": {
+            "tableName": {
+                "type": "string",
+                "required": true,
+                "desc": "模型表标识，如 news"
+            },
+            "params": {
+                "type": "object",
+                "required": true,
+                "desc": "筛选条件，字段名=>值"
+            },
+            "fields": {
+                "type": "array|string",
+                "required": true,
+                "desc": "返回字段列表，数组或逗号分隔字符串"
+            },
+            "page": {
+                "type": "integer",
+                "required": true,
+                "desc": "页码，从1开始"
+            },
+            "pageSize": {
+                "type": "integer",
+                "required": true,
+                "desc": "每页条数"
+            },
+            "isAllStatus": {
+                "type": "boolean",
+                "required": false,
+                "desc": "是否获取所有状态的内容，默认false"
+            }
+        },
+        "service": "App\\Services\\ContentService",
+        "method": "getListApi"
+    },
+    "content_detail": {
+        "name": "content_detail",
+        "description": "查询内容详情：按表标识与主键ID获取单条内容。",
+        "params": {
+            "tableName": {
+                "type": "string",
+                "required": true,
+                "desc": "模型表标识，如 news"
+            },
+            "id": {
+                "type": "integer",
+                "required": true,
+                "desc": "内容ID"
+            }
+        },
+        "service": "App\\Services\\ContentService",
+        "method": "getDetailApi"
+    },
+    "content_count": {
+        "name": "content_count",
+        "description": "统计内容数量：按表标识统计内容数量。",
+        "params": {
+            "tableName": {
+                "type": "string",
+                "required": true,
+                "desc": "模型表标识，如 news"
+            },
+            "filters": {
+                "type": "object",
+                "required": false,
+                "desc": "可选筛选条件，字段名=>值"
+            }
+        },
+        "service": "App\\Services\\ContentService",
+        "method": "getCountApi"
+    },
+    "content_publish": {
+        "name": "content_publish",
+        "description": "上架内容：按模型表标识id与主键ID上架内容。",
+        "params": {
+            "moldId": {
+                "type": "integer",
+                "required": true,
+                "desc": "模型表标识id"
+            },
+            "id": {
+                "type": "integer",
+                "required": true,
+                "desc": "内容ID"
+            }
+        },
+        "service": "App\\Services\\ContentService",
+        "method": "publish"
+    },
+    "content_publish_batch": {
+        "name": "content_publish_batch",
+        "description": "批量上架内容：按模型表标识id与主键ID列表批量上架内容。",
+        "params": {
+            "moldId": {
+                "type": "integer",
+                "required": true,
+                "desc": "模型表标识id"
+            },
+            "ids": {
+                "type": "array",
+                "required": true,
+                "desc": "内容ID列表"
+            }
+        },
+        "service": "App\\Services\\ContentService",
+        "method": "publishByIds"
+    },
+    "content_unpublish": {
+        "name": "content_unpublish",
+        "description": "下架内容：按模型表标识id与主键ID下架内容。",
+        "params": {
+            "moldId": {
+                "type": "integer",
+                "required": true,
+                "desc": "模型表标识id"
+            },
+            "id": {
+                "type": "integer",
+                "required": true,
+                "desc": "内容ID"
+            }
+        },
+        "service": "App\\Services\\ContentService",
+        "method": "unpublish"
+    },
+    "content_unpublish_batch": {
+        "name": "content_unpublish_batch",
+        "description": "批量下架内容：按模型表标识id与主键ID列表批量下架内容。",
+        "params": {
+            "moldId": {
+                "type": "integer",
+                "required": true,
+                "desc": "模型表标识id"
+            },
+            "ids": {
+                "type": "array",
+                "required": true,
+                "desc": "内容ID列表"
+            }
+        },
+        "service": "App\\Services\\ContentService",
+        "method": "unpublishByIds"
+    },
+    "content_delete": {
+        "name": "content_delete",
+        "description": "删除内容：根据ID删除内容。",
+        "params": {
+            "moldId": {
+                "type": "integer",
+                "required": true,
+                "desc": "模型ID"
+            },
+            "id": {
+                "type": "integer",
+                "required": true,
+                "desc": "内容ID"
+            }
+        },
+        "service": "App\\Services\\AiContentService",
+        "method": "deleteContent"
+    },
+    "cron_list": {
+        "name": "cron_list",
+        "description": "查询定时任务列表：支持按关键字和启用状态筛选，分页返回。",
+        "params": {
+            "page": {
+                "type": "integer",
+                "required": false,
+                "desc": "页码，默认1"
+            },
+            "pageSize": {
+                "type": "integer",
+                "required": false,
+                "desc": "每页条数，默认15"
+            },
+            "filters": {
+                "type": "object",
+                "required": false,
+                "desc": "筛选条件：keyword、enabled(true\/false)"
+            }
+        },
+        "service": "App\\Services\\CloudCronService",
+        "method": "list"
+    },
+    "cron_detail": {
+        "name": "cron_detail",
+        "description": "查询定时任务详情：根据ID获取定时任务完整信息。",
+        "params": {
+            "id": {
+                "type": "integer",
+                "required": true,
+                "desc": "定时任务ID"
+            }
+        },
+        "service": "App\\Services\\CloudCronService",
+        "method": "get"
+    },
+    "cron_create": {
+        "name": "cron_create",
+        "description": "创建定时任务：绑定一个触发函数(hook类型)，设置调度规则。",
+        "params": {
+            "data": {
+                "type": "object",
+                "required": true,
+                "desc": "定时任务数据：name(名称)、function_id(绑定的hook函数ID)、schedule_type(once一次性\/cron周期性)、cron_expr(cron表达式，周期性时必填)、run_at(一次性执行时间)、payload(传入参数JSON)、enabled(是否启用)"
+            }
+        },
+        "service": "App\\Services\\CloudCronService",
+        "method": "create"
+    },
+    "cron_toggle": {
+        "name": "cron_toggle",
+        "description": "切换定时任务启用\/禁用状态。",
+        "params": {
+            "id": {
+                "type": "integer",
+                "required": true,
+                "desc": "定时任务ID"
+            }
+        },
+        "service": "App\\Services\\CloudCronService",
+        "method": "toggle"
+    },
+    "cron_run_now": {
+        "name": "cron_run_now",
+        "description": "立即执行定时任务：手动触发一次定时任务绑定的函数。",
+        "params": {
+            "id": {
+                "type": "integer",
+                "required": true,
+                "desc": "定时任务ID"
+            }
+        },
+        "service": "App\\Services\\CloudCronService",
+        "method": "runNow"
+    },
+    "subject_detail": {
+        "name": "subject_detail",
+        "description": "获取单页（subject）详情：通过表标识读取 subject_content 等信息。",
+        "params": {
+            "tableName": {
+                "type": "string",
+                "required": true,
+                "desc": "模型表标识，如 about_us"
+            }
+        },
+        "service": "App\\Services\\SubjectService",
+        "method": "getSubjectByTable"
+    },
+    "subject_update": {
+        "name": "subject_update",
+        "description": "更新单页（subject）内容：通过表标识写入 subject_content。",
+        "params": {
+            "tableName": {
+                "type": "string",
+                "required": true,
+                "desc": "模型表标识，如 about_us"
+            },
+            "subjectContent": {
+                "type": "object",
+                "required": true,
+                "desc": "要保存的 subject_content（对象）"
+            }
+        },
+        "service": "App\\Services\\SubjectService",
+        "method": "updateSubjectByTable"
+    },
+    "cloud_function_list": {
+        "name": "cloud_function_list",
+        "description": "查询云函数列表：支持按类型(endpoint\/hook)、关键字、启用状态筛选，分页返回。",
+        "params": {
+            "page": {
+                "type": "integer",
+                "required": false,
+                "desc": "页码，默认1"
+            },
+            "pageSize": {
+                "type": "integer",
+                "required": false,
+                "desc": "每页条数，默认15"
+            },
+            "filters": {
+                "type": "object",
+                "required": false,
+                "desc": "筛选条件：type(endpoint\/hook)、keyword、enabled(true\/false)"
+            }
+        },
+        "service": "App\\Services\\CloudFunctionService",
+        "method": "list"
+    },
+    "cloud_function_detail": {
+        "name": "cloud_function_detail",
+        "description": "查询云函数详情：根据ID获取云函数完整信息，包括代码、配置等。",
+        "params": {
+            "id": {
+                "type": "integer",
+                "required": true,
+                "desc": "云函数ID"
+            },
+            "type": {
+                "type": "string",
+                "required": false,
+                "desc": "类型：endpoint或hook，默认endpoint"
+            }
+        },
+        "service": "App\\Services\\CloudFunctionService",
+        "method": "get"
+    },
+    "cloud_function_toggle": {
+        "name": "cloud_function_toggle",
+        "description": "切换云函数启用\/禁用状态。",
+        "params": {
+            "id": {
+                "type": "integer",
+                "required": true,
+                "desc": "云函数ID"
+            }
+        },
+        "service": "App\\Services\\CloudFunctionService",
+        "method": "toggle"
+    }
+}

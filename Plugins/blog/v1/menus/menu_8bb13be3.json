@@ -1,0 +1,77 @@
+{
+    "id": 3,
+    "title": "博客管理",
+    "key": "menu_8bb13be3",
+    "icon": "FileTextOutlined",
+    "order": 201,
+    "visible": true,
+    "permission_key": null,
+    "area": "admin",
+    "target_type": "group",
+    "target_payload": {
+        "models": [
+            1,
+            3,
+            4,
+            2
+        ]
+    },
+    "children": [
+        {
+            "id": 4,
+            "title": "文章",
+            "key": "mold_list_1",
+            "icon": null,
+            "order": 0,
+            "visible": true,
+            "permission_key": null,
+            "area": "admin",
+            "target_type": "mold_list",
+            "target_payload": {
+                "mold_slug": "blog_article"
+            }
+        },
+        {
+            "id": 5,
+            "title": "标签",
+            "key": "mold_list_2",
+            "icon": null,
+            "order": 0,
+            "visible": true,
+            "permission_key": null,
+            "area": "admin",
+            "target_type": "mold_list",
+            "target_payload": {
+                "mold_slug": "article_tag"
+            }
+        },
+        {
+            "id": 6,
+            "title": "文章分类",
+            "key": "mold_list_3",
+            "icon": null,
+            "order": 0,
+            "visible": true,
+            "permission_key": null,
+            "area": "admin",
+            "target_type": "mold_list",
+            "target_payload": {
+                "mold_slug": "article_category"
+            }
+        },
+        {
+            "id": 7,
+            "title": "博客主页介绍",
+            "key": "mold_single_4",
+            "icon": null,
+            "order": 0,
+            "visible": true,
+            "permission_key": null,
+            "area": "admin",
+            "target_type": "mold_single",
+            "target_payload": {
+                "mold_slug": "blog_home_intro"
+            }
+        }
+    ]
+}

@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - 文章列表</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-card: #1a1a1a;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a0a0a0;
+            --accent: #ff6b35;
+            --accent-secondary: #ffd166;
+            --border: rgba(255, 255, 255, 0.08);
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f5;
+            --bg-card: #fafafa;
+            --text-primary: #1a1a1a;
+            --text-secondary: #666666;
+            --border: rgba(0, 0, 0, 0.08);
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-primary);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .header {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            opacity: 0.1;
+            border-radius: 50%;
+            filter: blur(60px);
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(48px, 8vw, 96px);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            font-weight: 300;
+            letter-spacing: 0.01em;
+        }
+
+        .header-actions {
+            margin-top: 32px;
+            display: flex;
+            gap: 16px;
+        }
+
+        .header-button {
+            padding: 14px 32px;
+            background: var(--accent);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .header-button:hover::before {
+            left: 100%;
+        }
+
+        .header-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);
+        }
+
+        .blog-intro {
+            text-align: center;
+        }
+
+        .blog-intro h1 {
+            font-size: 72px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .blog-intro .subtitle {
+            font-size: 20px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+            /* text-align: right; */
+            margin: 0 auto;
+            margin-bottom: 38px;    
+        }
+
+        .blog-intro .description {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 32px;
+            line-height: 1.8;
+        }
+
+        .blog-intro .author-info {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .blog-intro .author-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .blog-intro .author-item a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .blog-intro .author-item a:hover {
+            color: var(--accent-secondary);
+        }
+
+        .current-filter {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .filter-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .filter-badge:hover {
+            background: var(--accent-secondary);
+        }
+
+        .filter-close {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            line-height: 1;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .filter-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 60px;
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 70%);
+            opacity: 0.05;
+            border-radius: 50%;
+            filter: blur(80px);
+            transform: translateX(-50%);
+        }
+
+        .articles-section {
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-list {
+            display: grid;
+            gap: 32px;
+        }
+
+        .article-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 0;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px var(--shadow);
+            border-color: var(--accent);
+        }
+
+        .article-card:hover::before {
+            opacity: 0.03;
+        }
+
+        .article-cover {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-cover::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent 0%, var(--bg-card) 100%);
+            opacity: 0.8;
+        }
+
+        .article-cover span {
+            font-size: 64px;
+            color: var(--text-secondary);
+            position: relative;
+            z-index: 1;
+            opacity: 0.5;
+        }
+
+        .article-content {
+            padding: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .article-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.3;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+        }
+
+        .article-excerpt {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+
+        .article-date {
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        .article-tags {
+            display: flex;
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .article-card:hover .tag {
+            opacity: 0.9;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 40px;
+            height: fit-content;
+        }
+
+        .sidebar-section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 32px;
+            border: 1px solid var(--border);
+            margin-bottom: 32px;
+        }
+
+        .sidebar-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--accent);
+            letter-spacing: -0.01em;
+        }
+
+        .sidebar-list {
+            list-style: none;
+        }
+
+        .sidebar-item {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .sidebar-item:last-child {
+            border-bottom: none;
+        }
+
+        .sidebar-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+            padding-left: 0;
+        }
+
+        .sidebar-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 0;
+            height: 2px;
+            background: currentColor;
+            transition: width 0.3s;
+        }
+
+        .sidebar-link:hover {
+            color: var(--text-primary);
+            padding-left: 12px;
+        }
+
+        .sidebar-link:hover::before {
+            width: 8px;
+        }
+
+        .tag-link {
+            border-left-width: 3px;
+            border-left-style: solid;
+            padding-left: 12px;
+        }
+
+        .tag-link::before {
+            display: none;
+        }
+
+        .tag-link::before {
+            display: none;
+        }
+
+        .category-count {
+            color: var(--text-secondary);
+            font-size: 12px;
+            margin-left: 4px;
+        }
+
+        .loading, .error, .empty {
+            text-align: center;
+            padding: 80px 40px;
+            color: var(--text-secondary);
+            font-size: 16px;
+            font-weight: 300;
+        }
+
+        .error {
+            color: var(--accent);
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 24px;
+            }
+
+            .header {
+                padding: 40px 0;
+            }
+
+            .header h1 {
+                font-size: 48px;
+            }
+
+            .article-content {
+                padding: 24px;
+            }
+
+            .article-title {
+                font-size: 24px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .article-card {
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .article-card:nth-child(1) { animation-delay: 0.1s; }
+        .article-card:nth-child(2) { animation-delay: 0.2s; }
+        .article-card:nth-child(3) { animation-delay: 0.3s; }
+        .article-card:nth-child(4) { animation-delay: 0.4s; }
+        .article-card:nth-child(5) { animation-delay: 0.5s; }
+
+        .theme-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+        }
+
+        .theme-toggle:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <div id="blogIntro">
+                    <div class="loading">加载中...</div>
+                </div>
+                <div class="header-actions">
+                    <a href="search.html" class="header-button">搜索文章</a>
+                </div>
+            </div>
+        </header>
+        
+        <div id="currentFilter" class="current-filter" style="display: none;"></div>
+        
+        <div class="main-content">
+            <div class="articles-section">
+                <div id="articleList" class="article-list">
+                    <div class="loading">加载中...</div>
+                </div>
+            </div>
+            
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">分类</h3>
+                    <ul id="categoryList" class="sidebar-list">
+                        <li class="sidebar-item"><span class="loading">加载中...</span></li>
+                    </ul>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">标签</h3>
+                    <ul id="tagList" class="sidebar-list">
+                        <li class="sidebar-item"><span class="loading">加载中...</span></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="切换主题">
+        🌙
+    </button>
+
+    <script src="config.js"></script>
+    <script>
+        const headers = { 
+            'x-api-key': API_CONFIG.API_KEY 
+        };
+
+        let allTags = [];
+        let allCategories = [];
+        
+        async function loadArticles() {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const categoryId = urlParams.get('category');
+                const tagId = urlParams.get('tag');
+                
+                let apiUrl = `${API_CONFIG.BASE_URL}/open/content/list/blog_article?page=1&page_size=10&sort=-created_at`;
+                
+                if (categoryId) {
+                    apiUrl += `&filter[category][op]=eq&filter[category][value]=${categoryId}`;
+                }
+                
+                if (tagId) {
+                    apiUrl += `&filter[tags][op]=eq&filter[tags][value]=${tagId}`;
+                }
+                
+                const response = await fetch(apiUrl, { 
+                    headers 
+                });
+                const result = await response.json();
+                
+                if (result.data && result.data.items) {
+                    const articles = result.data.items;
+                    renderArticles(articles);
+                    await showCurrentFilter(categoryId, tagId);
+                } else {
+                    showEmpty('暂无文章');
+                }
+            } catch (error) {
+                console.error('加载文章失败:', error);
+                showError('加载失败');
+            }
+        }
+        
+        async function loadCategories() {
+            try {
+                const response = await fetch(`${API_CONFIG.BASE_URL}/open/content/list/article_category`, { 
+                    headers 
+                });
+                const result = await response.json();
+                
+                if (result.data && result.data.items) {
+                    const categories = result.data.items;
+                    allCategories = categories;
+                    
+                    try {
+                        const countResponse = await fetch(`${API_CONFIG.BASE_URL}/open/func/get-all-categories-count`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'x-api-key': API_CONFIG.API_KEY
+                            }
+                        });
+                        const countResult = await countResponse.json();
+                        
+                        if (countResult.data && countResult.data.data && Array.isArray(countResult.data.data)) {
+                            const countMap = {};
+                            countResult.data.data.forEach(item => {
+                                countMap[item.category_name] = item.article_count;
+                            });
+                            
+                            categories.forEach(category => {
+                                category.article_count = countMap[category.category] || 0;
+                            });
+                        }
+                    } catch (error) {
+                        console.error('获取分类文章数失败:', error);
+                        categories.forEach(category => {
+                            category.article_count = 0;
+                        });
+                    }
+                    
+                    renderCategories(categories);
+                } else {
+                    document.getElementById('categoryList').innerHTML = '<li class="sidebar-item"><span style="color: var(--text-secondary);">暂无分类</span></li>';
+                }
+            } catch (error) {
+                console.error('加载分类失败:', error);
+                document.getElementById('categoryList').innerHTML = '<li class="sidebar-item"><span style="color: var(--accent);">加载失败</span></li>';
+            }
+        }
+        
+        async function loadTags() {
+            try {
+                const response = await fetch(`${API_CONFIG.BASE_URL}/open/content/list/article_tag`, { 
+                    headers 
+                });
+                const result = await response.json();
+                
+                if (result.data && result.data.items) {
+                    const tags = result.data.items;
+                    allTags = tags;
+                    renderTags(tags);
+                } else {
+                    document.getElementById('tagList').innerHTML = '<li class="sidebar-item"><span style="color: var(--text-secondary);">暂无标签</span></li>';
+                }
+            } catch (error) {
+                console.error('加载标签失败:', error);
+                document.getElementById('tagList').innerHTML = '<li class="sidebar-item"><span style="color: var(--accent);">加载失败</span></li>';
+            }
+        }
+        
+        function renderArticles(articles) {
+            const container = document.getElementById('articleList');
+            
+            if (!articles || articles.length === 0) {
+                showEmpty('暂无文章');
+                return;
+            }
+            
+            container.innerHTML = articles.map((article, index) => {
+                let tagsHtml = '';
+                if (article.tags) {
+                    const tagNames = article.tags.split(',').map(t => t.trim());
+                    tagsHtml = tagNames.map(tagName => {
+                        const tag = allTags.find(t => t.tag_name === tagName);
+                        const tagColor = tag ? tag.tag_color : 'var(--accent)';
+                        return `<span class="tag" style="background: ${tagColor}; color: white;">${tagName}</span>`;
+                    }).join('');
+                }
+                
+                return `
+                <div class="article-card" onclick="window.location.href='article.html?id=${article.id}'" style="animation-delay: ${index * 0.1}s">
+                    ${article.cover_image 
+                        ? `<div class="article-cover" style="background-image: url('${article.cover_image}'); background-size: cover; background-position: center;"></div>`
+                        : `<div class="article-cover"><span>📝</span></div>`
+                    }
+                    <div class="article-content">
+                        <h2 class="article-title">${article.title || '无标题'}</h2>
+                        <p class="article-excerpt">${article.summary || '暂无摘要'}</p>
+                        <div class="article-meta">
+                            <span class="article-date">${article.publish_date || article.created_at || ''}</span>
+                            <div class="article-tags">
+                                ${tagsHtml}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+        
+        function renderCategories(categories) {
+            const container = document.getElementById('categoryList');
+            
+            if (!categories || categories.length === 0) {
+                container.innerHTML = '<li class="sidebar-item"><span style="color: var(--text-secondary);">暂无分类</span></li>';
+                return;
+            }
+            
+            container.innerHTML = categories.map(category => `
+                <li class="sidebar-item">
+                    <a href="index.html?category=${category.id}" class="sidebar-link">
+                        ${category.category || '未命名'}
+                        <span class="category-count">(${category.article_count || 0})</span>
+                    </a>
+                </li>
+            `).join('');
+        }
+        
+        function renderTags(tags) {
+            const container = document.getElementById('tagList');
+            
+            if (!tags || tags.length === 0) {
+                container.innerHTML = '<li class="sidebar-item"><span style="color: var(--text-secondary);">暂无标签</span></li>';
+                return;
+            }
+            
+            container.innerHTML = tags.map(tag => `
+                <li class="sidebar-item">
+                    <a href="index.html?tag=${tag.id}" class="sidebar-link tag-link" style="border-left-color: ${tag.tag_color || 'var(--accent)'}">
+                        ${tag.tag_name || '未命名'}
+                    </a>
+                </li>
+            `).join('');
+        }
+        
+        function showError(message) {
+            document.getElementById('articleList').innerHTML = `<div class="error">${message}</div>`;
+        }
+        
+        function showEmpty(message) {
+            document.getElementById('articleList').innerHTML = `<div class="empty">${message}</div>`;
+        }
+
+        async function showCurrentFilter(categoryId, tagId) {
+            const filterContainer = document.getElementById('currentFilter');
+            
+            if (!categoryId && !tagId) {
+                filterContainer.style.display = 'none';
+                return;
+            }
+            
+            let filterText = '';
+            if (categoryId) {
+                const category = allCategories.find(c => c.id == categoryId);
+                filterText = category ? category.category : categoryId;
+            } else if (tagId) {
+                const tag = allTags.find(t => t.id == tagId);
+                filterText = tag ? tag.tag_name : tagId;
+            }
+            
+            filterContainer.innerHTML = `
+                <span class="filter-badge">
+                    ${filterText}
+                    <a href="index.html" class="filter-close">×</a>
+                </span>
+            `;
+            filterContainer.style.display = 'flex';
+        }
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            const themeToggle = document.getElementById('themeToggle');
+            
+            html.setAttribute('data-theme', newTheme);
+            themeToggle.textContent = newTheme === 'light' ? '🌙' : '☀️';
+            localStorage.setItem('theme', newTheme);
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const html = document.documentElement;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            html.setAttribute('data-theme', savedTheme);
+            themeToggle.textContent = savedTheme === 'light' ? '🌙' : '☀️';
+        }
+
+        async function loadBlogIntro() {
+            try {
+                const response = await fetch(`${API_CONFIG.BASE_URL}/open/page/detail/blog_home_intro`, { 
+                    headers 
+                });
+                const result = await response.json();
+                
+                if (result.data) {
+                    renderBlogIntro(result.data);
+                } else {
+                    renderDefaultBlogIntro();
+                }
+            } catch (error) {
+                console.error('加载博客介绍失败:', error);
+                renderDefaultBlogIntro();
+            }
+        }
+
+        function renderBlogIntro(intro) {
+            const container = document.getElementById('blogIntro');
+            
+            container.innerHTML = `
+                <div class="blog-intro">
+                    <h1>${intro.blog_name || '我的博客'}</h1>
+                    <p class="subtitle">${intro.blog_subtitle || ''}</p>
+                    ${intro.blog_description ? `<p class="description">${intro.blog_description}</p>` : ''}
+                    <div class="author-info">
+                        ${intro.author_nickname ? `<div class="author-item"><span>${intro.author_nickname}</span></div>` : ''}
+                        ${intro.author_email ? `<div class="author-item"><a href="mailto:${intro.author_email}">${intro.author_email}</a></div>` : ''}
+                        ${intro.author_github ? `<div class="author-item"><a href="${intro.author_github}" target="_blank">GitHub</a></div>` : ''}
+                        ${intro.author_wechat ? `<div class="author-item"><span>${intro.author_wechat}</span></div>` : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderDefaultBlogIntro() {
+            const container = document.getElementById('blogIntro');
+            
+            container.innerHTML = `
+                <div class="blog-intro">
+                    <h1>Blog</h1>
+                    <p class="subtitle">探索思想，分享见解，启发灵感</p>
+                </div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            loadBlogIntro();
+            loadCategories();
+            loadTags();
+            loadArticles();
+        });
+    </script>
+</body>
+</html>

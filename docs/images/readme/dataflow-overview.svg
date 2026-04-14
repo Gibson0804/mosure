@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1160" viewBox="0 0 1600 1160" role="img" aria-labelledby="title desc">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1020"/>
+      <stop offset="100%" stop-color="#131c33"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#18233d"/>
+      <stop offset="100%" stop-color="#1f2d4f"/>
+    </linearGradient>
+    <linearGradient id="accentBlue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#66b3ff"/>
+      <stop offset="100%" stop-color="#7f8cff"/>
+    </linearGradient>
+    <linearGradient id="accentGreen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#42d392"/>
+      <stop offset="100%" stop-color="#7df2c8"/>
+    </linearGradient>
+    <linearGradient id="accentOrange" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffb86b"/>
+      <stop offset="100%" stop-color="#ffd38a"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#02050d" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#73b8ff"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#5ce0a5"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#ffc06b"/>
+    </marker>
+    <style>
+      .title { font: 700 34px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #f8fbff; }
+      .subtitle { font: 500 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #9fb2d8; }
+      .section { font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #f3f7ff; }
+      .label { font: 700 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #edf4ff; }
+      .small { font: 500 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #b6c6e5; }
+      .tiny { font: 500 11px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #95a9cf; }
+      .chip { font: 700 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #08111f; }
+      .arrowText { font: 700 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #cfe4ff; }
+    </style>
+  </defs>
+  <rect width="1600" height="1160" rx="28" fill="url(#bg)"/>
+  
+    <title id="title">Mosure 数据流转图</title>
+    <desc id="desc">Mosure 中建模、内容输出、自动化与 AI/MCP 的主要数据流转路径。</desc>
+    <text x="80" y="86" class="title" text-anchor="start">Mosure 数据流转图</text>
+    <text x="80" y="118" class="subtitle" text-anchor="start">面向 README 的核心链路：建模录入 → API/页面输出 → 自动化执行 → AI/MCP 访问</text>
+
+    
+    <g>
+      <rect x="80" y="150" width="198" height="28" rx="14" fill="url(#accentBlue)"/>
+      <text x="179.0" y="168" text-anchor="middle" class="chip">Flow A · 内容建模与输出</text>
+    </g>
+    
+    
+    <g>
+      <rect x="290" y="150" width="176" height="28" rx="14" fill="url(#accentOrange)"/>
+      <text x="378.0" y="168" text-anchor="middle" class="chip">Flow B · 自动化编排</text>
+    </g>
+    
+    
+    <g>
+      <rect x="470" y="150" width="242" height="28" rx="14" fill="url(#accentGreen)"/>
+      <text x="591.0" y="168" text-anchor="middle" class="chip">Flow C · AI / MCP 接入</text>
+    </g>
+    
+
+    <text x="80" y="220" class="section" text-anchor="start">Flow A · 从建模到内容输出</text>
+    
+    <g filter="url(#shadow)">
+      <rect x="80" y="248" width="240" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="104" y="278" class="label">1. 管理端操作</text>
+      <text x="104" y="290" class="small">创建项目、选择项目</text><text x="104" y="310" class="tiny">进入模型与内容管理界面</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="370" y="248" width="260" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="394" y="278" class="label">2. 内容建模</text>
+      <text x="394" y="290" class="small">Mold / 字段配置 / 表单结构</text><text x="394" y="310" class="tiny">保存后生成或更新数据结构</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="680" y="248" width="260" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="704" y="278" class="label">3. 内容录入</text>
+      <text x="704" y="290" class="small">Content CRUD / Draft / Publish</text><text x="704" y="310" class="tiny">媒体引用、版本记录、回滚</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="990" y="248" width="240" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="1014" y="278" class="label">4. 数据持久化</text>
+      <text x="1014" y="290" class="small">项目数据表 / 系统表 / 媒体存储</text><text x="1014" y="310" class="tiny">以项目 prefix 做隔离</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="1280" y="248" width="240" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="1304" y="278" class="label">5. 对外输出</text>
+      <text x="1304" y="290" class="small">OpenAPI / Client API / Sites / Frontend</text><text x="1304" y="310" class="tiny">网站、App、插件前端消费</text>
+    </g>
+    
+
+    <line x1="320" y1="303" x2="370" y2="303" stroke="#73b8ff" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+    <line x1="630" y1="303" x2="680" y2="303" stroke="#73b8ff" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+    <line x1="940" y1="303" x2="990" y2="303" stroke="#73b8ff" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+    <line x1="1230" y1="303" x2="1280" y2="303" stroke="#73b8ff" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+
+    <text x="800" y="395" class="arrowText" text-anchor="middle">项目隔离 + 结构化模型 + 内容版本</text>
+
+    <text x="80" y="500" class="section" text-anchor="start">Flow B · 从内容事件到自动化执行</text>
+    
+    <g filter="url(#shadow)">
+      <rect x="80" y="528" width="250" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="104" y="558" class="label">1. 事件来源</text>
+      <text x="104" y="570" class="small">内容创建 / 更新 / 状态变更</text><text x="104" y="590" class="tiny">也可由定时任务主动触发</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="390" y="528" width="250" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="414" y="558" class="label">2. Trigger 规则判断</text>
+      <text x="414" y="570" class="small">基于条件过滤与编排</text><text x="414" y="590" class="tiny">决定是否触发后续函数</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="700" y="528" width="250" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="724" y="558" class="label">3. Cloud Function 执行</text>
+      <text x="724" y="570" class="small">HTTP Endpoint / Hook / invoke</text><text x="724" y="590" class="tiny">读写内容、调用第三方接口</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="1010" y="528" width="250" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="1034" y="558" class="label">4. SysTask / Queue</text>
+      <text x="1034" y="570" class="small">异步任务、进度跟踪、失败重试</text><text x="1034" y="590" class="tiny">长耗时操作不阻塞主流程</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="1320" y="528" width="200" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="1344" y="558" class="label">5. 外部系统</text>
+      <text x="1344" y="570" class="small">通知、同步、发布、采集</text><text x="1344" y="590" class="tiny">第三方平台或内部服务</text>
+    </g>
+    
+
+    <line x1="330" y1="583" x2="390" y2="583" stroke="#ffc06b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowOrange)"/>
+    <line x1="640" y1="583" x2="700" y2="583" stroke="#ffc06b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowOrange)"/>
+    <line x1="950" y1="583" x2="1010" y2="583" stroke="#ffc06b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowOrange)"/>
+    <line x1="1260" y1="583" x2="1320" y2="583" stroke="#ffc06b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowOrange)"/>
+    <line x1="825" y1="638" x2="825" y2="722" stroke="#ffc06b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowOrange)" stroke-dasharray="10 8"/>
+    <text x="845" y="690" class="arrowText">也可以由计划任务 cloud-cron:tick 驱动</text>
+
+    <text x="80" y="784" class="section" text-anchor="start">Flow C · 从 AI / MCP 到系统能力访问</text>
+    
+    <g filter="url(#shadow)">
+      <rect x="80" y="812" width="260" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="104" y="842" class="label">1. AI Client / Agent</text>
+      <text x="104" y="854" class="small">MCP Client 或 AI 会话</text><text x="104" y="874" class="tiny">发起资源读取 / 工具调用</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="400" y="812" width="260" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="424" y="842" class="label">2. 访问校验</text>
+      <text x="424" y="854" class="small">VerifyMcpAccess / Token</text><text x="424" y="874" class="tiny">控制项目级访问权限</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="720" y="812" width="260" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="744" y="842" class="label">3. MCP / AI 服务层</text>
+      <text x="744" y="854" class="small">MCP Server / AI Chat / Session</text><text x="744" y="874" class="tiny">组织工具、资源和会话上下文</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="1040" y="812" width="260" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="1064" y="842" class="label">4. Tools / Resources</text>
+      <text x="1064" y="854" class="small">读取内容、知识库、函数、配置</text><text x="1064" y="874" class="tiny">也可触发系统内部能力</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="1360" y="812" width="160" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="1384" y="842" class="label">5. 结果返回</text>
+      <text x="1384" y="854" class="small">结构化结果</text><text x="1384" y="874" class="tiny">继续被 Agent 使用</text>
+    </g>
+    
+
+    <line x1="340" y1="867" x2="400" y2="867" stroke="#5ce0a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+    <line x1="660" y1="867" x2="720" y2="867" stroke="#5ce0a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+    <line x1="980" y1="867" x2="1040" y2="867" stroke="#5ce0a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+    <line x1="1300" y1="867" x2="1360" y2="867" stroke="#5ce0a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+
+    
+    <g filter="url(#shadow)">
+      <rect x="330" y="996" width="940" height="96" rx="24" fill="url(#panel)" stroke="#40608f" stroke-width="1.5"/>
+      <text x="354" y="1026" class="label">统一数据底座</text>
+      <text x="354" y="1038" class="small">所有入口最终共享同一套项目、内容、媒体、函数、任务与知识数据；差异仅在访问面与鉴权方式。</text>
+    </g>
+    
+
+    <text x="1470" y="1110" class="small" text-anchor="end">README 建议文件名：architecture-overview.svg / dataflow-overview.svg</text>
+    
+</svg>

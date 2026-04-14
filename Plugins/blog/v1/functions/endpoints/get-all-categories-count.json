@@ -1,0 +1,14 @@
+{
+    "name": "获取所有分类文章数量",
+    "slug": "get-all-categories-count",
+    "type": "endpoint",
+    "enabled": true,
+    "code": "<?php\n$categories = $db->table($prefix . '_mc_article_category')->get();\n\n$result = [];\n\nforeach ($categories as $category) {\n    $count = $db->table($prefix . '_mc_blog_article')\n        ->where('category', $category->id)\n        ->count();\n    \n    $result[] = [\n        'category_name' => $category->category,\n        'article_count' => $count\n    ];\n}\n\nreturn [\n    'code' => 200,\n    'message' => 'success',\n    'data' => $result\n];",
+    "timeout_ms": 1000,
+    "max_mem_mb": 64,
+    "rate_limit": 100,
+    "input_schema": [],
+    "output_schema": [],
+    "http_method": "POST",
+    "remark": null
+}

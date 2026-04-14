@@ -1,0 +1,19 @@
+{
+    "name": "文章分类",
+    "description": null,
+    "table_name": "article_category",
+    "mold_type": "list",
+    "fields": [
+        {
+            "id": "input_0juljn6w",
+            "type": "input",
+            "field": "category",
+            "label": "分类名称"
+        }
+    ],
+    "settings": [],
+    "subject_content": [],
+    "list_show_fields": [
+        "category"
+    ]
+}

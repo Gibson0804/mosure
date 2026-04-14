@@ -1,0 +1,19 @@
+{
+    "description": "Native Ai Content Management System",
+    "app_name": "Mosure",
+    "content_type_add": "Content Type Add",
+    "content_type_list": "Content Type List",
+    "content_type_management": "Content Type Management",
+    "hook_list": "Hook List",
+    "content_list": "Content List",
+    "content_single": "Content Single",
+    "dashboard": "Dashboard",
+    "media": "Media",
+    "project_manage": "Project Manage",
+    "project_export": "Project Export",
+    "api_key_manage": "API Key Manage",
+    "api_doc": "API Doc",
+    "audit_logs": "Audit Logs",
+    "project_config": "Project Config"
+
+}

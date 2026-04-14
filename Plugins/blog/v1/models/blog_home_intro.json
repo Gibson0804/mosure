@@ -1,0 +1,115 @@
+{
+    "name": "博客主页介绍",
+    "description": null,
+    "table_name": "blog_home_intro",
+    "mold_type": "single",
+    "fields": [
+        {
+            "id": "input_89a7b6",
+            "type": "input",
+            "field": "blog_name",
+            "label": "博客名称"
+        },
+        {
+            "id": "input_54c3d2",
+            "type": "input",
+            "field": "blog_subtitle",
+            "label": "博客副标题"
+        },
+        {
+            "id": "picUpload_e1f0g9",
+            "type": "picUpload",
+            "field": "blog_avatar",
+            "label": "博客头像 \/ LOGO"
+        },
+        {
+            "id": "input_2n1o9p",
+            "type": "input",
+            "field": "author_nickname",
+            "label": "博主昵称"
+        },
+        {
+            "id": "input_8q7r6s",
+            "type": "input",
+            "field": "author_email",
+            "label": "博主邮箱"
+        },
+        {
+            "id": "input_5t4u3v",
+            "type": "input",
+            "field": "author_wechat",
+            "label": "博主公众号"
+        },
+        {
+            "id": "input_2w1x9y",
+            "type": "input",
+            "field": "author_github",
+            "label": "博主 GitHub 地址"
+        },
+        {
+            "id": "textarea_8z7a6b",
+            "type": "textarea",
+            "field": "blog_description",
+            "label": "博客简介"
+        },
+        {
+            "id": "picUpload_5c4d3e",
+            "type": "picUpload",
+            "field": "blog_cover",
+            "label": "博客首页封面图"
+        },
+        {
+            "id": "datePicker_2o1p9q",
+            "type": "datePicker",
+            "field": "blog_create_time",
+            "label": "博客创建时间"
+        },
+        {
+            "id": "textarea_8r7s6t",
+            "type": "textarea",
+            "field": "footer_text",
+            "label": "首页底部文案"
+        },
+        {
+            "id": "switch_5u4v3w",
+            "type": "switch",
+            "field": "show_visitor_count",
+            "label": "是否显示访客统计"
+        },
+        {
+            "id": "numInput_2x1y9z",
+            "type": "numInput",
+            "field": "home_article_count",
+            "label": "首页文章展示数量"
+        }
+    ],
+    "settings": [],
+    "subject_content": {
+        "blog_name": "我的技术博客",
+        "blog_cover": "",
+        "blog_avatar": "",
+        "footer_text": "© 2024 我的技术博客. 用心记录，用爱分享。",
+        "author_email": "tech@example.com",
+        "author_github": "https:\/\/github.com\/techexplorer",
+        "author_wechat": "tech_blog",
+        "blog_subtitle": "探索技术，分享见解，记录成长",
+        "author_nickname": "技术探索者",
+        "blog_create_time": "2024-01-01",
+        "blog_description": "这是一个专注于技术分享的博客，涵盖前端开发、后端架构、人工智能等多个领域。我致力于将复杂的技术概念以简单易懂的方式呈现，帮助开发者提升技能，共同成长。",
+        "home_article_count": 10,
+        "show_visitor_count": true
+    },
+    "list_show_fields": [
+        "blog_name",
+        "blog_subtitle",
+        "blog_avatar",
+        "author_nickname",
+        "author_email",
+        "author_wechat",
+        "author_github",
+        "blog_cover",
+        "blog_create_time",
+        "show_visitor_count",
+        "home_article_count"
+    ]
+}

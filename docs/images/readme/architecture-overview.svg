@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1100" viewBox="0 0 1600 1100" role="img" aria-labelledby="title desc">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1020"/>
+      <stop offset="100%" stop-color="#131c33"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#18233d"/>
+      <stop offset="100%" stop-color="#1f2d4f"/>
+    </linearGradient>
+    <linearGradient id="accentBlue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#66b3ff"/>
+      <stop offset="100%" stop-color="#7f8cff"/>
+    </linearGradient>
+    <linearGradient id="accentGreen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#42d392"/>
+      <stop offset="100%" stop-color="#7df2c8"/>
+    </linearGradient>
+    <linearGradient id="accentOrange" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ffb86b"/>
+      <stop offset="100%" stop-color="#ffd38a"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#02050d" flood-opacity="0.35"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#73b8ff"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#5ce0a5"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#ffc06b"/>
+    </marker>
+    <style>
+      .title { font: 700 34px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #f8fbff; }
+      .subtitle { font: 500 16px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #9fb2d8; }
+      .section { font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #f3f7ff; }
+      .label { font: 700 15px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #edf4ff; }
+      .small { font: 500 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #b6c6e5; }
+      .tiny { font: 500 11px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #95a9cf; }
+      .chip { font: 700 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #08111f; }
+      .arrowText { font: 700 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; fill: #cfe4ff; }
+    </style>
+  </defs>
+  <rect width="1600" height="1100" rx="28" fill="url(#bg)"/>
+  
+    <title id="title">Mosure 架构总览</title>
+    <desc id="desc">Mosure 的访问入口、应用服务、平台层与数据基础设施之间的关系图。</desc>
+    <text x="80" y="86" class="title" text-anchor="start">Mosure 架构总览</text>
+    <text x="80" y="118" class="subtitle" text-anchor="start">面向 README 的系统结构图：入口层 → 路由与中间件 → 应用服务 → 平台能力 → 数据与外部集成</text>
+
+    
+    <g>
+      <rect x="80" y="150" width="132" height="28" rx="14" fill="url(#accentBlue)"/>
+      <text x="146.0" y="168" text-anchor="middle" class="chip">Laravel 11</text>
+    </g>
+    
+    
+    <g>
+      <rect x="190" y="150" width="220" height="28" rx="14" fill="url(#accentGreen)"/>
+      <text x="300.0" y="168" text-anchor="middle" class="chip">React 18 + Inertia</text>
+    </g>
+    
+    
+    <g>
+      <rect x="390" y="150" width="264" height="28" rx="14" fill="url(#accentOrange)"/>
+      <text x="522.0" y="168" text-anchor="middle" class="chip">OpenAPI / MCP / Plugin</text>
+    </g>
+    
+
+    <text x="80" y="220" class="section" text-anchor="start">入口层 / Consumers</text>
+    
+    <g filter="url(#shadow)">
+      <rect x="80" y="246" width="320" height="120" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="104" y="276" class="label">管理后台</text>
+      <text x="104" y="288" class="small">React + TypeScript + Inertia</text><text x="104" y="308" class="tiny">项目、建模、内容、媒体、自动化配置</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="440" y="246" width="320" height="120" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="464" y="276" class="label">外部前端 / 插件页面</text>
+      <text x="464" y="288" class="small">Frontend / Sites / Hosted Pages</text><text x="464" y="308" class="tiny">官网、内容站、插件前端模板</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="800" y="246" width="320" height="120" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="824" y="276" class="label">官方客户端</text>
+      <text x="824" y="288" class="small">Client API + Token Auth</text><text x="824" y="308" class="tiny">移动端 / 专用客户端能力访问</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="1160" y="246" width="320" height="120" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="1184" y="276" class="label">AI Agent / MCP Client</text>
+      <text x="1184" y="288" class="small">MCP 协议接入</text><text x="1184" y="308" class="tiny">通过 Tools / Resources 访问系统能力</text>
+    </g>
+    
+
+    <text x="80" y="440" class="section" text-anchor="start">访问面 / Routing &amp; Middleware</text>
+    
+    <g filter="url(#shadow)">
+      <rect x="180" y="466" width="1240" height="128" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="204" y="496" class="label">统一路由入口</text>
+      <text x="204" y="508" class="small">web / open / client / frontend / sites / mcp</text><text x="204" y="528" class="tiny">HandleInertiaRequests · ValidateApiKey · VerifyMcpAccess · ClientTokenAuth · CORS</text>
+    </g>
+    
+
+    <line x1="240" y1="366" x2="340" y2="466" stroke="#73b8ff" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+    <line x1="600" y1="366" x2="620" y2="466" stroke="#73b8ff" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+    <line x1="960" y1="366" x2="900" y2="466" stroke="#73b8ff" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+    <line x1="1320" y1="366" x2="1180" y2="466" stroke="#73b8ff" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowBlue)"/>
+
+    <text x="80" y="670" class="section" text-anchor="start">应用服务层 / Domain Modules</text>
+    
+    <g filter="url(#shadow)">
+      <rect x="80" y="696" width="300" height="128" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="104" y="726" class="label">项目与内容建模</text>
+      <text x="104" y="738" class="small">Project / Mold / Subject / Menu</text><text x="104" y="758" class="tiny">项目隔离、字段建模、动态表结构</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="410" y="696" width="300" height="128" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="434" y="726" class="label">内容与媒体管理</text>
+      <text x="434" y="738" class="small">Content / Version / Media / Folder / Tags</text><text x="434" y="758" class="tiny">内容 CRUD、发布状态、版本回滚、媒体资源</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="740" y="696" width="300" height="128" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="764" y="726" class="label">自动化与任务</text>
+      <text x="764" y="738" class="small">Cloud Function / Trigger / Cron / SysTask</text><text x="764" y="758" class="tiny">HTTP Endpoint、Hook、定时调度、异步任务</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="1070" y="696" width="410" height="128" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="1094" y="726" class="label">开放能力与扩展</text>
+      <text x="1094" y="738" class="small">API Docs / API Keys / Plugin Manager / AI Chat / MCP Server</text><text x="1094" y="758" class="tiny">OpenAPI 输出、插件安装、AI 会话、MCP 集成</text>
+    </g>
+    
+
+    <line x1="800" y1="594" x2="800" y2="696" stroke="#5ce0a5" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowGreen)"/>
+
+    <text x="80" y="902" class="section" text-anchor="start">平台层与基础设施 / Runtime &amp; Data</text>
+    
+    <g filter="url(#shadow)">
+      <rect x="80" y="928" width="320" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="104" y="958" class="label">Laravel Runtime</text>
+      <text x="104" y="970" class="small">Controller · Service · Middleware · Job</text><text x="104" y="990" class="tiny">请求处理、领域服务、异常与鉴权</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="430" y="928" width="320" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="454" y="958" class="label">Plugin / MCP / Scheduler</text>
+      <text x="454" y="970" class="small">Plugin Runtime · Mcp::web · cloud-cron:tick</text><text x="454" y="990" class="tiny">插件生命周期、MCP 服务、计划任务驱动</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="780" y="928" width="320" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="804" y="958" class="label">数据存储</text>
+      <text x="804" y="970" class="small">SQLite（开发）/ MySQL（生产）</text><text x="804" y="990" class="tiny">项目数据、内容表、系统配置、审计日志</text>
+    </g>
+    
+    
+    <g filter="url(#shadow)">
+      <rect x="1130" y="928" width="350" height="110" rx="24" fill="url(#panel)" stroke="#314871" stroke-width="1.5"/>
+      <text x="1154" y="958" class="label">文件与外部系统</text>
+      <text x="1154" y="970" class="small">Storage / Media / Third-party APIs</text><text x="1154" y="990" class="tiny">页面托管资源、媒体文件、外部平台同步</text>
+    </g>
+    
+
+    <line x1="230" y1="824" x2="230" y2="928" stroke="#ffc06b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowOrange)"/>
+    <line x1="560" y1="824" x2="560" y2="928" stroke="#ffc06b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowOrange)"/>
+    <line x1="890" y1="824" x2="890" y2="928" stroke="#ffc06b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowOrange)"/>
+    <line x1="1270" y1="824" x2="1270" y2="928" stroke="#ffc06b" stroke-width="4" stroke-linecap="round" marker-end="url(#arrowOrange)"/>
+
+    <text x="1460" y="585" class="arrowText" text-anchor="end">统一入口后分发到具体控制器与服务</text>
+    <text x="970" y="688" class="arrowText" text-anchor="middle">领域能力汇聚</text>
+    <text x="1470" y="1048" class="small" text-anchor="end">生成时间：README diagram · Mosure workspace</text>
+    
+</svg>
