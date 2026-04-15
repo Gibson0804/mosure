@@ -1,0 +1,39 @@
+{
+  "name": "团队成员",
+  "table_name": "team_member",
+  "mold_type": "list",
+  "fields": [
+    {
+      "id": "input_name",
+      "type": "input",
+      "field": "name",
+      "label": "姓名"
+    },
+    {
+      "id": "input_role",
+      "type": "input",
+      "field": "role",
+      "label": "职位"
+    },
+    {
+      "id": "textarea_summary",
+      "type": "textarea",
+      "field": "summary",
+      "label": "简介"
+    },
+    {
+      "id": "imageUploader_avatar",
+      "type": "imageUploader",
+      "field": "avatar",
+      "label": "头像"
+    },
+    {
+      "id": "numberInput_sort",
+      "type": "numberInput",
+      "field": "sort",
+      "label": "排序值"
+    }
+  ],
+  "settings": [],
+  "list_show_fields": ["name", "role", "sort"]
+}

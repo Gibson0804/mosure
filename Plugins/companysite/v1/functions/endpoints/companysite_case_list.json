@@ -1,0 +1,17 @@
+{
+  "name": "案例列表",
+  "slug": "companysite_case_list",
+  "type": "endpoint",
+  "enabled": true,
+  "runtime": "php",
+  "http_method": "POST",
+  "timeout_ms": 5000,
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "page": {"type": "number"},
+      "page_size": {"type": "number"}
+    }
+  },
+  "code": "<?php\n$page = max(1, (int) ($payload['page'] ?? 1));\n$pageSize = max(1, min(20, (int) ($payload['page_size'] ?? 6)));\n$offset = ($page - 1) * $pageSize;\n$tableName = $prefix . '_mc_case_study';\n$total = $db->table($tableName)->count();\n$items = $db->table($tableName)->offset($offset)->limit($pageSize)->get();\nreturn ['page' => $page, 'page_size' => $pageSize, 'total' => $total, 'items' => $items];"
+}

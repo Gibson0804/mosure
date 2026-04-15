@@ -141,7 +141,14 @@ class ProjectService
                     $pluginId = $templatePlugin['plugin_id'];
                     $plugin = $this->pluginService->get($pluginId);
                     if (! $plugin) {
-                        throw new \RuntimeException("未找到项目模板插件：{$pluginId}");
+                        StructuredLogger::warning('project.template_plugin.missing', [
+                            'project_id' => $project->id,
+                            'project_prefix' => $data['prefix'],
+                            'template' => $data['template'],
+                            'plugin_id' => $pluginId,
+                        ]);
+
+                        return;
                     }
 
                     $this->pluginService->install($pluginId, [

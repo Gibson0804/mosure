@@ -1,0 +1,89 @@
+{
+  "title": "企业网站",
+  "key": "companysite_menu",
+  "icon": "Building2",
+  "order": 120,
+  "target_type": "group",
+  "children": [
+    {
+      "title": "公司概览",
+      "key": "companysite_profile",
+      "icon": "Info",
+      "order": 10,
+      "target_type": "mold_single",
+      "target_payload": {
+        "mold_slug": "company_profile"
+      }
+    },
+    {
+      "title": "站点配置",
+      "key": "companysite_settings",
+      "icon": "Settings",
+      "order": 15,
+      "target_type": "mold_single",
+      "target_payload": {
+        "mold_slug": "site_settings"
+      }
+    },
+    {
+      "title": "服务能力",
+      "key": "companysite_services",
+      "icon": "BriefcaseBusiness",
+      "order": 20,
+      "target_type": "mold_list",
+      "target_payload": {
+        "mold_slug": "service_item"
+      }
+    },
+    {
+      "title": "客户案例",
+      "key": "companysite_cases",
+      "icon": "Folders",
+      "order": 30,
+      "target_type": "mold_list",
+      "target_payload": {
+        "mold_slug": "case_study"
+      }
+    },
+    {
+      "title": "团队成员",
+      "key": "companysite_team",
+      "icon": "Team",
+      "order": 40,
+      "target_type": "mold_list",
+      "target_payload": {
+        "mold_slug": "team_member"
+      }
+    },
+    {
+      "title": "新闻动态",
+      "key": "companysite_news",
+      "icon": "Newspaper",
+      "order": 50,
+      "target_type": "mold_list",
+      "target_payload": {
+        "mold_slug": "news_article"
+      }
+    },
+    {
+      "title": "常见问题",
+      "key": "companysite_faq",
+      "icon": "QuestionCircle",
+      "order": 60,
+      "target_type": "mold_list",
+      "target_payload": {
+        "mold_slug": "faq_item"
+      }
+    },
+    {
+      "title": "联系留言",
+      "key": "companysite_contact",
+      "icon": "Mail",
+      "order": 70,
+      "target_type": "mold_list",
+      "target_payload": {
+        "mold_slug": "contact_message"
+      }
+    }
+  ]
+}

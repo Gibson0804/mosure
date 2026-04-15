@@ -1,0 +1,17 @@
+{
+  "name": "新闻列表",
+  "slug": "companysite_news_list",
+  "type": "endpoint",
+  "enabled": true,
+  "runtime": "php",
+  "http_method": "POST",
+  "timeout_ms": 5000,
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "page": {"type": "number"},
+      "page_size": {"type": "number"}
+    }
+  },
+  "code": "<?php\n$page = max(1, (int) ($payload['page'] ?? 1));\n$pageSize = max(1, min(20, (int) ($payload['page_size'] ?? 6)));\n$offset = ($page - 1) * $pageSize;\n$tableName = $prefix . '_mc_news_article';\n\n$total = $db->table($tableName)->where('status', 1)->count();\n$items = $db->table($tableName)\n    ->where('status', 1)\n    ->orderBy('publish_date', 'desc')\n    ->offset($offset)\n    ->limit($pageSize)\n    ->get();\n\nreturn ['page' => $page, 'page_size' => $pageSize, 'total' => $total, 'items' => $items];"
+}

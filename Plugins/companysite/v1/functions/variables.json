@@ -1,0 +1,22 @@
+[
+  {
+    "name": "brand_name",
+    "value": "Ark North Studio",
+    "remark": "站点品牌名称"
+  },
+  {
+    "name": "contact_hotline",
+    "value": "400-820-2048",
+    "remark": "展示用服务热线"
+  },
+  {
+    "name": "contact_email",
+    "value": "hello@arknorth.example",
+    "remark": "展示用联系邮箱"
+  },
+  {
+    "name": "contact_address",
+    "value": "上海市徐汇区漕溪北路 88 号",
+    "remark": "展示用办公地址"
+  }
+]

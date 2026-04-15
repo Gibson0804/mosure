@@ -1,0 +1,53 @@
+{
+  "id": "companysite_v1",
+  "name": "企业网站",
+  "description": "一套可直接安装的企业官网插件，包含品牌展示、服务介绍、案例展示、团队介绍、新闻动态、FAQ、联系留言与多页面前端模板。",
+  "author": "Mosure Team",
+  "version": "v1",
+  "type": "template",
+  "icon": null,
+  "tags": ["企业官网", "品牌站", "案例展示", "新闻中心", "表单线索"],
+  "has_frontend": true,
+  "has_src": false,
+  "provides": {
+    "models": [
+      "company_profile",
+      "site_settings",
+      "service_item",
+      "case_study",
+      "team_member",
+      "faq_item",
+      "news_article",
+      "contact_message"
+    ],
+    "functions": {
+      "endpoints": [
+        "companysite_contact_submit",
+        "companysite_home_payload",
+        "companysite_news_list",
+        "companysite_news_detail",
+        "companysite_case_list",
+        "companysite_case_detail"
+      ],
+      "hooks": [
+        "companysite_contact_after_save",
+        "companysite_news_after_save"
+      ],
+      "variables": true,
+      "triggers": true,
+      "schedules": false
+    },
+    "data": [
+      "company_profile",
+      "site_settings",
+      "service_item",
+      "case_study",
+      "team_member",
+      "faq_item",
+      "news_article"
+    ],
+    "menus": [
+      "companysite_menu"
+    ]
+  }
+}

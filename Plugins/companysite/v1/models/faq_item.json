@@ -1,0 +1,27 @@
+{
+  "name": "常见问题",
+  "table_name": "faq_item",
+  "mold_type": "list",
+  "fields": [
+    {
+      "id": "input_question",
+      "type": "input",
+      "field": "question",
+      "label": "问题"
+    },
+    {
+      "id": "textarea_answer",
+      "type": "textarea",
+      "field": "answer",
+      "label": "回答"
+    },
+    {
+      "id": "numberInput_sort",
+      "type": "numberInput",
+      "field": "sort",
+      "label": "排序值"
+    }
+  ],
+  "settings": [],
+  "list_show_fields": ["question", "sort"]
+}

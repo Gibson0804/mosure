@@ -1,0 +1,45 @@
+{
+  "name": "公司概览",
+  "table_name": "company_profile",
+  "mold_type": "single",
+  "fields": [
+    {
+      "id": "input_company_name",
+      "type": "input",
+      "field": "company_name",
+      "label": "公司名称"
+    },
+    {
+      "id": "input_english_name",
+      "type": "input",
+      "field": "english_name",
+      "label": "英文名"
+    },
+    {
+      "id": "textarea_headline",
+      "type": "textarea",
+      "field": "headline",
+      "label": "首页主标题"
+    },
+    {
+      "id": "textarea_subheadline",
+      "type": "textarea",
+      "field": "subheadline",
+      "label": "首页副标题"
+    },
+    {
+      "id": "richText_intro",
+      "type": "richText",
+      "field": "introduction",
+      "label": "公司介绍"
+    },
+    {
+      "id": "imageUploader_cover",
+      "type": "imageUploader",
+      "field": "hero_image",
+      "label": "主视觉"
+    }
+  ],
+  "settings": [],
+  "list_show_fields": ["company_name", "headline"]
+}

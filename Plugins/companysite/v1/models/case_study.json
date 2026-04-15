@@ -1,0 +1,45 @@
+{
+  "name": "客户案例",
+  "table_name": "case_study",
+  "mold_type": "list",
+  "fields": [
+    {
+      "id": "input_title",
+      "type": "input",
+      "field": "title",
+      "label": "案例标题"
+    },
+    {
+      "id": "input_client_name",
+      "type": "input",
+      "field": "client_name",
+      "label": "客户名称"
+    },
+    {
+      "id": "input_industry",
+      "type": "input",
+      "field": "industry",
+      "label": "行业"
+    },
+    {
+      "id": "textarea_result",
+      "type": "textarea",
+      "field": "result_summary",
+      "label": "结果摘要"
+    },
+    {
+      "id": "richText_content",
+      "type": "richText",
+      "field": "content",
+      "label": "案例内容"
+    },
+    {
+      "id": "imageUploader_cover",
+      "type": "imageUploader",
+      "field": "cover",
+      "label": "案例封面"
+    }
+  ],
+  "settings": [],
+  "list_show_fields": ["title", "client_name", "industry"]
+}

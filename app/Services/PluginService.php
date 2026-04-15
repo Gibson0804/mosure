@@ -155,6 +155,11 @@ class PluginService
             // 检查类文件是否存在
             $classFile = $this->getClassFile($className);
             if ($classFile && File::exists($classFile)) {
+                // 某些生产环境使用 classmap-authoritative 时，PSR-4 新类可能无法被 class_exists 自动发现。
+                // 文件存在时主动加载一次，避免插件误判为不存在。
+                if (! class_exists($className, false)) {
+                    require_once $classFile;
+                }
                 if (class_exists($className)) {
                     return $className;
                 }

@@ -1,0 +1,8 @@
+{
+  "name": "联系留言保存后处理",
+  "slug": "companysite_contact_after_save",
+  "type": "hook",
+  "enabled": true,
+  "runtime": "php",
+  "code": "<?php\n$after = $payload['after'] ?? [];\nlogger()->info('companysite contact lead created', [\n    'name' => $after['name'] ?? '',\n    'company' => $after['company'] ?? '',\n    'phone' => $after['phone'] ?? ''\n]);\nreturn $after;"
+}

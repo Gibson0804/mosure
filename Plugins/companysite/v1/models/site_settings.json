@@ -1,0 +1,45 @@
+{
+  "name": "站点配置",
+  "table_name": "site_settings",
+  "mold_type": "single",
+  "fields": [
+    {
+      "id": "input_hotline",
+      "type": "input",
+      "field": "hotline",
+      "label": "服务热线"
+    },
+    {
+      "id": "input_email",
+      "type": "input",
+      "field": "email",
+      "label": "联系邮箱"
+    },
+    {
+      "id": "input_address",
+      "type": "input",
+      "field": "address",
+      "label": "办公地址"
+    },
+    {
+      "id": "input_hours",
+      "type": "input",
+      "field": "office_hours",
+      "label": "办公时间"
+    },
+    {
+      "id": "textarea_cta",
+      "type": "textarea",
+      "field": "cta_text",
+      "label": "CTA 文案"
+    },
+    {
+      "id": "input_wechat",
+      "type": "input",
+      "field": "wechat",
+      "label": "微信号"
+    }
+  ],
+  "settings": [],
+  "list_show_fields": ["hotline", "email", "address"]
+}

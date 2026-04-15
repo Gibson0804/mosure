@@ -1,0 +1,23 @@
+{
+  "name": "提交联系表单",
+  "slug": "companysite_contact_submit",
+  "type": "endpoint",
+  "enabled": true,
+  "runtime": "php",
+  "http_method": "POST",
+  "timeout_ms": 5000,
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "name": {"type": "string"},
+      "company": {"type": "string"},
+      "phone": {"type": "string"},
+      "email": {"type": "string"},
+      "budget_range": {"type": "string"},
+      "source_page": {"type": "string"},
+      "message": {"type": "string"}
+    },
+    "required": ["name", "message"]
+  },
+  "code": "<?php\n$name = trim((string) ($payload['name'] ?? ''));\n$message = trim((string) ($payload['message'] ?? ''));\n\nif ($name === '' || $message === '') {\n    return ['code' => 422, 'message' => 'name 和 message 为必填项'];\n}\n\n$tableName = $prefix . '_mc_contact_message';\n$db->table($tableName)->insert([\n    'name' => $name,\n    'company' => (string) ($payload['company'] ?? ''),\n    'phone' => (string) ($payload['phone'] ?? ''),\n    'email' => (string) ($payload['email'] ?? ''),\n    'budget_range' => (string) ($payload['budget_range'] ?? ''),\n    'source_page' => (string) ($payload['source_page'] ?? ''),\n    'message' => $message,\n    'processed' => 0,\n    'created_at' => now(),\n    'updated_at' => now(),\n]);\n\nreturn ['ok' => true, 'message' => '咨询信息已提交，我们会尽快联系你'];"
+}

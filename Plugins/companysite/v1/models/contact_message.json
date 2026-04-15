@@ -1,0 +1,62 @@
+{
+  "name": "联系留言",
+  "table_name": "contact_message",
+  "mold_type": "list",
+  "fields": [
+    {
+      "id": "input_name",
+      "type": "input",
+      "field": "name",
+      "label": "联系人"
+    },
+    {
+      "id": "input_company",
+      "type": "input",
+      "field": "company",
+      "label": "公司名称"
+    },
+    {
+      "id": "input_phone",
+      "type": "input",
+      "field": "phone",
+      "label": "联系电话"
+    },
+    {
+      "id": "input_email",
+      "type": "input",
+      "field": "email",
+      "label": "邮箱"
+    },
+    {
+      "id": "select_budget",
+      "type": "select",
+      "field": "budget_range",
+      "label": "预算区间",
+      "options": [
+        {"label": "10万以内", "value": "under_100k"},
+        {"label": "10-50万", "value": "100k_500k"},
+        {"label": "50万以上", "value": "over_500k"}
+      ]
+    },
+    {
+      "id": "input_source_page",
+      "type": "input",
+      "field": "source_page",
+      "label": "来源页面"
+    },
+    {
+      "id": "textarea_message",
+      "type": "textarea",
+      "field": "message",
+      "label": "留言内容"
+    },
+    {
+      "id": "switch_processed",
+      "type": "switch",
+      "field": "processed",
+      "label": "已处理"
+    }
+  ],
+  "settings": [],
+  "list_show_fields": ["name", "company", "phone", "email", "processed"]
+}

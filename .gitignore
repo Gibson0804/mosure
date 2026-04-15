@@ -31,6 +31,7 @@ yarn-error.log
 # Plugins directory - ignore all folders but keep specific files
 Plugins/*
 !Plugins/blog
+!Plugins/companysite
 !Plugins/AbstractPlugin.php
 !Plugins/PluginInterface.php
 !Plugins/README.md

@@ -1,0 +1,14 @@
+{
+  "name": "首页聚合数据",
+  "slug": "companysite_home_payload",
+  "type": "endpoint",
+  "enabled": true,
+  "runtime": "php",
+  "http_method": "POST",
+  "timeout_ms": 5000,
+  "input_schema": {
+    "type": "object",
+    "properties": {}
+  },
+  "code": "<?php\n$serviceTable = $prefix . '_mc_service_item';\n$caseTable = $prefix . '_mc_case_study';\n$teamTable = $prefix . '_mc_team_member';\n$newsTable = $prefix . '_mc_news_article';\n\nreturn [\n    'services' => $db->table($serviceTable)->orderBy('sort', 'asc')->limit(6)->get(),\n    'cases' => $db->table($caseTable)->limit(3)->get(),\n    'team' => $db->table($teamTable)->orderBy('sort', 'asc')->limit(4)->get(),\n    'news' => $db->table($newsTable)->where('status', 1)->orderBy('publish_date', 'desc')->limit(3)->get(),\n];"
+}

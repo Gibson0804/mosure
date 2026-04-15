@@ -1,0 +1,8 @@
+{
+  "name": "新闻保存后处理",
+  "slug": "companysite_news_after_save",
+  "type": "hook",
+  "enabled": true,
+  "runtime": "php",
+  "code": "<?php\n$after = $payload['after'] ?? [];\nlogger()->info('companysite news updated', [\n    'title' => $after['title'] ?? '',\n    'status' => $after['status'] ?? null\n]);\nreturn $after;"
+}

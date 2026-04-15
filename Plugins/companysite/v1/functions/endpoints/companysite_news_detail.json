@@ -1,0 +1,17 @@
+{
+  "name": "新闻详情",
+  "slug": "companysite_news_detail",
+  "type": "endpoint",
+  "enabled": true,
+  "runtime": "php",
+  "http_method": "POST",
+  "timeout_ms": 5000,
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "id": {"type": "number"}
+    },
+    "required": ["id"]
+  },
+  "code": "<?php\n$id = (int) ($payload['id'] ?? 0);\nif ($id <= 0) {\n    return ['code' => 422, 'message' => 'id 为必填项'];\n}\n$tableName = $prefix . '_mc_news_article';\n$item = $db->table($tableName)->where('id', $id)->first();\nif (!$item) {\n    return ['code' => 404, 'message' => '未找到新闻'];\n}\nreturn ['item' => $item];"
+}

@@ -1,0 +1,8 @@
+{
+  "title": "内容后台设计",
+  "summary": "把服务、案例、团队、新闻和 FAQ 统一纳入管理。",
+  "content": "<p>通过 Mosure 的模型体系将企业站常见栏目结构化，减少后续维护成本。</p>",
+  "icon": "Layers3",
+  "sort": 20,
+  "is_active": 1
+}

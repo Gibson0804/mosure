@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>联系咨询 - Ark North Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/main.css">
+</head>
+<body data-page="contact">
+  <header class="site-header">
+    <a class="brand" href="index.html"><span>AN</span> Ark North</a>
+    <nav class="site-nav">
+      <a href="about.html">关于</a>
+      <a href="services.html">服务</a>
+      <a href="cases.html">案例</a>
+      <a href="news.html">动态</a>
+      <a href="contact.html">联系</a>
+    </nav>
+  </header>
+  <main class="page-stack">
+    <section class="page-hero">
+      <p class="eyebrow">Contact</p>
+      <h1>安装后就能用的咨询入口，既可展示，也能落到后台线索模型。</h1>
+    </section>
+    <section class="panel contact-layout">
+      <div class="contact-copy">
+        <h2>把官网变成业务入口</h2>
+        <p>表单会直接调用插件内置的 `companysite_contact_submit` 接口，后续你只需要把展示内容替换成真实公司信息。</p>
+        <ul>
+          <li>预算区间收集</li>
+          <li>来源页面记录</li>
+          <li>后台留言统一处理</li>
+        </ul>
+        <div class="faq-stack">
+          <details open>
+            <summary>安装后可以直接上线吗？</summary>
+            <p>可以先作为模板快速上线，再替换成你的真实品牌文案、媒体资源和接口数据。</p>
+          </details>
+          <details>
+            <summary>前端页面一定要改代码吗？</summary>
+            <p>不一定。当前模板已经可展示，后续只在需要更强定制时再逐步替换内容和逻辑。</p>
+          </details>
+        </div>
+      </div>
+      <form id="contact-form" class="contact-form">
+        <input type="text" name="name" placeholder="联系人姓名" required>
+        <input type="text" name="company" placeholder="公司名称">
+        <input type="text" name="phone" placeholder="联系电话">
+        <input type="email" name="email" placeholder="邮箱地址">
+        <select name="budget_range">
+          <option value="">预算区间</option>
+          <option value="under_100k">10万以内</option>
+          <option value="100k_500k">10-50万</option>
+          <option value="over_500k">50万以上</option>
+        </select>
+        <textarea name="message" rows="6" placeholder="请描述你的项目需求" required></textarea>
+        <button type="submit">提交咨询</button>
+        <p id="contact-result" class="contact-result">尚未提交</p>
+      </form>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div>
+      <strong>Ark North Studio</strong>
+      <p>把官网从展示页升级为真正的业务入口。</p>
+    </div>
+  </footer>
+  <script src="config.js"></script>
+  <script src="assets/main.js"></script>
+</body>
+</html>

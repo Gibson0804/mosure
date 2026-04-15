@@ -1,0 +1,55 @@
+{
+  "name": "新闻动态",
+  "table_name": "news_article",
+  "mold_type": "list",
+  "fields": [
+    {
+      "id": "input_title",
+      "type": "input",
+      "field": "title",
+      "label": "标题"
+    },
+    {
+      "id": "textarea_excerpt",
+      "type": "textarea",
+      "field": "excerpt",
+      "label": "摘要"
+    },
+    {
+      "id": "imageUploader_cover",
+      "type": "imageUploader",
+      "field": "cover",
+      "label": "封面图"
+    },
+    {
+      "id": "input_author",
+      "type": "input",
+      "field": "author",
+      "label": "作者"
+    },
+    {
+      "id": "datePicker_publish_date",
+      "type": "datePicker",
+      "field": "publish_date",
+      "label": "发布日期"
+    },
+    {
+      "id": "select_status",
+      "type": "select",
+      "field": "status",
+      "label": "状态",
+      "options": [
+        {"label": "草稿", "value": 0},
+        {"label": "已发布", "value": 1}
+      ]
+    },
+    {
+      "id": "richText_content",
+      "type": "richText",
+      "field": "content",
+      "label": "正文"
+    }
+  ],
+  "settings": [],
+  "list_show_fields": ["title", "author", "publish_date", "status"]
+}

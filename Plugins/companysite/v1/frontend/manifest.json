@@ -1,0 +1,21 @@
+{
+  "plugin_id": "companysite",
+  "version": "1.0.0",
+  "build_time": "",
+  "entry_point": "index.html",
+  "spa_mode": false,
+  "files": [
+    "index.html",
+    "about.html",
+    "services.html",
+    "cases.html",
+    "case-detail.html",
+    "news.html",
+    "news-detail.html",
+    "contact.html",
+    "config.js",
+    "assets/main.css",
+    "assets/main.js"
+  ],
+  "size": 0
+}

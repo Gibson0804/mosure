@@ -1,0 +1,30 @@
+[
+  {
+    "name": "联系留言创建后处理",
+    "enabled": true,
+    "trigger_type": "content_model",
+    "events": ["after_create"],
+    "action_function_slug": "companysite_contact_after_save",
+    "action_mold_slug": "contact_message",
+    "content_id": null,
+    "watch_function_id": null,
+    "input_schema": {
+      "required": ["name", "message"]
+    },
+    "remark": "留言创建后记录日志与后续扩展处理"
+  },
+  {
+    "name": "新闻更新后处理",
+    "enabled": true,
+    "trigger_type": "content_model",
+    "events": ["after_update"],
+    "action_function_slug": "companysite_news_after_save",
+    "action_mold_slug": "news_article",
+    "content_id": null,
+    "watch_function_id": null,
+    "input_schema": {
+      "required": ["title", "status"]
+    },
+    "remark": "新闻保存后可扩展发布通知等行为"
+  }
+]

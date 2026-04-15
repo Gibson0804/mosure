@@ -1,0 +1,45 @@
+{
+  "name": "服务能力",
+  "table_name": "service_item",
+  "mold_type": "list",
+  "fields": [
+    {
+      "id": "input_title",
+      "type": "input",
+      "field": "title",
+      "label": "服务名称"
+    },
+    {
+      "id": "textarea_summary",
+      "type": "textarea",
+      "field": "summary",
+      "label": "一句话概述"
+    },
+    {
+      "id": "richText_content",
+      "type": "richText",
+      "field": "content",
+      "label": "详细说明"
+    },
+    {
+      "id": "input_icon",
+      "type": "input",
+      "field": "icon",
+      "label": "图标名"
+    },
+    {
+      "id": "numberInput_sort",
+      "type": "numberInput",
+      "field": "sort",
+      "label": "排序值"
+    },
+    {
+      "id": "switch_active",
+      "type": "switch",
+      "field": "is_active",
+      "label": "是否启用"
+    }
+  ],
+  "settings": [],
+  "list_show_fields": ["title", "sort", "is_active"]
+}
