@@ -56,23 +56,6 @@ fi
 PHP_VERSION=$(php -r 'echo PHP_VERSION;')
 echo "当前 PHP 版本: $PHP_VERSION"
 
-# 检查 Node.js 是否安装
-if ! command -v node &> /dev/null; then
-    echo -e "${RED}错误: Node.js 未安装或不在 PATH 中${NC}"
-    echo "请先安装 Node.js 18 或更高版本"
-    exit 1
-fi
-
-# 检查 npm 是否安装
-if ! command -v npm &> /dev/null; then
-    echo -e "${RED}错误: npm 未安装或不在 PATH 中${NC}"
-    echo "请先安装 npm"
-    exit 1
-fi
-
-echo "当前 Node.js 版本: $(node -v)"
-echo "当前 npm 版本: $(npm -v)"
-
 # 检查 composer 是否安装
 if ! command -v composer &> /dev/null; then
     echo -e "${YELLOW}警告: composer 未安装，某些功能可能无法使用${NC}"
@@ -101,12 +84,6 @@ if [ ! -d vendor ]; then
     fi
 fi
 
-# 检查 node_modules 是否存在
-if [ ! -d node_modules ]; then
-    echo -e "${YELLOW}警告: node_modules 目录不存在，正在运行 npm install...${NC}"
-    npm install
-fi
-
 # 定义清理函数
 cleanup() {
     echo ""
@@ -116,12 +93,6 @@ cleanup() {
     if [ ! -z "$PHP_PID" ]; then
         kill $PHP_PID 2>/dev/null || true
         echo "PHP 服务器已停止"
-    fi
-    
-    # 终止 npm 进程
-    if [ ! -z "$NPM_PID" ]; then
-        kill $NPM_PID 2>/dev/null || true
-        echo "前端服务器已停止"
     fi
     
     # 终止队列进程
@@ -155,22 +126,6 @@ sleep 2
 if ! kill -0 $PHP_PID 2>/dev/null; then
     echo -e "${RED}错误: PHP 服务器启动失败${NC}"
     echo "请检查端口 9445 是否被占用"
-    exit 1
-fi
-
-# 启动前端开发服务器
-echo "正在启动前端开发服务器..."
-npm run dev > /dev/null 2>&1 &
-NPM_PID=$!
-echo "前端开发服务器已启动 (PID: $NPM_PID)"
-
-# 等待前端服务器启动
-sleep 3
-
-# 检查前端服务器是否成功启动
-if ! kill -0 $NPM_PID 2>/dev/null; then
-    echo -e "${RED}错误: 前端服务器启动失败${NC}"
-    cleanup
     exit 1
 fi
 
@@ -226,7 +181,6 @@ echo "  - 安装向导: http://localhost:9445/install"
 echo ""
 echo "运行的服务："
 echo "  - PHP Artisan 服务器 (PID: $PHP_PID)"
-echo "  - 前端开发服务器 (PID: $NPM_PID)"
 echo "  - 队列工作进程 (PID: $QUEUE_PID) [${MODE}模式]"
 if [ ! -z "$CRON_PID" ]; then
     echo "  - 定时任务进程 (PID: $CRON_PID)"
@@ -241,4 +195,4 @@ echo "  - 启动定时任务: ./start.sh -cron 或 ./start.sh -prod -cron"
 echo ""
 
 # 等待任意一个进程结束
-wait $PHP_PID $NPM_PID $QUEUE_PID $CRON_PID
+wait $PHP_PID $QUEUE_PID $CRON_PID

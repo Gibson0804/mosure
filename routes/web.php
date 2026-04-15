@@ -97,6 +97,11 @@ Route::prefix('ai')->middleware(['auth'])->group(function () {
     Route::get('/sessions/{id}/poll', [AISessionController::class, 'poll']);
 });
 
+// 媒体上传（系统级，如头像上传；无需选择项目）
+Route::post('/media/upload', [MediaController::class, 'upload'])
+    ->middleware(['auth'])
+    ->name('media.upload');
+
 Route::prefix('manage')->middleware(['auth', EnsureProjectSelected::class])->group(function () {
     Route::get('/export', [ProjectExportController::class, 'index'])->name('project.export');
     Route::post('/export', [ProjectExportController::class, 'export'])->name('project.export.submit');
@@ -309,7 +314,6 @@ Route::prefix('media')->middleware(['auth', EnsureProjectSelected::class])->grou
     Route::get('/show/{id}', [MediaController::class, 'show'])->name('media.show');
     Route::post('/delete/{id}', [MediaController::class, 'delete'])->name('media.destroy');
 
-    Route::post('/upload', [MediaController::class, 'upload'])->name('media.upload');
     Route::post('/batch-delete', [MediaController::class, 'batchDelete'])->name('media.batchDelete');
     Route::post('/batch-move', [MediaController::class, 'batchMove'])->name('media.batchMove');
 
