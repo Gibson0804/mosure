@@ -10,11 +10,11 @@
   "_DefineUtil-335af965.js": {
     "file": "assets/DefineUtil-335af965.js"
   },
-  "_EditContent-42947820.js": {
-    "file": "assets/EditContent-42947820.js",
+  "_EditContent-f5eed848.js": {
+    "file": "assets/EditContent-f5eed848.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
-      "_MiddleOne-087ff079.js",
+      "_MiddleOne-2887090a.js",
       "_Service-450f2c78.js",
       "_AiGenerateModal-01db2a34.js",
       "_vendor-antd-9384dbd2.js"
@@ -26,12 +26,12 @@
       "_vendor-react-4af8f23c.js"
     ]
   },
-  "_Main-ebd92ed3.js": {
-    "file": "assets/Main-ebd92ed3.js",
+  "_Main-e4dbcb49.js": {
+    "file": "assets/Main-e4dbcb49.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-sortable-b279871e.js",
-      "_MiddleOne-087ff079.js",
+      "_MiddleOne-2887090a.js",
       "_vendor-antd-9384dbd2.js",
       "_Service-450f2c78.js",
       "resources/js/app.jsx",
@@ -39,8 +39,8 @@
       "_useTranslate-a3aada98.js"
     ]
   },
-  "_MiddleOne-087ff079.js": {
-    "file": "assets/MiddleOne-087ff079.js",
+  "_MiddleOne-2887090a.js": {
+    "file": "assets/MiddleOne-2887090a.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-antd-9384dbd2.js",
@@ -297,7 +297,7 @@
     "src": "resources/js/Pages/ApiDocumentation/ApiDemo.tsx"
   },
   "resources/js/Pages/ApiDocumentation/Index.tsx": {
-    "file": "assets/Index-55480be0.js",
+    "file": "assets/Index-e1320b46.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -315,7 +315,7 @@
     "src": "resources/js/Pages/ApiDocumentation/Index.tsx"
   },
   "resources/js/Pages/ApiKey/ApiKeyList.tsx": {
-    "file": "assets/ApiKeyList-b6165607.js",
+    "file": "assets/ApiKeyList-de7409cf.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -350,7 +350,7 @@
     "src": "resources/js/Pages/Auth/ForgotPassword.tsx"
   },
   "resources/js/Pages/Auth/Login.tsx": {
-    "file": "assets/Login-289ba0c5.js",
+    "file": "assets/Login-4fbf4664.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -386,18 +386,18 @@
     "src": "resources/js/Pages/Auth/ResetPassword.tsx"
   },
   "resources/js/Pages/Content/ContentAdd.tsx": {
-    "file": "assets/ContentAdd-6860748e.js",
+    "file": "assets/ContentAdd-3606c8a1.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
-      "_EditContent-42947820.js",
+      "_EditContent-f5eed848.js",
       "_AiGenerateModal-01db2a34.js",
       "_vendor-antd-9384dbd2.js",
       "_vendor-amis-19b28984.js",
       "_vendor-misc-5a281d24.js",
       "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_MiddleOne-087ff079.js",
+      "_MiddleOne-2887090a.js",
       "_Service-450f2c78.js",
       "resources/js/app.jsx",
       "_vendor-codemirror-d246ab50.js",
@@ -411,18 +411,18 @@
     "src": "resources/js/Pages/Content/ContentAdd.tsx"
   },
   "resources/js/Pages/Content/ContentEdit.tsx": {
-    "file": "assets/ContentEdit-543e946a.js",
+    "file": "assets/ContentEdit-3aaad2d8.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
-      "_EditContent-42947820.js",
+      "_EditContent-f5eed848.js",
       "_AiGenerateModal-01db2a34.js",
       "_vendor-antd-9384dbd2.js",
       "_vendor-amis-19b28984.js",
       "_vendor-misc-5a281d24.js",
       "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_MiddleOne-087ff079.js",
+      "_MiddleOne-2887090a.js",
       "_Service-450f2c78.js",
       "resources/js/app.jsx",
       "_vendor-codemirror-d246ab50.js",
@@ -436,7 +436,7 @@
     "src": "resources/js/Pages/Content/ContentEdit.tsx"
   },
   "resources/js/Pages/Content/ContentList.tsx": {
-    "file": "assets/ContentList-e2339c92.js",
+    "file": "assets/ContentList-c47effb1.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -486,7 +486,7 @@
     "src": "resources/js/Pages/Install/Step1Requirements.tsx"
   },
   "resources/js/Pages/Install/Step2Setup.tsx": {
-    "file": "assets/Step2Setup-d4d67929.js",
+    "file": "assets/Step2Setup-bbcdf853.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -505,7 +505,7 @@
     "src": "resources/js/Pages/Install/Step2Setup.tsx"
   },
   "resources/js/Pages/Install/Step3Confirmation.tsx": {
-    "file": "assets/Step3Confirmation-9b74240d.js",
+    "file": "assets/Step3Confirmation-e9c95630.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -523,7 +523,7 @@
     "src": "resources/js/Pages/Install/Step3Confirmation.tsx"
   },
   "resources/js/Pages/KnowledgeBase/KbEditor.tsx": {
-    "file": "assets/KbEditor-1c1b11be.js",
+    "file": "assets/KbEditor-bfb1d1df.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -596,7 +596,7 @@
     "src": "resources/js/Pages/KnowledgeBase/KbPublicView.tsx"
   },
   "resources/js/Pages/KnowledgeBase/KnowledgeBase.tsx": {
-    "file": "assets/KnowledgeBase-2a0570d5.js",
+    "file": "assets/KnowledgeBase-84d23108.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -615,7 +615,7 @@
     "src": "resources/js/Pages/KnowledgeBase/KnowledgeBase.tsx"
   },
   "resources/js/Pages/KnowledgeBase/components/MilkdownEditor.tsx": {
-    "file": "assets/MilkdownEditor-7fb3a6a8.js",
+    "file": "assets/MilkdownEditor-e8f4798d.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-milkdown-a6d5ab9c.js",
@@ -684,7 +684,7 @@
     "src": "resources/js/Pages/Manage/CloudEnv.tsx"
   },
   "resources/js/Pages/Manage/Export.tsx": {
-    "file": "assets/Export-77380a15.js",
+    "file": "assets/Export-11843981.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -751,8 +751,24 @@
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/PageHosting.tsx"
   },
+  "resources/js/Pages/Manage/ProjectAuthUsers.tsx": {
+    "file": "assets/ProjectAuthUsers-da9edeb7.js",
+    "imports": [
+      "_vendor-react-4af8f23c.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-9384dbd2.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
+      "_vendor-katex-98160839.js",
+      "_vendor-inertia-efb81232.js",
+      "_vendor-dayjs-2ddd460c.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/js/Pages/Manage/ProjectAuthUsers.tsx"
+  },
   "resources/js/Pages/Manage/ProjectConfig.tsx": {
-    "file": "assets/ProjectConfig-48ce3486.js",
+    "file": "assets/ProjectConfig-42f3d16b.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-antd-9384dbd2.js",
@@ -832,7 +848,7 @@
     "src": "resources/js/Pages/Manage/WebFunctions.tsx"
   },
   "resources/js/Pages/Media/MediaDetail.tsx": {
-    "file": "assets/MediaDetail-e51adc74.js",
+    "file": "assets/MediaDetail-8c8a58d4.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -852,7 +868,7 @@
     "src": "resources/js/Pages/Media/MediaDetail.tsx"
   },
   "resources/js/Pages/Media/MediaEdit.tsx": {
-    "file": "assets/MediaEdit-e586e6ef.js",
+    "file": "assets/MediaEdit-31faa04f.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -871,7 +887,7 @@
     "src": "resources/js/Pages/Media/MediaEdit.tsx"
   },
   "resources/js/Pages/Media/MediaList.tsx": {
-    "file": "assets/MediaList-32c8784f.js",
+    "file": "assets/MediaList-a40a0158.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -891,7 +907,7 @@
     "src": "resources/js/Pages/Media/MediaList.tsx"
   },
   "resources/js/Pages/Media/MediaUpload.tsx": {
-    "file": "assets/MediaUpload-bf7dbb6b.js",
+    "file": "assets/MediaUpload-6b80f4e4.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -910,10 +926,10 @@
     "src": "resources/js/Pages/Media/MediaUpload.tsx"
   },
   "resources/js/Pages/Mold/MoldAdd.tsx": {
-    "file": "assets/MoldAdd-b880e142.js",
+    "file": "assets/MoldAdd-db80fb93.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
-      "_Main-ebd92ed3.js",
+      "_Main-e4dbcb49.js",
       "_vendor-inertia-efb81232.js",
       "resources/js/app.jsx",
       "_vendor-antd-9384dbd2.js",
@@ -922,7 +938,7 @@
       "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
       "_vendor-sortable-b279871e.js",
-      "_MiddleOne-087ff079.js",
+      "_MiddleOne-2887090a.js",
       "_Service-450f2c78.js",
       "_vendor-dayjs-2ddd460c.js",
       "_DefineUtil-335af965.js",
@@ -937,10 +953,10 @@
     "src": "resources/js/Pages/Mold/MoldAdd.tsx"
   },
   "resources/js/Pages/Mold/MoldEdit.tsx": {
-    "file": "assets/MoldEdit-7cbb63f2.js",
+    "file": "assets/MoldEdit-87d63472.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
-      "_Main-ebd92ed3.js",
+      "_Main-e4dbcb49.js",
       "resources/js/app.jsx",
       "_vendor-inertia-efb81232.js",
       "_vendor-antd-9384dbd2.js",
@@ -949,7 +965,7 @@
       "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
       "_vendor-sortable-b279871e.js",
-      "_MiddleOne-087ff079.js",
+      "_MiddleOne-2887090a.js",
       "_Service-450f2c78.js",
       "_vendor-dayjs-2ddd460c.js",
       "_DefineUtil-335af965.js",
@@ -964,7 +980,7 @@
     "src": "resources/js/Pages/Mold/MoldEdit.tsx"
   },
   "resources/js/Pages/Mold/MoldList.tsx": {
-    "file": "assets/MoldList-b30dc2e6.js",
+    "file": "assets/MoldList-171f2f2f.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -1017,7 +1033,7 @@
     "src": "resources/js/Pages/Plugins/PluginsManage.tsx"
   },
   "resources/js/Pages/Project/ProjectCreate.tsx": {
-    "file": "assets/ProjectCreate-d7258c81.js",
+    "file": "assets/ProjectCreate-6e6cc045.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -1036,7 +1052,7 @@
     "src": "resources/js/Pages/Project/ProjectCreate.tsx"
   },
   "resources/js/Pages/Project/ProjectEdit.tsx": {
-    "file": "assets/ProjectEdit-be1c0339.js",
+    "file": "assets/ProjectEdit-399aee8c.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -1054,7 +1070,7 @@
     "src": "resources/js/Pages/Project/ProjectEdit.tsx"
   },
   "resources/js/Pages/Project/ProjectList.tsx": {
-    "file": "assets/ProjectList-e1e1588d.js",
+    "file": "assets/ProjectList-2a327e79.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -1072,18 +1088,18 @@
     "src": "resources/js/Pages/Project/ProjectList.tsx"
   },
   "resources/js/Pages/Subject/SubjectEdit.tsx": {
-    "file": "assets/SubjectEdit-0adc0494.js",
+    "file": "assets/SubjectEdit-dc27ada2.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
-      "_EditContent-42947820.js",
+      "_EditContent-f5eed848.js",
       "_AiGenerateModal-01db2a34.js",
       "_vendor-antd-9384dbd2.js",
       "_vendor-amis-19b28984.js",
       "_vendor-misc-5a281d24.js",
       "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_MiddleOne-087ff079.js",
+      "_MiddleOne-2887090a.js",
       "_Service-450f2c78.js",
       "resources/js/app.jsx",
       "_vendor-codemirror-d246ab50.js",
@@ -1128,7 +1144,7 @@
     "src": "resources/js/Pages/System/Profile.tsx"
   },
   "resources/js/Pages/System/SystemConfig.tsx": {
-    "file": "assets/SystemConfig-b1bc906f.js",
+    "file": "assets/SystemConfig-5bd5fadf.js",
     "imports": [
       "_vendor-react-4af8f23c.js",
       "_vendor-inertia-efb81232.js",
@@ -1240,6 +1256,7 @@
       "resources/js/Pages/Manage/FunctionCode.tsx",
       "resources/js/Pages/Manage/Menus.tsx",
       "resources/js/Pages/Manage/PageHosting.tsx",
+      "resources/js/Pages/Manage/ProjectAuthUsers.tsx",
       "resources/js/Pages/Manage/ProjectConfig.tsx",
       "resources/js/Pages/Manage/SysTasks.tsx",
       "resources/js/Pages/Manage/TriggerFunctions.tsx",
@@ -1266,7 +1283,7 @@
       "resources/js/Pages/System/components/SecurityConfig.tsx",
       "resources/js/Pages/System/components/StorageConfig.tsx"
     ],
-    "file": "assets/app-2ed2b09b.js",
+    "file": "assets/app-cd76f617.js",
     "imports": [
       "_vendor-codemirror-d246ab50.js",
       "_vendor-react-4af8f23c.js",

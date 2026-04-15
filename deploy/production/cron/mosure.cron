@@ -1,0 +1,5 @@
+# Install as one of:
+# 1) /etc/cron.d/mosure  (recommended for server-level config)
+# 2) crontab -u www-data -e
+
+* * * * * www-data cd /root/www/mosure && /usr/bin/php artisan schedule:run >> /root/www/mosure/storage/logs/cron-schedule.log 2>&1
