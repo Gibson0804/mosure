@@ -92,13 +92,13 @@ class ProjectTableService
         Log::info("Dropping project tables for prefix: {$prefix}");
 
         try {
-            // 获取所有数据库表
-            $tables = DB::select('SHOW TABLES');
+            // 跨数据库获取表列表（SQLite 不支持 SHOW TABLES）
+            $tables = Schema::getTableListing();
             $droppedTables = [];
 
             // 遍历所有表，删除以项目前缀开头的表
             foreach ($tables as $table) {
-                $tableName = array_values((array) $table)[0];
+                $tableName = (string) $table;
 
                 // 检查表名是否以项目前缀开头
                 if (strpos($tableName, $prefix.'_') === 0) {
@@ -508,10 +508,11 @@ class ProjectTableService
         Log::info("Purging project data for prefix: {$prefix}");
 
         try {
-            // 获取所有数据库表
-            $tables = DB::select('SHOW TABLES');
+            // 跨数据库获取表列表（SQLite 不支持 SHOW TABLES）
+            $tables = Schema::getTableListing();
             $droppedTables = [];
             $truncatedTables = [];
+            $connectionDriver = DB::getDriverName();
 
             // 项目前缀定义
             $frameworkPrefix = ProjectConstants::PROJECT_FRAMEWORK_PREFIX; // _pf_
@@ -519,7 +520,7 @@ class ProjectTableService
 
             // 遍历所有表，根据表名前缀采取不同操作
             foreach ($tables as $table) {
-                $tableName = array_values((array) $table)[0];
+                $tableName = (string) $table;
 
                 // 检查表名是否以项目前缀开头
                 if (strpos($tableName, $prefix.'_') === 0) {
@@ -532,7 +533,11 @@ class ProjectTableService
                     // 检查是否是项目管理层表（项目前缀_pf_）
                     elseif (strpos($tableName, $prefix.$frameworkPrefix) === 0) {
                         // 清空表数据，保留表结构（项目管理层表）
-                        DB::statement('TRUNCATE TABLE '.$tableName);
+                        if ($connectionDriver === 'mysql') {
+                            DB::statement('TRUNCATE TABLE '.$tableName);
+                        } else {
+                            DB::table($tableName)->delete();
+                        }
                         $truncatedTables[] = $tableName;
                     }
                 }
