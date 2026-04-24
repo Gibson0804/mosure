@@ -2,7 +2,7 @@
 
 return [
     'marketplace' => [
-        'enabled' => env('PLUGIN_MARKETPLACE_ENABLED', false),
+        'enabled' => env('PLUGIN_MARKETPLACE_ENABLED', true),
         'repository' => [
             'type' => env('PLUGIN_MARKETPLACE_TYPE', 'gitee'),
             'owner' => env('GITEE_REPO_OWNER', ''),

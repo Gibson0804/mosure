@@ -1,7 +1,7 @@
 {
   "title": "企业网站",
   "key": "companysite_menu",
-  "icon": "Building2",
+  "icon": "HomeOutlined",
   "order": 120,
   "target_type": "group",
   "children": [

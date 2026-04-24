@@ -12,6 +12,7 @@ use App\Mcp\Tools\HookFunctionTool;
 use App\Mcp\Tools\ListOpenApisTool;
 use App\Mcp\Tools\MediaManageTool;
 use App\Mcp\Tools\ModelTool;
+use App\Mcp\Tools\KnowledgeBaseProjectTool;
 use App\Mcp\Tools\ScheduleTool;
 use App\Mcp\Tools\TriggerTool;
 use App\Mcp\Tools\WebFunctionTool;
@@ -40,6 +41,7 @@ class mcpServer extends Server
         // 内容相关
         ContentCrudTool::class,
         ContentSinglePageTool::class,
+        KnowledgeBaseProjectTool::class,
         MediaManageTool::class,
         // 云函数相关
         WebFunctionTool::class,

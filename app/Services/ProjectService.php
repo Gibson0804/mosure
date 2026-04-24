@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\KbCategory;
 use App\Models\Project;
 use App\Models\SysAiAgent;
 use App\Support\StructuredLogger;
@@ -26,6 +27,14 @@ class ProjectService
 
     private function createProjectAgent(Project $project): SysAiAgent
     {
+        $existing = SysAiAgent::where('type', 'project')
+            ->where('identifier', $project->prefix)
+            ->first();
+
+        if ($existing) {
+            return $existing;
+        }
+
         return SysAiAgent::create([
             'type' => 'project',
             'identifier' => $project->prefix,
@@ -54,6 +63,65 @@ class ProjectService
         SysAiAgent::where('project_id', $projectId)
             ->where('type', 'project')
             ->update(['enabled' => false]);
+    }
+
+    private function ensureProjectKnowledgeBaseCategory(Project $project): void
+    {
+        $this->ensureProjectKnowledgeBaseCategoryForUser($project, 0);
+    }
+
+    private function ensureProjectKnowledgeBaseCategoryForUser(Project $project, int $userId): void
+    {
+        $slug = 'project-'.$project->prefix;
+        $exists = KbCategory::query()
+            ->where('user_id', $userId)
+            ->where('slug', $slug)
+            ->exists();
+
+        if ($exists) {
+            return;
+        }
+
+        KbCategory::query()->create([
+            'user_id' => $userId,
+            'parent_id' => null,
+            'title' => $project->name,
+            'slug' => $slug,
+            'sort_order' => 0,
+        ]);
+    }
+
+    public function backfillProjectKnowledgeBaseCategories(): array
+    {
+        $created = 0;
+        $skipped = 0;
+
+        Project::query()->orderBy('id')->chunk(100, function ($projects) use (&$created, &$skipped) {
+            foreach ($projects as $project) {
+                $before = KbCategory::query()
+                    ->where('user_id', 0)
+                    ->where('slug', 'project-'.$project->prefix)
+                    ->count();
+
+                $this->ensureProjectKnowledgeBaseCategory($project);
+
+                $after = KbCategory::query()
+                    ->where('user_id', 0)
+                    ->where('slug', 'project-'.$project->prefix)
+                    ->count();
+
+                if ($after > $before) {
+                    $created += ($after - $before);
+                } else {
+                    $skipped++;
+                }
+            }
+        });
+
+        return [
+            'created' => $created,
+            'skipped_projects' => $skipped,
+        ];
     }
 
     public function repairProjectAgentByPrefix(string $prefix): array
@@ -113,6 +181,7 @@ class ProjectService
             // 事务外创建项目相关的数据库表
             // 首先创建项目管理层表（项目前缀_pf_）
             $this->projectTableService->createProjectTables($data['prefix'], $data['template']);
+            $this->ensureProjectKnowledgeBaseCategory($project);
 
             // 如果选择了预设模板（blog/corporate），通过模板插件完成初始化
             $templatePlugins = [

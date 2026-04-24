@@ -31,7 +31,7 @@ class GiteePluginRepository
     {
         $config = config('plugin.marketplace.repository', []);
 
-        $this->enabled = (bool) config('plugin.marketplace.enabled', false);
+        $this->enabled = (bool) config('plugin.marketplace.enabled', true);
         $this->owner = trim((string) ($config['owner'] ?? ''));
         $this->repo = trim((string) ($config['repo'] ?? ''));
         $this->branch = $config['branch'] ?? 'master';

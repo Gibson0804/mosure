@@ -110,6 +110,9 @@ class ProjectController extends BaseAdminController
                     $project = $this->projectService->createProject($data);
                 }
 
+                // 创建成功后默认选中当前项目，确保后续页面（如知识库）进入项目上下文
+                session(['current_project_prefix' => $project->prefix]);
+
                 // 创建成功后重定向到项目列表
                 return redirect()->route('project.index');
             } catch (\Exception $e) {

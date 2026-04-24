@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Models\KbArticle;
 use App\Models\KbCategory;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class KnowledgeBaseService
@@ -16,8 +15,7 @@ class KnowledgeBaseService
      */
     public function getCategoryTree(): array
     {
-        $userId = Auth::id();
-        $categories = KbCategory::where('user_id', $userId)
+        $categories = KbCategory::query()
             ->orderBy('sort_order')
             ->orderBy('id')
             ->get()
@@ -48,7 +46,7 @@ class KnowledgeBaseService
      */
     public function createCategory(array $data): KbCategory
     {
-        $data['user_id'] = Auth::id();
+        $data['user_id'] = 0;
         if (empty($data['slug'])) {
             $data['slug'] = Str::slug($data['title']);
         }
@@ -61,9 +59,7 @@ class KnowledgeBaseService
      */
     public function updateCategory(int $id, array $data): KbCategory
     {
-        $category = KbCategory::where('id', $id)
-            ->where('user_id', Auth::id())
-            ->firstOrFail();
+        $category = KbCategory::query()->where('id', $id)->firstOrFail();
 
         $category->update($data);
 
@@ -75,19 +71,14 @@ class KnowledgeBaseService
      */
     public function deleteCategory(int $id): void
     {
-        $userId = Auth::id();
-        $category = KbCategory::where('id', $id)
-            ->where('user_id', $userId)
-            ->firstOrFail();
+        $category = KbCategory::query()->where('id', $id)->firstOrFail();
 
         // 将子分类提升到父级
         KbCategory::where('parent_id', $id)
-            ->where('user_id', $userId)
             ->update(['parent_id' => $category->parent_id]);
 
         // 将该分类下的文章设为未分类
         KbArticle::where('category_id', $id)
-            ->where('user_id', $userId)
             ->update(['category_id' => null]);
 
         $category->delete();
@@ -96,9 +87,9 @@ class KnowledgeBaseService
     /**
      * 获取指定分类及其所有子孙分类的 ID 列表
      */
-    private function getCategoryWithDescendantIds(int $categoryId, int $userId): array
+    private function getCategoryWithDescendantIds(int $categoryId): array
     {
-        $allCategories = KbCategory::where('user_id', $userId)
+        $allCategories = KbCategory::query()
             ->select('id', 'parent_id')
             ->get()
             ->toArray();
@@ -126,12 +117,11 @@ class KnowledgeBaseService
      */
     public function getArticleList(array $params = []): array
     {
-        $userId = Auth::id();
-        $query = KbArticle::where('user_id', $userId);
+        $query = KbArticle::query();
 
         // 分类筛选（包含子分类）
         if (! empty($params['category_id'])) {
-            $categoryIds = $this->getCategoryWithDescendantIds((int) $params['category_id'], $userId);
+            $categoryIds = $this->getCategoryWithDescendantIds((int) $params['category_id']);
             $query->whereIn('category_id', $categoryIds);
         }
 
@@ -199,9 +189,7 @@ class KnowledgeBaseService
      */
     public function getArticle(int $id): ?KbArticle
     {
-        return KbArticle::where('id', $id)
-            ->where('user_id', Auth::id())
-            ->first();
+        return KbArticle::query()->where('id', $id)->first();
     }
 
     /**
@@ -209,7 +197,7 @@ class KnowledgeBaseService
      */
     public function createArticle(array $data): KbArticle
     {
-        $data['user_id'] = Auth::id();
+        $data['user_id'] = 0;
 
         if (empty($data['slug'])) {
             $baseSlug = Str::random(8);
@@ -236,9 +224,7 @@ class KnowledgeBaseService
      */
     public function updateArticle(int $id, array $data): KbArticle
     {
-        $article = KbArticle::where('id', $id)
-            ->where('user_id', Auth::id())
-            ->firstOrFail();
+        $article = KbArticle::query()->where('id', $id)->firstOrFail();
 
         $article->update($data);
 
@@ -250,9 +236,7 @@ class KnowledgeBaseService
      */
     public function deleteArticle(int $id): void
     {
-        $article = KbArticle::where('id', $id)
-            ->where('user_id', Auth::id())
-            ->firstOrFail();
+        $article = KbArticle::query()->where('id', $id)->firstOrFail();
 
         $article->delete();
     }
@@ -262,9 +246,7 @@ class KnowledgeBaseService
      */
     public function toggleArticleStatus(int $id): KbArticle
     {
-        $article = KbArticle::where('id', $id)
-            ->where('user_id', Auth::id())
-            ->firstOrFail();
+        $article = KbArticle::query()->where('id', $id)->firstOrFail();
 
         $article->status = $article->status === KbArticle::STATUS_PUBLIC
             ? KbArticle::STATUS_PRIVATE
@@ -279,9 +261,7 @@ class KnowledgeBaseService
      */
     public function getArticleById(int $id): ?KbArticle
     {
-        return KbArticle::where('id', $id)
-            ->where('user_id', Auth::id())
-            ->first();
+        return KbArticle::query()->where('id', $id)->first();
     }
 
     /**

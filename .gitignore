@@ -36,3 +36,4 @@ Plugins/*
 !Plugins/PluginInterface.php
 !Plugins/README.md
 .omx/
+database/mosure.db

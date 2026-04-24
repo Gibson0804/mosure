@@ -25,8 +25,12 @@ class ProjectAuthUserRole extends BaseModel
             $table->unsignedBigInteger('project_auth_role_id');
             $table->timestamps();
 
-            // Do not force a global index name; SQLite requires index names to be unique across the whole DB.
-            $table->unique(['project_auth_user_id', 'project_auth_role_id']);
+            // Use a short deterministic unique index name:
+            // - avoids MySQL 64-char identifier limit on long prefixed tables
+            // - remains unique across project tables for SQLite
+            $tableNameHash = substr(md5((string) $table->getTable()), 0, 8);
+            $uniqueName = 'pau_role_uq_'.$tableNameHash;
+            $table->unique(['project_auth_user_id', 'project_auth_role_id'], $uniqueName);
             $table->index(['project_auth_user_id']);
             $table->index(['project_auth_role_id']);
         };

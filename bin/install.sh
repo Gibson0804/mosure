@@ -31,7 +31,7 @@ fix_runtime_permissions() {
     mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache database
     
     # 修复运行目录权限，如果实际非www-data用户自行修改
-    chown -R "www-data:www-data" storage bootstrap/cache
+    # chown -R "www-data:www-data" storage bootstrap/cache
 
     # Laravel 运行目录必须允许 Web/PHP 用户写入缓存、会话、日志等文件。
     chmod -R ug+rwX storage bootstrap/cache database 2>/dev/null || true
