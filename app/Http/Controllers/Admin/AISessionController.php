@@ -23,9 +23,6 @@ class AISessionController extends BaseAdminController
     {
         $userId = $request->user()->id ?? 0;
         $projectId = $this->currentProjectId();
-        if ($projectId <= 0) {
-            return success(['items' => []]);
-        }
 
         $this->sessionService->ensureAllProjectGroups($userId);
         $sessions = $this->sessionService->getAdminSessionsForUser($userId, $projectId);
@@ -179,10 +176,6 @@ class AISessionController extends BaseAdminController
     {
         $userId = $request->user()->id ?? 0;
         $projectId = $this->currentProjectId();
-
-        if ($projectId <= 0) {
-            return error([], '未选择项目，无法创建私聊');
-        }
 
         try {
             $session = $this->sessionService->ensurePrivateSession($userId, $projectId, $type, $identifier);

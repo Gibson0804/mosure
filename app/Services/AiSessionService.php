@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Events\MessageReceived;
 use App\Models\Project;
 use App\Models\SysAiAgent;
+use App\Models\User;
 use App\Repository\SysAiSessionRepository;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
@@ -17,8 +18,8 @@ class AiSessionService
     {
         $existing = $this->sessionRepo->findGlobalDefaultSession($userId);
         if ($existing) {
-            if (($existing->title ?? '') !== '总群') {
-                $this->sessionRepo->editById(['title' => '总群'], $existing->id);
+            if (($existing->title ?? '') !== '全员群') {
+                $this->sessionRepo->editById(['title' => '全员群'], $existing->id);
                 $existing = $this->sessionRepo->find($existing->id);
             }
             $this->syncGlobalGroupMembers($existing);
@@ -30,7 +31,7 @@ class AiSessionService
         $sessionId = $this->sessionRepo->createSession([
             'user_id' => $userId,
             'project_id' => null,
-            'title' => '总群',
+            'title' => '全员群',
             'session_type' => 'group',
             'is_default' => 1,
             'member_ids' => json_encode($memberIds, JSON_UNESCAPED_UNICODE),
@@ -140,7 +141,7 @@ class AiSessionService
 
                 if ((int) ($session->is_default ?? 0) === 1) {
                     if ($session->project_id === null) {
-                        $item['title'] = '总群';
+                        $item['title'] = '全员群';
                     } else {
                         $projectName = $projectMap->get((int) $session->project_id)?->name ?? '未知项目';
                         $item['title'] = $projectName.' · 项目协作群';
@@ -232,32 +233,64 @@ class AiSessionService
 
     public function ensurePrivateSession(int $userId, int $projectId, string $type, string $identifier): ?object
     {
-        $agent = SysAiAgent::query()
+        $agentQuery = SysAiAgent::query()
             ->where('enabled', true)
             ->where('type', $type)
-            ->where('identifier', $identifier)
-            ->where(function ($query) use ($projectId, $type) {
-                if ($type === 'secretary') {
-                    $query->whereNull('project_id')->orWhere('project_id', $projectId);
+            ->where('identifier', $identifier);
 
-                    return;
+        if ($type === 'secretary') {
+            $agentQuery->where(function ($query) use ($projectId) {
+                $query->whereNull('project_id');
+                if ($projectId > 0) {
+                    $query->orWhere('project_id', $projectId);
                 }
-                $query->where('project_id', $projectId);
-            })
-            ->first();
+            });
+        } elseif ($type === 'project') {
+            if ($projectId > 0) {
+                $agentQuery->where('project_id', $projectId);
+            }
+        } else {
+            if ($projectId > 0) {
+                $agentQuery->where('project_id', $projectId);
+            } else {
+                return null;
+            }
+        }
+
+        $agent = $agentQuery->first();
 
         if (! $agent) {
             return null;
         }
 
-        $existing = $this->sessionRepo->findPrivateSession($userId, $projectId, $type, $identifier);
+        $sessionProjectId = $type === 'secretary'
+            ? ((int) ($agent->project_id ?? 0) > 0 ? (int) $agent->project_id : null)
+            : (int) ($agent->project_id ?? 0);
+
+        if ($type !== 'secretary' && (! $sessionProjectId || $sessionProjectId <= 0)) {
+            return null;
+        }
+
+        $existing = $this->sessionRepo->query()
+            ->where('user_id', $userId)
+            ->where('session_type', 'private')
+            ->where('agent_type', $type)
+            ->where('agent_identifier', $identifier)
+            ->where(function ($query) use ($sessionProjectId) {
+                if ($sessionProjectId === null) {
+                    $query->whereNull('project_id');
+                } else {
+                    $query->where('project_id', $sessionProjectId);
+                }
+            })
+            ->first();
         if ($existing) {
             return $existing;
         }
 
         $sessionId = $this->sessionRepo->createSession([
             'user_id' => $userId,
-            'project_id' => $projectId,
+            'project_id' => $sessionProjectId,
             'title' => $agent->name,
             'session_type' => 'private',
             'is_default' => 0,
@@ -376,7 +409,7 @@ class AiSessionService
             return ['error' => '会话不存在', 'code' => 404];
         }
 
-        $user = DB::table('users')->where('id', $userId)->first();
+        $user = User::query()->find($userId);
 
         $messageId = DB::table('sys_ai_messages')->insertGetId([
             'session_id' => $sessionId,
