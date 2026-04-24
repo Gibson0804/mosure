@@ -14,6 +14,7 @@ use App\Models\SystemSetting;
 use App\Models\User;
 use App\Support\StructuredLogger;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
@@ -50,6 +51,9 @@ class InstallationService
 
             // 4 创建数据库（如果不存在）
             $this->createDatabaseIfNotExists($data);
+
+            // 5. 使用当前安装参数强制重置数据库连接，避免页面安装时沿用旧配置
+            $this->reconnectDatabaseForInstall($data);
 
             // 5. 创建系统核心层表
             $this->createSystemCoreTables();
@@ -115,6 +119,7 @@ class InstallationService
 
         $appUrl = (string) ($data['appurl'] ?? '');
         $contents = $this->upsertEnvValue($contents, 'APP_URL', $appUrl);
+        $contents = $this->upsertEnvValue($contents, 'CACHE_STORE', 'file');
 
         if ($dbType === 'sqlite') {
             $dbPath = $this->resolveSqliteDatabasePath($data);
@@ -513,6 +518,38 @@ class InstallationService
             ]);
             throw $e;
         }
+    }
+
+    private function reconnectDatabaseForInstall(array $data): void
+    {
+        $dbType = (string) ($data['dbtype'] ?? '');
+
+        if ($dbType === 'sqlite') {
+            $databasePath = $this->resolveSqliteDatabasePath($data);
+
+            config([
+                'database.default' => 'sqlite',
+                'database.connections.sqlite.database' => $databasePath,
+            ]);
+        } elseif ($dbType === 'mysql') {
+            config([
+                'database.default' => 'mysql',
+                'database.connections.mysql.host' => (string) ($data['dbhost'] ?? ''),
+                'database.connections.mysql.port' => (string) ($data['dbport'] ?? ''),
+                'database.connections.mysql.database' => (string) ($data['dbname'] ?? ''),
+                'database.connections.mysql.username' => (string) ($data['dbuser'] ?? ''),
+                'database.connections.mysql.password' => (string) ($data['dbpwd'] ?? ''),
+            ]);
+        } else {
+            throw new \Exception('不支持的数据库类型: '.$dbType);
+        }
+
+        DB::purge();
+        DB::reconnect();
+
+        StructuredLogger::info('install.database.reconnected', [
+            'dbtype' => $dbType,
+        ]);
     }
 
     /**

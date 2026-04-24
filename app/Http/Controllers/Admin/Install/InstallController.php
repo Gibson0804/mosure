@@ -202,12 +202,13 @@ class InstallController
 
     private function checkInstalled()
     {
-
-        if (file_exists(base_path('.locked'))) {
-            return true;
+        if (! file_exists(base_path('.locked'))) {
+            return false;
         }
 
-        return false;
+        // .locked 仅作为安装标记；若数据库核心表不存在，视为未完成安装，
+        // 允许继续访问安装向导（例如重置数据库后的重新安装场景）。
+        return $this->installationService->isInstalled(true);
     }
 
     /**
@@ -369,13 +370,27 @@ class InstallController
 
             // Log::info('API安装结果:', $result);
             if ($result['status'] === 'success') {
-                // 清除缓存
-                Artisan::call('cache:clear');
-                Artisan::call('config:clear');
-                // Artisan::call('view:clear');
-
                 Log::info('API安装成功', $result);
                 file_put_contents(base_path('.locked'), 'locked'.time());
+
+                // 安装后清缓存不应影响安装结果，且此时可能尚未存在 DB cache 表。
+                try {
+                    config(['cache.default' => 'file']);
+                    Artisan::call('cache:clear');
+                } catch (\Throwable $cacheClearError) {
+                    Log::warning('安装后 cache:clear 失败，已忽略', [
+                        'message' => $cacheClearError->getMessage(),
+                    ]);
+                }
+
+                try {
+                    Artisan::call('config:clear');
+                } catch (\Throwable $configClearError) {
+                    Log::warning('安装后 config:clear 失败，已忽略', [
+                        'message' => $configClearError->getMessage(),
+                    ]);
+                }
+                // Artisan::call('view:clear');
 
                 return success($result, '安装成功');
             } else {
