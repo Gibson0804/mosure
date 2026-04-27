@@ -40,7 +40,7 @@
 
 ## 关键注意
 
-- 把配置中的路径 `/root/www/mosure` 改成你的实际部署目录。
+- 当前示例默认部署目录为 `/var/www/mosure`，如你的目录不同请按实际路径修改。
 - 把 `fastcgi_pass unix:/run/php/php8.3-fpm.sock;` 改成你的 PHP-FPM 实际 socket。
 - 生产不要使用 `./bin/start.sh` 或 `npm run dev`。
 - 首次部署后请执行：
