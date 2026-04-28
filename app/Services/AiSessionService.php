@@ -44,6 +44,7 @@ class AiSessionService
 
     public function listAgents(int $projectId): array
     {
+        $this->ensureSecretaryAgent();
         $this->ensureProjectAgent($projectId);
 
         return SysAiAgent::query()
@@ -527,6 +528,44 @@ class AiSessionService
                 'emoji_usage' => 'normal',
             ],
             'core_prompt' => '你是'.$project->name.'项目的专业助手，帮助用户处理与该项目相关的问题。',
+            'enabled' => true,
+        ]);
+    }
+
+    private function ensureSecretaryAgent(): void
+    {
+        $existing = SysAiAgent::query()
+            ->where('type', 'secretary')
+            ->first();
+
+        if ($existing) {
+            if (! $existing->enabled) {
+                $existing->enabled = true;
+                $existing->save();
+            }
+
+            return;
+        }
+
+        SysAiAgent::create([
+            'type' => 'secretary',
+            'identifier' => 'secretary',
+            'user_id' => null,
+            'project_id' => null,
+            'name' => '智能秘书',
+            'description' => '您的专属智能助手',
+            'avatar' => '',
+            'personality' => [
+                'tone' => 'friendly',
+                'traits' => ['耐心', '专业', '热情'],
+                'greeting' => '你好！我是智能秘书，有什么可以帮你的？',
+            ],
+            'dialogue_style' => [
+                'length' => 'medium',
+                'format' => 'markdown',
+                'emoji_usage' => 'normal',
+            ],
+            'core_prompt' => '你是一个友好、专业的智能助手，帮助用户解答问题、提供信息和完成任务。',
             'enabled' => true,
         ]);
     }

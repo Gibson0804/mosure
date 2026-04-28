@@ -11,7 +11,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
 SUPERVISOR_CMD="${SUPERVISOR_CMD:-supervisorctl}"
-SUPERVISOR_PROGRAMS="${SUPERVISOR_PROGRAMS:-mosure_queue mosure_cron}"
+SUPERVISOR_PROGRAMS="${SUPERVISOR_PROGRAMS:-mosure-queue}"
 RUN_COMPOSER="${RUN_COMPOSER:-1}"
 ALLOW_DIRTY="${ALLOW_DIRTY:-0}"
 SKIP_PULL="${SKIP_PULL:-0}"
@@ -31,12 +31,12 @@ Mosure 升级脚本
   SKIP_PULL=1           跳过 git pull（默认 0）
   RUN_COMPOSER=0        跳过 composer install（默认 1）
   SUPERVISOR_CMD=...    supervisor 命令（默认 supervisorctl）
-  SUPERVISOR_PROGRAMS   需要重启的进程，空格分隔（默认 "mosure_queue mosure_cron"）
+  SUPERVISOR_PROGRAMS   需要重启的进程，空格分隔（默认 "mosure-queue"）
 
 示例：
   ./bin/upgrade.sh
   ALLOW_DIRTY=1 SKIP_PULL=1 ./bin/upgrade.sh
-  SUPERVISOR_PROGRAMS="mosure_queue" ./bin/upgrade.sh
+  SUPERVISOR_PROGRAMS="mosure-queue mosure-scheduler" ./bin/upgrade.sh
 EOF
     exit 0
 fi
@@ -115,7 +115,9 @@ fi
 
 for program in $SUPERVISOR_PROGRAMS; do
     echo "重启进程: ${program}"
-    "$SUPERVISOR_CMD" restart "$program"
+    if ! "$SUPERVISOR_CMD" restart "$program"; then
+        echo "警告: 进程 ${program} 不存在或重启失败，已跳过。"
+    fi
 done
 
 echo "===== Mosure 升级完成 ====="
