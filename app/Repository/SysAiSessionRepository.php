@@ -90,10 +90,25 @@ class SysAiSessionRepository extends BaseRepository
 
     public function markRead(int $sessionId, int $messageId): void
     {
+        $session = $this->newQuery()
+            ->where('id', $sessionId)
+            ->first(['id', 'last_read_message_id']);
+
+        if (! $session) {
+            return;
+        }
+
+        $current = (int) ($session->last_read_message_id ?? 0);
+        $next = max($current, (int) $messageId);
+
+        if ($next === $current) {
+            return;
+        }
+
         $this->newQuery()
             ->where('id', $sessionId)
             ->update([
-                'last_read_message_id' => DB::raw('GREATEST(COALESCE(last_read_message_id, 0), '.(int) $messageId.')'),
+                'last_read_message_id' => $next,
             ]);
     }
 
