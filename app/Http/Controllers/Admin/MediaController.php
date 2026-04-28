@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Services\MediaService;
 use App\Support\StructuredLogger;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 
 class MediaController extends BaseAdminController
@@ -70,17 +71,45 @@ class MediaController extends BaseAdminController
 
     public function upload(Request $request)
     {
-        $request->validate([
-            'file' => 'required|file|max:102400',
-            'description' => 'nullable|string|max:500',
-            'filename' => 'nullable|string|max:255',
-            'folder_id' => 'nullable|integer',
-            'tags' => 'nullable',
-        ]);
+        $uploadedFile = $request->file('file');
+        if ($uploadedFile instanceof UploadedFile && ! $uploadedFile->isValid()) {
+            return error([
+                'php_upload_error' => $uploadedFile->getError(),
+                'upload_max_filesize' => ini_get('upload_max_filesize'),
+                'post_max_size' => ini_get('post_max_size'),
+                'upload_tmp_dir' => ini_get('upload_tmp_dir') ?: sys_get_temp_dir(),
+            ], '文件上传失败: '.$uploadedFile->getErrorMessage());
+        }
+
+        try {
+            $request->validate([
+                'file' => 'required|file|max:102400',
+                'description' => 'nullable|string|max:500',
+                'filename' => 'nullable|string|max:255',
+                'folder_id' => 'nullable|integer',
+                'tags' => 'nullable',
+            ], [
+                'file.uploaded' => '文件上传失败（可能超过服务器上传限制，或临时目录无写权限）',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            $errors = $e->errors();
+            $fileErrors = $errors['file'] ?? [];
+            $message = $fileErrors[0] ?? '参数验证失败';
+
+            return error([
+                'errors' => $errors,
+                'upload_max_filesize' => ini_get('upload_max_filesize'),
+                'post_max_size' => ini_get('post_max_size'),
+                'upload_tmp_dir' => ini_get('upload_tmp_dir') ?: sys_get_temp_dir(),
+            ], $message);
+        }
 
         if (! $request->hasFile('file')) {
-            return back()->withInput()
-                ->withErrors(['message' => '没有文件被上传']);
+            return error([
+                'upload_max_filesize' => ini_get('upload_max_filesize'),
+                'post_max_size' => ini_get('post_max_size'),
+                'upload_tmp_dir' => ini_get('upload_tmp_dir') ?: sys_get_temp_dir(),
+            ], '没有接收到有效上传文件');
         }
 
         $res = $this->mediaService->createMedia(
