@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Allow invocation via "sh bin/upgrade.sh" by re-execing under bash.
+if [ -z "${BASH_VERSION:-}" ]; then
+    exec /bin/bash "$0" "$@"
+fi
+
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -47,6 +52,28 @@ if ! command -v php >/dev/null 2>&1; then
     echo "错误: 未找到 php"
     exit 1
 fi
+
+ensure_git_safe_directory() {
+    local git_check_output
+
+    if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        return 0
+    fi
+
+    git_check_output="$(git rev-parse --is-inside-work-tree 2>&1 || true)"
+    if echo "$git_check_output" | grep -q "detected dubious ownership"; then
+        echo "检测到 Git safe.directory 限制，正在自动授权: $ROOT_DIR"
+        git config --global --add safe.directory "$ROOT_DIR"
+        git rev-parse --is-inside-work-tree >/dev/null
+        return 0
+    fi
+
+    echo "错误: Git 仓库检查失败"
+    echo "$git_check_output"
+    exit 1
+}
+
+ensure_git_safe_directory
 
 if [[ "$ALLOW_DIRTY" != "1" ]]; then
     if [[ -n "$(git status --porcelain)" ]]; then

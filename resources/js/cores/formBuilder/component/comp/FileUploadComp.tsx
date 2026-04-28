@@ -36,6 +36,16 @@ const FileUploadComp = {
         const handleFileChange = (info: any) => {
             let newFileList = info.fileList.slice(-1); // 只保留最后一个
 
+            if (info.file.status === 'done') {
+                const resp = info.file.response;
+                if (resp && resp.code !== 0) {
+                    message.error(resp.message || '文件上传失败');
+                    setFileList([]);
+                    form && form.setFieldsValue({ [child.field]: '' });
+                    return;
+                }
+            }
+
             if (info.file.status === 'done' || info.file.status === 'removed') {
                 // 统一提取 URL，构建干净的 fileList
                 newFileList = newFileList

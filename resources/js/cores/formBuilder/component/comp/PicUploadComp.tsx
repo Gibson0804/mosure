@@ -46,6 +46,16 @@ const PicUploadComp = {
         const handleChange: UploadProps['onChange'] = (info) => {
             let newFileList: UploadFile[] = info.fileList.slice(-1); // 只保留最后一个
 
+            if (info.file.status === 'done') {
+                const resp: any = (info.file as any).response;
+                if (resp && resp.code !== 0) {
+                    message.error(resp.message || '图片上传失败');
+                    setFileList([]);
+                    form && form.setFieldsValue({ [child.field]: '' });
+                    return;
+                }
+            }
+
             if (info.file.status === 'done' || info.file.status === 'removed') {
                 const cleaned: UploadFile[] = [];
                 newFileList.forEach((file: any, i: number) => {

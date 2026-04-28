@@ -41,6 +41,16 @@ const PicGalleryComp = {
         const handleChange: UploadProps['onChange'] = (info) => {
             let newFileList: UploadFile[] = info.fileList;
 
+            if (info.file.status === 'done') {
+                const resp: any = (info.file as any).response;
+                if (resp && resp.code !== 0) {
+                    message.error(resp.message || '图片上传失败');
+                    newFileList = info.fileList.filter((f: any) => f.uid !== info.file.uid);
+                    setFileList(newFileList);
+                    return;
+                }
+            }
+
             if (info.file.status === 'done' || info.file.status === 'removed') {
                 const cleaned: UploadFile[] = [];
                 newFileList.forEach((file: any, i: number) => {
