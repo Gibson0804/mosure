@@ -58,12 +58,13 @@ class AIAgentController extends BaseAdminController
         $personality = $request->input('personality', []);
         $dialogueStyle = $request->input('dialogue_style', []);
         $corePrompt = $request->input('core_prompt', '');
+        $runtimeMode = $request->input('runtime_mode', AiAgentService::RUNTIME_MODE_GENERAL);
 
         if (! empty($corePrompt)) {
             return success(['prompt' => $corePrompt]);
         }
 
-        $prompt = $this->agentService->generateCorePrompt($name, $description, $personality, $dialogueStyle);
+        $prompt = $this->agentService->generatePromptByRuntimeMode($runtimeMode, $name, $description, $personality, $dialogueStyle);
 
         return success(['prompt' => $prompt]);
     }
@@ -87,6 +88,7 @@ class AIAgentController extends BaseAdminController
                     'personality' => $request->input('personality', []),
                     'dialogue_style' => $request->input('dialogue_style', []),
                     'core_prompt' => $request->input('core_prompt', ''),
+                    'runtime_mode' => $request->input('runtime_mode', AiAgentService::RUNTIME_MODE_GENERAL),
                 ];
             }
 
@@ -115,6 +117,7 @@ class AIAgentController extends BaseAdminController
             'core_prompt' => $agent->core_prompt,
             'tools' => $agent->tools,
             'capabilities' => $agent->capabilities,
+            'runtime_mode' => $agent->runtime_mode,
         ];
     }
 }

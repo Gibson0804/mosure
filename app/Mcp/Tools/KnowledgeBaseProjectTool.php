@@ -50,7 +50,6 @@ class KnowledgeBaseProjectTool extends Tool
                 'get_doc' => $this->handleGetDoc($ctx, $arguments),
                 'create_doc' => $this->handleCreateDoc($ctx, $arguments),
                 'update_doc' => $this->handleUpdateDoc($ctx, $arguments),
-                'delete_doc' => $this->handleDeleteDoc($ctx, $arguments),
                 default => ToolResult::text(json_encode([
                     'success' => false,
                     'error' => '未知 action，支持：list_categories|list_docs|get_doc|create_doc|update_doc|delete_doc',
@@ -235,25 +234,6 @@ class KnowledgeBaseProjectTool extends Tool
         return ToolResult::text(json_encode(['success' => true, 'item' => $article], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
     }
 
-    private function handleDeleteDoc(array $ctx, array $arguments): ToolResult
-    {
-        $id = (int) ($arguments['id'] ?? 0);
-        if ($id <= 0) {
-            return ToolResult::text(json_encode(['success' => false, 'error' => '缺少有效的 id'], JSON_UNESCAPED_UNICODE));
-        }
-
-        $article = KbArticle::query()
-            ->where('id', $id)
-            ->where('user_id', $ctx['user_id'])
-            ->first();
-        if (! $article || ! in_array((int) $article->category_id, $ctx['category_ids'], true)) {
-            return ToolResult::text(json_encode(['success' => false, 'error' => '文档不存在或无访问权限'], JSON_UNESCAPED_UNICODE));
-        }
-
-        $article->delete();
-
-        return ToolResult::text(json_encode(['success' => true, 'id' => $id], JSON_UNESCAPED_UNICODE));
-    }
 
     private function resolveContext(): array
     {

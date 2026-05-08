@@ -12,12 +12,14 @@ interface AgentEditModalProps {
 
 export default function AgentEditModal({ open, agent, onCancel, onSuccess }: AgentEditModalProps) {
   const [form] = Form.useForm();
+  const runtimeMode = Form.useWatch('runtime_mode', form) || 'general';
   const [loading, setLoading] = React.useState(false);
 
   useEffect(() => {
     if (open && agent) {
       form.setFieldsValue({
         name: agent.name,
+        runtime_mode: agent.runtime_mode || 'general',
         description: agent.description || '',
         tone: agent.personality?.tone || 'friendly',
         traits: agent.personality?.traits || [],
@@ -35,6 +37,7 @@ export default function AgentEditModal({ open, agent, onCancel, onSuccess }: Age
     setLoading(true);
     try {
       await api.put(`/ai/agents/update/${agent.id}`, {
+        runtime_mode: values.runtime_mode || 'general',
         name: values.name,
         description: values.description || '',
         personality: {
@@ -52,8 +55,8 @@ export default function AgentEditModal({ open, agent, onCancel, onSuccess }: Age
       message.success('修改成功');
       onSuccess();
       onCancel();
-    } catch (error) {
-      message.error('修改失败');
+    } catch (error: any) {
+      message.error(error?.message || '修改失败');
     } finally {
       setLoading(false);
     }
@@ -68,6 +71,17 @@ export default function AgentEditModal({ open, agent, onCancel, onSuccess }: Age
       width={600}
     >
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
+        <Form.Item name="runtime_mode" label="成员模式">
+          <Radio.Group>
+            <Radio value="general">通用自定义成员</Radio>
+            <Radio value="frontend_page_developer">前端页面开发成员</Radio>
+          </Radio.Group>
+        </Form.Item>
+        {runtimeMode === 'frontend_page_developer' && (
+          <div style={{ marginBottom: 16, color: '#666', fontSize: 12 }}>
+            前端页面开发成员不预绑定项目。它会根据所在群聊项目上下文，或根据用户在会话里明确说明的项目来处理页面需求。
+          </div>
+        )}
         <Form.Item name="name" label="成员名称" rules={[{ required: true, message: '请输入成员名称' }]}>
           <Input placeholder="请输入成员名称" />
         </Form.Item>

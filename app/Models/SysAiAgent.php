@@ -26,6 +26,7 @@ class SysAiAgent extends Model
         'tools',
         'capabilities',
         'enabled',
+        'runtime_mode',
     ];
 
     protected $casts = [
@@ -53,6 +54,7 @@ class SysAiAgent extends Model
             $table->json('tools')->nullable()->comment('工具配置');
             $table->json('capabilities')->nullable()->comment('能力配置');
             $table->boolean('enabled')->default(true)->comment('是否启用');
+            $table->string('runtime_mode', 50)->default('general')->comment('custom agent runtime mode: general|frontend_page_developer');
             $table->timestamps();
 
             $table->unique(['type', 'identifier']);

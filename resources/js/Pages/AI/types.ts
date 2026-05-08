@@ -1,6 +1,7 @@
 export interface Agent {
   id: number;
   type: 'secretary' | 'project' | 'custom';
+  runtime_mode?: 'general' | 'frontend_page_developer';
   identifier: string;
   name: string;
   avatar?: string;
@@ -25,6 +26,7 @@ export interface Agent {
 
 export interface Session {
   id: number;
+  project_id?: number | null;
   title: string;
   avatar?: string;
   session_type: 'private' | 'group';

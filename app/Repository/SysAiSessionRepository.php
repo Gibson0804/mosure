@@ -88,6 +88,15 @@ class SysAiSessionRepository extends BaseRepository
         ]);
     }
 
+    public function updateMeta(int $sessionId, array $meta): void
+    {
+        $this->newQuery()
+            ->where('id', $sessionId)
+            ->update([
+                'meta_json' => json_encode($meta, JSON_UNESCAPED_UNICODE),
+            ]);
+    }
+
     public function markRead(int $sessionId, int $messageId): void
     {
         $session = $this->newQuery()

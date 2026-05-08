@@ -470,6 +470,7 @@ export default function AIChat() {
         onCancel={() => setNewAgentModalVisible(false)}
         onSuccess={() => {
           loadAgents();
+          loadSessions();
           setNewAgentModalVisible(false);
         }}
       />
@@ -480,6 +481,7 @@ export default function AIChat() {
         onCancel={() => setEditingAgent(null)}
         onSuccess={() => {
           loadAgents();
+          loadSessions();
           setEditingAgent(null);
         }}
       />

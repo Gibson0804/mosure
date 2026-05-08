@@ -51,6 +51,10 @@ class AiSessionService
             ->where('enabled', true)
             ->where(function ($query) use ($projectId) {
                 $query->where('type', 'secretary')
+                    ->orWhere(function ($q) {
+                        $q->where('type', 'custom')
+                            ->where('runtime_mode', \App\Services\AiAgentService::RUNTIME_MODE_FRONTEND_PAGE_DEVELOPER);
+                    })
                     ->orWhere(function ($q) use ($projectId) {
                         $q->where('project_id', $projectId);
                     });
@@ -67,6 +71,7 @@ class AiSessionService
                 'description' => $agent->description,
                 'enabled' => (bool) $agent->enabled,
                 'project_id' => $agent->project_id,
+                'runtime_mode' => $agent->runtime_mode,
             ])
             ->values()
             ->all();
@@ -253,7 +258,7 @@ class AiSessionService
         } else {
             if ($projectId > 0) {
                 $agentQuery->where('project_id', $projectId);
-            } else {
+            } elseif ($type !== 'custom') {
                 return null;
             }
         }
@@ -266,9 +271,14 @@ class AiSessionService
 
         $sessionProjectId = $type === 'secretary'
             ? ((int) ($agent->project_id ?? 0) > 0 ? (int) $agent->project_id : null)
-            : (int) ($agent->project_id ?? 0);
+            : ((int) ($agent->project_id ?? 0) > 0 ? (int) $agent->project_id : ($projectId > 0 ? $projectId : null));
 
-        if ($type !== 'secretary' && (! $sessionProjectId || $sessionProjectId <= 0)) {
+        $runtimeMode = (string) ($agent->runtime_mode ?? \App\Services\AiAgentService::RUNTIME_MODE_GENERAL);
+        if (
+            $type !== 'secretary' &&
+            $runtimeMode !== \App\Services\AiAgentService::RUNTIME_MODE_FRONTEND_PAGE_DEVELOPER &&
+            (! $sessionProjectId || $sessionProjectId <= 0)
+        ) {
             return null;
         }
 

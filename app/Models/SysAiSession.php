@@ -27,6 +27,7 @@ class SysAiSession extends BaseModel
             $table->unsignedInteger('message_count')->default(0);
             $table->text('context_summary')->nullable()->comment('上下文摘要');
             $table->unsignedInteger('context_token_count')->default(0);
+            $table->json('meta_json')->nullable()->comment('session runtime metadata');
             $table->timestamps();
         };
     }
@@ -47,5 +48,10 @@ class SysAiSession extends BaseModel
         'message_count',
         'context_summary',
         'context_token_count',
+        'meta_json',
+    ];
+
+    protected $casts = [
+        'meta_json' => 'array',
     ];
 }

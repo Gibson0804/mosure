@@ -52,9 +52,6 @@ const Profile: React.FC = () => {
 
   const handleSubmit = () => {
     post('/profile', {
-      onSuccess: () => {
-        message.success('资料已更新');
-      },
       onError: (errs: any) => {
         if (errs.name) message.error(errs.name);
         if (errs.email) message.error(errs.email);

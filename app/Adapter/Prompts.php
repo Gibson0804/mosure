@@ -351,4 +351,198 @@ HOC;
 
         return $content;
     }
+
+    public static function getFrontendPagePlanPrompt(string $userPrompt, array $pages = [], ?string $currentPageSlug = null): string
+    {
+        $userPrompt = self::formatQuestion($userPrompt);
+        $pagesJson = json_encode(array_values($pages), JSON_UNESCAPED_UNICODE);
+        $currentPageSlug = self::formatQuestion((string) ($currentPageSlug ?? ''));
+
+        return <<<HOC
+你是一名前端页面开发助手的任务规划器。请根据用户需求，判断这是：
+1. 新建页面
+2. 修改现有页面
+3. 需要澄清
+4. 与前端页面无关，应拒绝
+
+当前项目已有页面：
+{$pagesJson}
+
+当前会话页面焦点：
+{$currentPageSlug}
+
+用户需求：
+{$userPrompt}
+
+输出要求：
+1. 仅输出一个 JSON 对象。
+2. JSON 必须包含以下字段：
+   - action: create | update | clarify | reject
+   - target_slug: string|null
+   - target_title: string|null
+   - clarification: string
+   - description: string
+   - requirements: string[]
+   - change_summary: string[]
+3. 规则：
+   - 如果用户说“再新建一个”“新建另一个”，即使当前有页面焦点，也优先判断为 create。
+   - 如果用户说“修改刚才那个页面”“改一下这个页面”，优先参考当前会话页面焦点。
+   - 如果页面指向不明确，action 输出 clarify，并在 clarification 中给出追问。
+   - 如果问题与前端页面无关，action 输出 reject。
+   - target_slug 只能使用小写字母、数字和短横线。
+HOC;
+    }
+
+    public static function getFrontendPageCreatePrompt(string $userPrompt, array $models, string $targetSlug, string $targetTitle, array $requirements = [], ?string $description = null): string
+    {
+        $userPrompt = self::formatQuestion($userPrompt);
+        $targetSlug = self::formatQuestion($targetSlug);
+        $targetTitle = self::formatQuestion($targetTitle);
+        $description = self::formatQuestion((string) ($description ?? ''));
+        $requirementsJson = json_encode(array_values($requirements), JSON_UNESCAPED_UNICODE);
+        $modelsJson = json_encode(array_values($models), JSON_UNESCAPED_UNICODE);
+
+        $designBlock = self::frontendDesignRequirementsBlock();
+        $sdkBlock = self::frontendMosureSdkBlock();
+
+        return <<<HOC
+你是一名前端页面开发助手，请为 Mosure 生成一个新的托管页面。
+
+用户原始需求：
+{$userPrompt}
+
+目标页面：
+- slug: {$targetSlug}
+- title: {$targetTitle}
+- description: {$description}
+
+页面需求拆解：
+{$requirementsJson}
+
+当前项目内容模型（用于页面真实数据渲染）：
+{$modelsJson}
+
+{$sdkBlock}
+
+{$designBlock}
+
+Mosure 专属约束：
+1. 只输出 HTML/CSS/JavaScript。
+2. 不输出 Vue、React、Svelte 等源码。
+3. 不输出构建脚本。
+4. 所有 CSS 使用 <style>，所有 JS 使用 <script>，优先内联。
+5. 只要当前项目存在内容模型，页面必须使用 window.Mosure 获取真实数据并渲染，不能只展示静态假数据。
+6. 页面将保存到单页托管系统，因此必须输出完整 HTML 文档。
+7. 不要引入外部 CDN。
+8. 如果使用了内容模型，必须在 html_content 的 <script> 中体现真实调用（如 getList/getItem/getPage），table 参数必须来自上方模型的 table_name，不得臆造。
+9. 页面初始可以有 loading/empty/error 状态，但成功态必须以 window.Mosure 返回的数据驱动渲染。
+
+输出要求：
+1. 仅输出一个 JSON 对象。
+2. 必须包含：
+   - slug
+   - title
+   - description
+   - html_content
+   - change_summary
+3. html_content 必须是完整 HTML 文档。
+4. 若存在内容模型，change_summary 中必须明确写出使用了哪个 table_name，以及通过哪个 window.Mosure 方法取数。
+HOC;
+    }
+
+    public static function getFrontendPageUpdatePrompt(string $userPrompt, array $models, string $targetSlug, string $targetTitle, string $existingHtml, array $changeSummary = []): string
+    {
+        $userPrompt = self::formatQuestion($userPrompt);
+        $targetSlug = self::formatQuestion($targetSlug);
+        $targetTitle = self::formatQuestion($targetTitle);
+        $modelsJson = json_encode(array_values($models), JSON_UNESCAPED_UNICODE);
+        $changeSummaryJson = json_encode(array_values($changeSummary), JSON_UNESCAPED_UNICODE);
+
+        $designBlock = self::frontendDesignRequirementsBlock();
+        $sdkBlock = self::frontendMosureSdkBlock();
+
+        return <<<HOC
+你是一名前端页面开发助手，请在保留原有页面主要结构的前提下，按用户要求修改页面。
+
+用户原始需求：
+{$userPrompt}
+
+目标页面：
+- slug: {$targetSlug}
+- title: {$targetTitle}
+
+本次变更要点：
+{$changeSummaryJson}
+
+当前项目内容模型（用于页面真实数据渲染）：
+{$modelsJson}
+
+{$sdkBlock}
+
+当前页面 HTML：
+{$existingHtml}
+
+{$designBlock}
+
+Mosure 专属约束：
+1. 只输出 HTML/CSS/JavaScript。
+2. 不输出 Vue、React、Svelte 等源码。
+3. 不输出构建脚本。
+4. 所有 CSS 使用 <style>，所有 JS 使用 <script>，优先内联。
+5. 只要当前项目存在内容模型，修改后页面必须继续或补充使用 window.Mosure 获取真实数据并渲染，不能退化为静态假数据。
+6. 必须尽量保留现有页面结构与功能，只做与需求相关的最小必要修改。
+7. 不要引入外部 CDN。
+8. 如果涉及内容模型，必须在 html_content 的 <script> 中体现真实调用（如 getList/getItem/getPage），table 参数必须来自上方模型的 table_name，不得臆造。
+9. 页面初始可以有 loading/empty/error 状态，但成功态必须以 window.Mosure 返回的数据驱动渲染。
+
+输出要求：
+1. 仅输出一个 JSON 对象。
+2. 必须包含：
+   - slug
+   - title
+   - description
+   - html_content
+   - change_summary
+3. html_content 必须是完整 HTML 文档。
+4. 若存在内容模型，change_summary 中必须明确写出使用了哪个 table_name，以及通过哪个 window.Mosure 方法取数。
+HOC;
+    }
+
+    private static function frontendDesignRequirementsBlock(): string
+    {
+        return <<<'TXT'
+前端设计约束：
+1. 页面必须有明确视觉层级，不要做成通用后台模板感。
+2. 配色要收敛，主色、辅色、中性色清晰。
+3. 避免默认紫色系、默认暗黑风、默认系统字体组合。
+4. 背景需要有层次，避免纯白空板。
+5. 动效只保留少量必要动画，不堆微交互。
+6. 移动端必须优先可用。
+TXT;
+    }
+
+    private static function frontendMosureSdkBlock(): string
+    {
+        return <<<'TXT'
+Mosure SDK（系统会自动注入到页面中，你不需要引入）：
+页面中通过 window.Mosure 进行数据交互。所有方法都是 async，需要 await。
+
+list 类型模型方法：
+1. Mosure.getList(tableName, params) 获取列表，params 可选 { page, page_size }
+2. Mosure.getItem(tableName, id) 获取单条
+3. Mosure.createItem(tableName, data) 创建
+4. Mosure.updateItem(tableName, id, data) 更新
+5. Mosure.deleteItem(tableName, id) 删除
+
+single 类型模型方法：
+6. Mosure.getPage(tableName) 获取单页数据
+7. Mosure.updatePage(tableName, data) 更新单页数据
+
+通用规则：
+- code=200 表示成功，非 200 按失败处理并展示 message
+- tableName 必须使用上方内容模型里的 table_name
+- list 模型只能使用 getList/getItem/createItem/updateItem/deleteItem
+- single 模型只能使用 getPage/updatePage
+TXT;
+    }
 }

@@ -102,6 +102,7 @@ class HandleInertiaRequests extends Middleware
             'mainSelectedKeys' => $mainSelectedKeys,
             'subSelectedKeys' => $subSelectedKeys,
             'project_info' => [
+                'id' => session('current_project_id'),
                 'prefix' => session('current_project_prefix'),
                 'name' => session('current_project_name'),
             ],

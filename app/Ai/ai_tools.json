@@ -370,5 +370,419 @@
         },
         "service": "App\\Services\\CloudFunctionService",
         "method": "toggle"
+    },
+    "kb_global_list_docs": {
+        "name": "kb_global_list_docs",
+        "description": "查询全部知识库文档列表。秘书使用；可看到默认目录和项目目录文档。",
+        "params": {
+            "keyword": {
+                "type": "string",
+                "required": false,
+                "desc": "标题、摘要、正文关键词"
+            },
+            "page": {
+                "type": "integer",
+                "required": false,
+                "desc": "页码，默认1"
+            },
+            "pageSize": {
+                "type": "integer",
+                "required": false,
+                "desc": "每页数量，默认10，最大50"
+            }
+        },
+        "service": "App\\Services\\AgentKnowledgeBaseToolService",
+        "method": "listGlobalDocs"
+    },
+    "kb_global_get_doc": {
+        "name": "kb_global_get_doc",
+        "description": "读取任意知识库文档详情。秘书使用；id 和 title 二选一。",
+        "params": {
+            "id": {
+                "type": "integer",
+                "required": false,
+                "desc": "文档ID"
+            },
+            "title": {
+                "type": "string",
+                "required": false,
+                "desc": "文档标题，可模糊匹配"
+            }
+        },
+        "service": "App\\Services\\AgentKnowledgeBaseToolService",
+        "method": "getGlobalDoc"
+    },
+    "kb_global_create_doc": {
+        "name": "kb_global_create_doc",
+        "description": "在知识库中新建文档。秘书使用；可用 categoryId 或 categoryPath 指定目录，未指定则创建到“默认”目录。",
+        "params": {
+            "title": {
+                "type": "string",
+                "required": true,
+                "desc": "文档标题"
+            },
+            "content": {
+                "type": "string",
+                "required": false,
+                "desc": "Markdown正文"
+            },
+            "summary": {
+                "type": "string",
+                "required": false,
+                "desc": "摘要"
+            },
+            "tags": {
+                "type": "array",
+                "required": false,
+                "desc": "标签数组"
+            },
+            "status": {
+                "type": "string",
+                "required": false,
+                "desc": "private 或 public，默认 private"
+            },
+            "categoryId": {
+                "type": "integer",
+                "required": false,
+                "desc": "目标目录ID，不传则使用“默认”目录"
+            },
+            "categoryPath": {
+                "type": "string",
+                "required": false,
+                "desc": "目标目录路径，如 \/电子商务；categoryId 优先"
+            }
+        },
+        "service": "App\\Services\\AgentKnowledgeBaseToolService",
+        "method": "createGlobalDoc"
+    },
+    "kb_global_update_doc": {
+        "name": "kb_global_update_doc",
+        "description": "修改任意知识库文档信息。秘书使用；id 和 title 二选一；只修改传入字段，不会删除文档。",
+        "params": {
+            "id": {
+                "type": "integer",
+                "required": false,
+                "desc": "文档ID"
+            },
+            "title": {
+                "type": "string",
+                "required": false,
+                "desc": "用于定位文档的标题，可模糊匹配"
+            },
+            "newTitle": {
+                "type": "string",
+                "required": false,
+                "desc": "新标题"
+            },
+            "content": {
+                "type": "string",
+                "required": false,
+                "desc": "新的完整 Markdown 正文"
+            },
+            "summary": {
+                "type": "string",
+                "required": false,
+                "desc": "新摘要"
+            },
+            "tags": {
+                "type": "array",
+                "required": false,
+                "desc": "新标签数组"
+            },
+            "status": {
+                "type": "string",
+                "required": false,
+                "desc": "private 或 public"
+            }
+        },
+        "service": "App\\Services\\AgentKnowledgeBaseToolService",
+        "method": "updateGlobalDoc"
+    },
+    "kb_global_modify_doc_content": {
+        "name": "kb_global_modify_doc_content",
+        "description": "通用修改知识库文档正文。秘书使用；支持完整改写、追加内容、按旧文本替换。id 和 title 二选一。",
+        "params": {
+            "id": {
+                "type": "integer",
+                "required": false,
+                "desc": "文档ID"
+            },
+            "title": {
+                "type": "string",
+                "required": false,
+                "desc": "用于定位文档的标题，可模糊匹配"
+            },
+            "editInstruction": {
+                "type": "string",
+                "required": false,
+                "desc": "用户的修改要求说明"
+            },
+            "updatedContent": {
+                "type": "string",
+                "required": false,
+                "desc": "修改后的完整 Markdown 正文；适合复杂改写"
+            },
+            "appendContent": {
+                "type": "string",
+                "required": false,
+                "desc": "要追加到文档末尾的内容"
+            },
+            "oldText": {
+                "type": "string",
+                "required": false,
+                "desc": "局部替换时要被替换的原文"
+            },
+            "newText": {
+                "type": "string",
+                "required": false,
+                "desc": "局部替换时替换后的新文本"
+            }
+        },
+        "service": "App\\Services\\AgentKnowledgeBaseToolService",
+        "method": "modifyGlobalDocContent"
+    },
+    "kb_global_append_doc": {
+        "name": "kb_global_append_doc",
+        "description": "向任意知识库文档末尾追加记录。秘书使用；id 和 title 二选一；文档不存在时可设置 createIfMissing=true 自动创建到“默认”目录。",
+        "params": {
+            "id": {
+                "type": "integer",
+                "required": false,
+                "desc": "文档ID"
+            },
+            "title": {
+                "type": "string",
+                "required": false,
+                "desc": "文档标题，可模糊匹配"
+            },
+            "appendContent": {
+                "type": "string",
+                "required": true,
+                "desc": "要追加的 Markdown 内容"
+            },
+            "createIfMissing": {
+                "type": "boolean",
+                "required": false,
+                "desc": "找不到文档时是否按 title 新建，默认 false"
+            }
+        },
+        "service": "App\\Services\\AgentKnowledgeBaseToolService",
+        "method": "appendGlobalDoc"
+    },
+    "kb_global_create_category": {
+        "name": "kb_global_create_category",
+        "description": "新建知识库目录。秘书使用；可在根目录或指定父目录下创建目录，不会删除或覆盖已有目录。",
+        "params": {
+            "title": {
+                "type": "string",
+                "required": true,
+                "desc": "目录名称"
+            },
+            "parentId": {
+                "type": "integer",
+                "required": false,
+                "desc": "父目录ID，不传则创建在根目录"
+            },
+            "parentPath": {
+                "type": "string",
+                "required": false,
+                "desc": "父目录路径，如 \/默认\/子目录；parentId 优先"
+            },
+            "sortOrder": {
+                "type": "integer",
+                "required": false,
+                "desc": "排序值，默认0"
+            }
+        },
+        "service": "App\\Services\\AgentKnowledgeBaseToolService",
+        "method": "createGlobalCategory"
+    },
+    "kb_project_list_docs": {
+        "name": "kb_project_list_docs",
+        "description": "查询当前项目知识库目录下的文档列表。只能访问当前项目目录及其子目录。",
+        "params": {
+            "keyword": {
+                "type": "string",
+                "required": false,
+                "desc": "标题、摘要、正文关键词"
+            },
+            "page": {
+                "type": "integer",
+                "required": false,
+                "desc": "页码，默认1"
+            },
+            "pageSize": {
+                "type": "integer",
+                "required": false,
+                "desc": "每页数量，默认10，最大50"
+            }
+        },
+        "service": "App\\Services\\AgentKnowledgeBaseToolService",
+        "method": "listProjectDocs"
+    },
+    "kb_project_get_doc": {
+        "name": "kb_project_get_doc",
+        "description": "读取当前项目知识库目录下的文档详情。id 和 title 二选一。",
+        "params": {
+            "id": {
+                "type": "integer",
+                "required": false,
+                "desc": "文档ID"
+            },
+            "title": {
+                "type": "string",
+                "required": false,
+                "desc": "文档标题，可模糊匹配"
+            }
+        },
+        "service": "App\\Services\\AgentKnowledgeBaseToolService",
+        "method": "getProjectDoc"
+    },
+    "kb_project_create_doc": {
+        "name": "kb_project_create_doc",
+        "description": "在当前项目知识库根目录下新建文档。不能创建到其他项目或默认知识库。",
+        "params": {
+            "title": {
+                "type": "string",
+                "required": true,
+                "desc": "文档标题"
+            },
+            "content": {
+                "type": "string",
+                "required": false,
+                "desc": "Markdown正文"
+            },
+            "summary": {
+                "type": "string",
+                "required": false,
+                "desc": "摘要"
+            },
+            "tags": {
+                "type": "array",
+                "required": false,
+                "desc": "标签数组"
+            },
+            "status": {
+                "type": "string",
+                "required": false,
+                "desc": "private 或 public，默认 private"
+            }
+        },
+        "service": "App\\Services\\AgentKnowledgeBaseToolService",
+        "method": "createProjectDoc"
+    },
+    "kb_project_update_doc": {
+        "name": "kb_project_update_doc",
+        "description": "修改当前项目知识库目录下的文档信息。id 和 title 二选一；只修改传入字段，不会删除文档。",
+        "params": {
+            "id": {
+                "type": "integer",
+                "required": false,
+                "desc": "文档ID"
+            },
+            "title": {
+                "type": "string",
+                "required": false,
+                "desc": "用于定位文档的标题，可模糊匹配"
+            },
+            "newTitle": {
+                "type": "string",
+                "required": false,
+                "desc": "新标题"
+            },
+            "content": {
+                "type": "string",
+                "required": false,
+                "desc": "新的完整 Markdown 正文"
+            },
+            "summary": {
+                "type": "string",
+                "required": false,
+                "desc": "新摘要"
+            },
+            "tags": {
+                "type": "array",
+                "required": false,
+                "desc": "新标签数组"
+            },
+            "status": {
+                "type": "string",
+                "required": false,
+                "desc": "private 或 public"
+            }
+        },
+        "service": "App\\Services\\AgentKnowledgeBaseToolService",
+        "method": "updateProjectDoc"
+    },
+    "kb_project_modify_doc_content": {
+        "name": "kb_project_modify_doc_content",
+        "description": "通用修改当前项目知识库文档正文。支持完整改写、追加内容、按旧文本替换。id 和 title 二选一。",
+        "params": {
+            "id": {
+                "type": "integer",
+                "required": false,
+                "desc": "文档ID"
+            },
+            "title": {
+                "type": "string",
+                "required": false,
+                "desc": "用于定位文档的标题，可模糊匹配"
+            },
+            "editInstruction": {
+                "type": "string",
+                "required": false,
+                "desc": "用户的修改要求说明"
+            },
+            "updatedContent": {
+                "type": "string",
+                "required": false,
+                "desc": "修改后的完整 Markdown 正文；适合复杂改写"
+            },
+            "appendContent": {
+                "type": "string",
+                "required": false,
+                "desc": "要追加到文档末尾的内容"
+            },
+            "oldText": {
+                "type": "string",
+                "required": false,
+                "desc": "局部替换时要被替换的原文"
+            },
+            "newText": {
+                "type": "string",
+                "required": false,
+                "desc": "局部替换时替换后的新文本"
+            }
+        },
+        "service": "App\\Services\\AgentKnowledgeBaseToolService",
+        "method": "modifyProjectDocContent"
+    },
+    "kb_project_append_doc": {
+        "name": "kb_project_append_doc",
+        "description": "向当前项目知识库目录下的文档末尾追加记录。id 和 title 二选一；文档不存在时可设置 createIfMissing=true 自动创建到当前项目根目录。",
+        "params": {
+            "id": {
+                "type": "integer",
+                "required": false,
+                "desc": "文档ID"
+            },
+            "title": {
+                "type": "string",
+                "required": false,
+                "desc": "文档标题，可模糊匹配"
+            },
+            "appendContent": {
+                "type": "string",
+                "required": true,
+                "desc": "要追加的 Markdown 内容"
+            },
+            "createIfMissing": {
+                "type": "boolean",
+                "required": false,
+                "desc": "找不到文档时是否按 title 新建，默认 false"
+            }
+        },
+        "service": "App\\Services\\AgentKnowledgeBaseToolService",
+        "method": "appendProjectDoc"
     }
 }

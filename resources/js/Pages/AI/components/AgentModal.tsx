@@ -10,6 +10,7 @@ interface AgentModalProps {
 
 export default function AgentModal({ open, onCancel, onSuccess }: AgentModalProps) {
   const [form] = Form.useForm();
+  const runtimeMode = Form.useWatch('runtime_mode', form) || 'general';
   const [previewPrompt, setPreviewPrompt] = useState('');
   const [testQuestion, setTestQuestion] = useState('');
   const [testAnswer, setTestAnswer] = useState('');
@@ -19,13 +20,14 @@ export default function AgentModal({ open, onCancel, onSuccess }: AgentModalProp
   const handleCreate = async (values: any) => {
     try {
       await api.post('/ai/agents/create', {
+        runtime_mode: values.runtime_mode || 'general',
         name: values.name,
         description: values.description || '',
         avatar: values.avatar,
         personality: {
           tone: values.tone || 'friendly',
           traits: values.traits || ['友善'],
-          greeting: values.greeting || `你好！我是{name}，有什么可以帮你的？`,
+          greeting: values.greeting || `你好！我是${values.name || '{name}'}，有什么可以帮你的？`,
         },
         dialogue_style: {
           length: values.length || 'medium',
@@ -37,8 +39,8 @@ export default function AgentModal({ open, onCancel, onSuccess }: AgentModalProp
       message.success('成员创建成功');
       onSuccess();
       handleClose();
-    } catch (error) {
-      message.error('创建失败');
+    } catch (error: any) {
+      message.error(error?.message || '创建失败');
     }
   };
 
@@ -46,6 +48,7 @@ export default function AgentModal({ open, onCancel, onSuccess }: AgentModalProp
     setPreviewLoading(true);
     try {
       const res = await api.post('/ai/agents/preview-prompt', {
+        runtime_mode: values.runtime_mode || 'general',
         name: values.name || '助手',
         description: values.description || '',
         personality: {
@@ -83,6 +86,7 @@ export default function AgentModal({ open, onCancel, onSuccess }: AgentModalProp
 
     try {
       const res = await api.post('/ai/agents/test', {
+        runtime_mode: values.runtime_mode || 'general',
         name: values.name,
         description: values.description || '',
         personality: {
@@ -133,6 +137,17 @@ export default function AgentModal({ open, onCancel, onSuccess }: AgentModalProp
             label: '基本设置',
             children: (
               <Form form={form} layout="vertical" onFinish={handleCreate}>
+                <Form.Item name="runtime_mode" label="成员模式" initialValue="general">
+                  <Radio.Group>
+                    <Radio value="general">通用自定义成员</Radio>
+                    <Radio value="frontend_page_developer">前端页面开发成员</Radio>
+                  </Radio.Group>
+                </Form.Item>
+                {runtimeMode === 'frontend_page_developer' && (
+                  <div style={{ marginBottom: 16, color: '#666', fontSize: 12 }}>
+                    前端页面开发成员不预绑定项目。它会根据所在群聊项目上下文，或根据用户在会话里明确说明的项目来处理页面需求。
+                  </div>
+                )}
                 <Form.Item name="name" label="成员名称" rules={[{ required: true, message: '请输入成员名称' }]}>
                   <Input placeholder="请输入成员名称，如：小冰" />
                 </Form.Item>

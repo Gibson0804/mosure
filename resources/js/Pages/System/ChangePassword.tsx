@@ -15,7 +15,6 @@ const ChangePassword: React.FC = () => {
   const handleSubmit = () => {
     post('/change-password', {
       onSuccess: () => {
-        message.success('密码已成功更新');
         reset();
       },
       onError: (errors) => {

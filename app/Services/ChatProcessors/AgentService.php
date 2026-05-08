@@ -5,6 +5,7 @@ namespace App\Services\ChatProcessors;
 use App\Events\MessageReceived;
 use App\Models\SysAiAgent;
 use App\Models\SysAiMessage;
+use App\Services\AiAgentService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -46,7 +47,7 @@ class AgentService
         match ($agent->type) {
             'secretary' => app(SecretaryService::class)->process($message, $agent),
             'project' => app(ProjectAgentService::class)->process($message, $agent),
-            'custom' => app(CustomAgentService::class)->process($message, $agent),
+            'custom' => $this->processCustomAgent($message, $agent),
             default => Log::error('Unknown agent type', ['type' => $agent->type]),
         };
 
@@ -156,5 +157,18 @@ class AgentService
             ],
             dispatch: true
         );
+    }
+
+    private function processCustomAgent(SysAiMessage $message, SysAiAgent $agent): void
+    {
+        $runtimeMode = (string) ($agent->runtime_mode ?? AiAgentService::RUNTIME_MODE_GENERAL);
+
+        if ($runtimeMode === AiAgentService::RUNTIME_MODE_FRONTEND_PAGE_DEVELOPER) {
+            app(FrontendAgentService::class)->process($message, $agent);
+
+            return;
+        }
+
+        app(CustomAgentService::class)->process($message, $agent);
     }
 }

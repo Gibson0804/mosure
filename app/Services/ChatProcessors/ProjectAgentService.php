@@ -57,10 +57,14 @@ class ProjectAgentService
         session(['current_project_prefix' => $projectPrefix]);
 
         try {
+            if ($this->tryDispatchFrontendTask($message, $agent, $project, $question)) {
+                return;
+            }
+
             $context = AgentService::getConversationContext($sessionId, 20);
             $systemPrompt = $this->buildSystemPrompt($project, $projectPrefix);
             $messages = $this->buildMessages($systemPrompt, $context, $question);
-            $tools = AiToolRegistry::all();
+            $tools = $this->toolsForProjectAgent(AiToolRegistry::all());
 
             Log::info('ProjectAgentService: messages built', [
                 'messages_count' => count($messages),
@@ -85,6 +89,53 @@ class ProjectAgentService
         } finally {
             session(['current_project_prefix' => $previousPrefix]);
         }
+    }
+
+    private function tryDispatchFrontendTask(SysAiMessage $message, SysAiAgent $agent, object $project, string $question): bool
+    {
+        if (! $this->isFrontendPageRequest($question)) {
+            return false;
+        }
+
+        if ($this->looksLikeModelChangeRequest($question)) {
+            $this->replyToUser($message, $agent, '这个需求同时涉及页面和内容模型调整。请先明确并完成模型部分后，再继续页面开发。');
+
+            return true;
+        }
+
+        $session = DB::table('sys_ai_sessions')->where('id', $message->session_id)->first();
+        if (! $session) {
+            return false;
+        }
+
+        $frontendAgent = $this->findFrontendAgentForSession($session);
+        if (! $frontendAgent) {
+            $frontendAgent = $this->findAvailableFrontendAgent();
+            if (! $frontendAgent) {
+                $this->replyToUser($message, $agent, '当前群组未配置前端页面开发成员，也没有可用的前端页面开发成员。请先手动创建一个前端页面开发成员。');
+
+                return true;
+            }
+        }
+
+        $meta = $this->normalizeSessionMeta($session->meta_json ?? null);
+        $payload = [
+            'project_id' => (int) $project->id,
+            'project_prefix' => (string) $project->prefix,
+            'project_name' => (string) $project->name,
+            'user_request' => $question,
+            'current_page_slug' => $meta['current_page_slug'] ?? null,
+        ];
+
+        $this->replyToUser($message, $agent, '好的，我把这个页面需求转给前端页面开发成员处理。');
+        app(AgentService::class)->dispatchToAgent(
+            $message,
+            FrontendAgentService::TASK_PREFIX.json_encode($payload, JSON_UNESCAPED_UNICODE),
+            $agent,
+            $frontendAgent
+        );
+
+        return true;
     }
 
     private function buildSystemPrompt(object $project, string $projectPrefix): string
@@ -138,6 +189,18 @@ class ProjectAgentService
 - 如果问题是百科常识、概念解释、写作改写、简短建议等，不需要工具时直接回答。
 - 这类问题不要强行映射到项目模型、内容创建或数据查询。
 
+6. 知识库文档类：
+- 用户消息以 `/kb` 开头时，必须按当前项目知识库文档任务理解。
+- 当前项目助手只能操作当前项目知识库目录及其子目录下的文档。
+- 可以查询、读取、新建、修改、追加项目知识库文档。
+- 不允许删除知识库文档；用户要求删除时，明确说明当前不支持删除。
+- 用户说“新建一个 XXX 文档”时，调用 `kb_project_create_doc`。
+- 用户说“在 XXX 文档记录/记下/补充/追加 ...”时，优先调用 `kb_project_append_doc`；找不到且意图明确时可 `createIfMissing=true`。
+- 用户要求修改项目知识库文档正文时，优先调用通用工具 `kb_project_modify_doc_content`；复杂改写应先读取文档再传 updatedContent，局部“把 A 改成 B”可传 oldText 和 newText，追加可传 appendContent。
+- 修改完整正文前应先读取文档，避免覆盖已有内容；追加记录优先使用 append 工具。
+- 如果工具返回 `need_user_selection=true`，必须把 candidates 按“1. /path/doc_name（id: xx）”格式列给用户，并请用户回复编号；不要继续新建或修改。
+- 用户只回复编号时，结合上一轮候选文档，用对应候选的 id 执行原本要做的修改或追加。
+
 ## 模型选择要求
 1. 选择模型时，优先依据“模型名称 + 表标识 + 关键字段”综合判断。
 2. `single` 类型模型通常表示单例配置或页面信息；`list` 类型模型通常表示可新增多条内容。
@@ -166,6 +229,15 @@ class ProjectAgentService
 PROMPT;
 
         return $prompt;
+    }
+
+    private function toolsForProjectAgent(array $tools): array
+    {
+        return array_filter(
+            $tools,
+            fn ($tool, $name) => ! str_starts_with((string) $name, 'kb_global_'),
+            ARRAY_FILTER_USE_BOTH
+        );
     }
 
     private function buildProjectInfo(object $project, string $projectPrefix): string
@@ -240,6 +312,58 @@ PROMPT;
     {
         $agentService = app(AgentService::class);
         $agentService->replyToUser($message, $content, $agent);
+    }
+
+    private function findFrontendAgentForSession(object $session): ?SysAiAgent
+    {
+        $memberIds = $session->member_ids ? json_decode($session->member_ids, true) : [];
+        if (! is_array($memberIds) || $memberIds === []) {
+            return null;
+        }
+
+        return SysAiAgent::query()
+            ->whereIn('id', $memberIds)
+            ->where('enabled', true)
+            ->where('type', 'custom')
+            ->where('runtime_mode', \App\Services\AiAgentService::RUNTIME_MODE_FRONTEND_PAGE_DEVELOPER)
+            ->orderBy('id')
+            ->first();
+    }
+
+    private function findAvailableFrontendAgent(): ?SysAiAgent
+    {
+        return SysAiAgent::query()
+            ->where('enabled', true)
+            ->where('type', 'custom')
+            ->where('runtime_mode', \App\Services\AiAgentService::RUNTIME_MODE_FRONTEND_PAGE_DEVELOPER)
+            ->orderBy('id')
+            ->first();
+    }
+
+    private function isFrontendPageRequest(string $question): bool
+    {
+        return preg_match('/页面|首页|落地页|前端|布局|样式|UI|按钮|hero|banner|播放器|导航|卡片|表单|颜色|背景|页头|页脚/i', $question) === 1;
+    }
+
+    private function looksLikeModelChangeRequest(string $question): bool
+    {
+        return preg_match('/内容模型|新增模型|创建模型|修改模型|增加字段|新增字段|字段配置|表单字段|mold|table_name/i', $question) === 1;
+    }
+
+    private function normalizeSessionMeta(mixed $meta): array
+    {
+        if (is_array($meta)) {
+            return $meta;
+        }
+
+        if (is_string($meta) && $meta !== '') {
+            $decoded = json_decode($meta, true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
+        }
+
+        return [];
     }
 
     private function summarizeMoldFields($fieldsJson, $listShowFieldsJson): string

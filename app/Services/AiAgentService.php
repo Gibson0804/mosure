@@ -8,6 +8,10 @@ use App\Repository\SysAiAgentRepository;
 
 class AiAgentService
 {
+    public const RUNTIME_MODE_GENERAL = 'general';
+
+    public const RUNTIME_MODE_FRONTEND_PAGE_DEVELOPER = 'frontend_page_developer';
+
     private SysAiAgentRepository $agentRepo;
 
     public function __construct(SysAiAgentRepository $agentRepo)
@@ -106,41 +110,57 @@ class AiAgentService
 
     public function createCustomAgent(int $userId, array $data): SysAiAgent
     {
+        $runtimeMode = $this->normalizeRuntimeMode($data['runtime_mode'] ?? null);
         $name = $data['name'] ?? '';
         $description = $data['description'] ?? '';
         $personality = $data['personality'] ?? [];
         $dialogueStyle = $data['dialogue_style'] ?? [];
         $corePrompt = $data['core_prompt'] ?? '';
+        $projectId = $this->resolveProjectBinding($runtimeMode, $data);
 
         if (empty($corePrompt)) {
-            $corePrompt = $this->generateCorePrompt($name, $description, $personality, $dialogueStyle);
+            $corePrompt = $this->generatePromptByRuntimeMode($runtimeMode, $name, $description, $personality, $dialogueStyle);
         }
 
         return SysAiAgent::create([
             'user_id' => $userId,
             'type' => 'custom',
             'identifier' => 'custom_'.uniqid(),
+            'project_id' => $projectId,
             'name' => $name,
-            'description' => $description,
+            'description' => $this->resolveDescriptionByRuntimeMode($runtimeMode, $description),
             'avatar' => $data['avatar'] ?? '',
             'personality' => $personality,
             'dialogue_style' => $dialogueStyle,
             'enabled' => true,
             'core_prompt' => $corePrompt,
+            'runtime_mode' => $runtimeMode,
         ]);
     }
 
     public function updateAgent(int $agentId, array $data): bool
     {
+        $runtimeMode = $this->normalizeRuntimeMode($data['runtime_mode'] ?? null);
+        $agent = SysAiAgent::find($agentId);
+        if (! $agent) {
+            return false;
+        }
+
         if (isset($data['core_prompt']) && empty($data['core_prompt'])) {
             $name = $data['name'] ?? '';
             $description = $data['description'] ?? '';
             $personality = $data['personality'] ?? [];
             $dialogueStyle = $data['dialogue_style'] ?? [];
-            $data['core_prompt'] = $this->generateCorePrompt($name, $description, $personality, $dialogueStyle);
+            $data['core_prompt'] = $this->generatePromptByRuntimeMode($runtimeMode, $name, $description, $personality, $dialogueStyle);
         }
 
-        return SysAiAgent::where('id', $agentId)->update($data) > 0;
+        $data['runtime_mode'] = $runtimeMode;
+        $data['description'] = $this->resolveDescriptionByRuntimeMode($runtimeMode, $data['description'] ?? '');
+        $data['project_id'] = $this->resolveProjectBinding($runtimeMode, $data, false);
+
+        $agent->fill($data);
+
+        return $agent->save();
     }
 
     public function deleteAgent(int $agentId): bool
@@ -172,9 +192,11 @@ class AiAgentService
         $agentData['description'] = $agentData['description'] ?? '';
         $agentData['personality'] = $agentData['personality'] ?? [];
         $agentData['dialogue_style'] = $agentData['dialogue_style'] ?? [];
+        $runtimeMode = $this->normalizeRuntimeMode($agentData['runtime_mode'] ?? null);
 
         if (empty($agentData['core_prompt'])) {
-            $agentData['core_prompt'] = $this->generateCorePrompt(
+            $agentData['core_prompt'] = $this->generatePromptByRuntimeMode(
+                $runtimeMode,
                 $agentData['name'],
                 $agentData['description'],
                 $agentData['personality'],
@@ -250,6 +272,58 @@ class AiAgentService
 PROMPT;
     }
 
+    public function generateFrontendCorePrompt(string $name, ?string $description = null): string
+    {
+        $description = trim((string) ($description ?? ''));
+        if ($description === '') {
+            $description = '负责当前项目的前端页面创建、修改和发布。';
+        }
+
+        return <<<PROMPT
+你是 {$name}，是当前项目的前端页面开发成员。
+
+## 你的唯一职责
+1. 处理当前项目的前端页面新建与修改需求。
+2. 只生成和修改 HTML、CSS、JavaScript 页面代码。
+3. 页面必须符合 Mosure 当前页面托管方式，可发布并返回访问地址。
+
+## 你的边界
+1. 你不负责内容模型结构设计，不负责数据库结构调整。
+2. 你不回答与前端页面无关的问题。
+3. 你不操作其他项目资源。
+4. 你不生成 Vue、React、Svelte 等源码，不生成构建脚本。
+
+## 页面实现约束
+1. 只输出可直接运行的 HTML、CSS、JavaScript。
+2. CSS 与 JavaScript 优先内联。
+3. 若页面需要数据交互，只能通过 window.Mosure。
+4. 修改已有页面时应优先保留原结构并做最小必要改动。
+
+## 视觉设计约束
+1. 页面必须有清晰视觉层级，不做通用后台模板感。
+2. 配色需收敛，主色、辅色、中性色清晰。
+3. 避免默认紫色风格、默认暗黑风和生硬系统字体组合。
+4. 背景需要层次，不能只是纯白空板。
+5. 仅保留少量必要动画，不堆无意义微交互。
+6. 移动端必须优先可用。
+
+## 无关问题处理
+如果用户的问题与前端页面开发无关，请礼貌拒绝，并提示对方联系项目助手或秘书。
+
+## 你的职责说明
+{$description}
+PROMPT;
+    }
+
+    public function generatePromptByRuntimeMode(string $runtimeMode, string $name, ?string $description, array $personality, array $dialogueStyle): string
+    {
+        if ($runtimeMode === self::RUNTIME_MODE_FRONTEND_PAGE_DEVELOPER) {
+            return $this->generateFrontendCorePrompt($name, $description);
+        }
+
+        return $this->generateCorePrompt($name, $description, $personality, $dialogueStyle);
+    }
+
     private function formatAgent(SysAiAgent $agent): array
     {
         return [
@@ -267,7 +341,44 @@ PROMPT;
             'core_prompt' => $agent->core_prompt,
             'tools' => $agent->tools,
             'capabilities' => $agent->capabilities,
+            'runtime_mode' => $agent->runtime_mode ?? self::RUNTIME_MODE_GENERAL,
         ];
+    }
+
+    private function normalizeRuntimeMode(mixed $runtimeMode): string
+    {
+        $runtimeMode = is_string($runtimeMode) ? trim($runtimeMode) : '';
+
+        return $runtimeMode === self::RUNTIME_MODE_FRONTEND_PAGE_DEVELOPER
+            ? self::RUNTIME_MODE_FRONTEND_PAGE_DEVELOPER
+            : self::RUNTIME_MODE_GENERAL;
+    }
+
+    private function resolveProjectBinding(string $runtimeMode, array $data, bool $strict = true): ?int
+    {
+        if ($runtimeMode !== self::RUNTIME_MODE_FRONTEND_PAGE_DEVELOPER) {
+            return isset($data['project_id']) ? (int) $data['project_id'] : null;
+        }
+
+        $projectId = isset($data['project_id']) ? (int) $data['project_id'] : 0;
+        if ($projectId <= 0) {
+            return null;
+        }
+
+        return $projectId;
+    }
+
+    private function resolveDescriptionByRuntimeMode(string $runtimeMode, string $description): string
+    {
+        if ($runtimeMode !== self::RUNTIME_MODE_FRONTEND_PAGE_DEVELOPER) {
+            return $description;
+        }
+
+        $description = trim($description);
+
+        return $description !== ''
+            ? $description
+            : '负责当前项目的前端页面创建、修改与发布，只处理页面相关问题。';
     }
 
     private function getDefaultSecretary(): array

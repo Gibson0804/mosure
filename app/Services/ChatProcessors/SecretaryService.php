@@ -2,8 +2,10 @@
 
 namespace App\Services\ChatProcessors;
 
+use App\Ai\AiToolRegistry;
 use App\Models\SysAiAgent;
 use App\Models\SysAiMessage;
+use App\Services\AgentKnowledgeBaseToolService;
 use App\Services\GptService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -12,9 +14,12 @@ class SecretaryService
 {
     private GptService $gptService;
 
+    private AgentKnowledgeBaseToolService $knowledgeBaseToolService;
+
     public function __construct()
     {
         $this->gptService = app(GptService::class);
+        $this->knowledgeBaseToolService = app(AgentKnowledgeBaseToolService::class);
     }
 
     public function process(SysAiMessage $message, SysAiAgent $agent): void
@@ -39,6 +44,13 @@ class SecretaryService
         $dispatchableAgents = $this->getDispatchableAgents($sessionId, $userId);
         $context = AgentService::getConversationContext($sessionId, 20);
         $conversationFocus = $this->resolveConversationFocus($context, $userProjects, $dispatchableAgents);
+
+        if ($this->shouldHandleKnowledgeBase($question, $context)) {
+            $answer = $this->handleKnowledgeBase($question, $context, $userId);
+            app(AgentService::class)->replyToUser($message, $answer, $agent);
+
+            return;
+        }
 
         if ($this->shouldForceProjectDispatch($question, $conversationFocus, $userProjects, $dispatchableAgents)) {
             app(AgentService::class)->replyToUser($message, '好的，我来帮您处理。', $agent);
@@ -279,6 +291,202 @@ class SecretaryService
 
 注意：dispatch 和 direct_answer 只能选择一个优先使用。
 PROMPT;
+    }
+
+    private function shouldHandleKnowledgeBase(string $question, array $context = []): bool
+    {
+        $q = trim($question);
+        if ($q === '') {
+            return false;
+        }
+
+        if (preg_match('/^\/kb(\s+|$)/iu', $q) === 1) {
+            return true;
+        }
+
+        if (preg_match('/^\d+$/', $q) === 1) {
+            $recentText = implode("\n", array_map(fn ($item) => (string) ($item['content'] ?? ''), array_slice($context, -6)));
+            if (preg_match('/(选择编号|候选文档|可能的文档|文档列表|need_user_selection)/u', $recentText) === 1) {
+                return true;
+            }
+        }
+
+        return preg_match('/(知识库|文档|笔记|待办|代办|todo|TODO|记录到|记到|写到|追加到|补充到|新建.*文档|创建.*文档|更新.*文档|编辑.*文档|修改.*文档|新增.*(待办|代办|todo|TODO)|添加.*(待办|代办|todo|TODO)|把.+改成|将.+改为|替换.+为)/u', $q) === 1;
+    }
+
+    private function handleKnowledgeBase(string $question, array $context, int $userId): string
+    {
+        $cleanQuestion = trim((string) preg_replace('/^\/kb\s*/iu', '', trim($question)));
+        if ($cleanQuestion === '') {
+            $cleanQuestion = '查看知识库文档';
+        }
+
+        $replacementAnswer = $this->tryHandleKnowledgeBaseReplacement($cleanQuestion, $context);
+        if ($replacementAnswer !== null) {
+            return $replacementAnswer;
+        }
+
+        $directAnswer = $this->tryHandleSimpleKnowledgeBaseQuery($cleanQuestion);
+        if ($directAnswer !== null) {
+            return $directAnswer;
+        }
+
+        $messages = [
+            [
+                'role' => 'system',
+                'content' => <<<PROMPT
+你是知识库助手。秘书可以操作全部知识库文档；新建文档默认放到默认知识库（非项目目录）的“默认”目录。
+
+规则：
+1. 用户以 /kb 开头时，必须按知识库任务理解。
+2. 可以查询、读取、新建、修改、追加文档内容。
+3. 可以新建知识库目录；用户说“新建目录/创建目录/新增分类”时调用 kb_global_create_category。
+4. 不允许删除文档或目录；用户要求删除时，明确说明当前不支持删除。
+5. 用户说“在某目录下新建文档 XXX”时，调用 kb_global_create_doc 并传 categoryPath，例如 categoryPath="/电子商务"；不要先调用目录创建工具，除非目录不存在且用户明确要求创建目录。
+6. 用户说“新建一个 XXX 文档”且没有指定目录时，调用 kb_global_create_doc，新文档会放到“默认”目录。
+7. 用户说“在 XXX 文档记录/记下/补充/追加 ...”时，优先用 title 查找并调用 kb_global_append_doc；找不到且意图明确时可 createIfMissing=true。
+8. 用户要求修改文档正文时，优先调用通用工具 kb_global_modify_doc_content；复杂改写应先读取文档再传 updatedContent，局部“把 A 改成 B”可传 oldText 和 newText，追加可传 appendContent。
+9. 修改完整正文前应先读取文档，避免覆盖已有内容；追加记录也可以用 append 工具。
+10. 如果工具返回 need_user_selection=true，必须把 candidates 按“1. /path/doc_name（id: xx）”格式列给用户，并请用户回复编号；不要继续新建或修改。
+11. 用户只回复编号时，结合上一轮候选文档，用对应候选的 id 执行原本要做的修改或追加。
+12. 如果用户说“新增一个待办/代办/todo”但没说文档名，优先理解为要写入已有 todo/待办类文档；先查询相关文档，不要直接回答无法处理。
+13. 回答简洁说明已完成的动作和文档标题或目录路径。
+PROMPT,
+            ],
+        ];
+
+        if (! empty($context)) {
+            $messages[] = ['role' => 'system', 'content' => '以下历史仅用于理解“它/这个文档”等上下文，只处理最后一条用户消息。'];
+            foreach (array_slice($context, -10) as $ctx) {
+                $role = ($ctx['role'] ?? 'user') === 'assistant' ? 'assistant' : 'user';
+                $sender = $ctx['sender'] ?? ($role === 'assistant' ? '助手' : '用户');
+                $messages[] = [
+                    'role' => $role,
+                    'content' => "[{$sender}]: {$ctx['content']}",
+                ];
+            }
+        }
+
+        $messages[] = ['role' => 'user', 'content' => $cleanQuestion];
+
+        $tools = $this->filterToolsByPrefix(AiToolRegistry::all(), 'kb_global_');
+        try {
+            $result = $this->gptService->chatWithTools($messages, $tools, $userId, $cleanQuestion, 6);
+            $answer = trim((string) ($result['content'] ?? $result['text'] ?? ''));
+        } catch (\Throwable $e) {
+            Log::error('SecretaryService: knowledge base tool chat failed', [
+                'error' => $e->getMessage(),
+                'question' => mb_substr($cleanQuestion, 0, 120),
+            ]);
+
+            return '知识库操作暂时失败：AI 服务连接异常。你可以稍后重试，或直接使用“当前知识库有哪些文档”这类查询。';
+        }
+
+        return $answer !== '' ? $answer : '知识库操作已处理。';
+    }
+
+    private function tryHandleKnowledgeBaseReplacement(string $question, array $context): ?string
+    {
+        $pattern = '/(?:把|将|替换)\s*[「"“\']?(.*?)[」"”\']?\s*(?:改成|改为|替换为|为)\s*[「"“\']?(.*?)[」"”\']?\s*$/u';
+        if (preg_match($pattern, trim($question), $matches) !== 1) {
+            return null;
+        }
+
+        $oldText = trim($matches[1]);
+        $newText = trim($matches[2]);
+        if ($oldText === '' || $newText === '') {
+            return null;
+        }
+
+        $docTitle = $this->extractKnowledgeBaseDocTitle($question, $context);
+        if ($docTitle === null) {
+            return '请先说明要修改哪个文档，例如：在 亚马逊电商 文档中，把 大单品选品 改成 爆款大单品选周边配件。';
+        }
+
+        $result = $this->knowledgeBaseToolService->modifyGlobalDocContent(
+            id: null,
+            title: $docTitle,
+            editInstruction: $question,
+            oldText: $oldText,
+            newText: $newText
+        );
+        if (($result['success'] ?? false) === true) {
+            $count = (int) ($result['modified_count'] ?? 1);
+
+            return "已在「{$docTitle}」文档中按要求完成修改（修改 {$count} 处）。";
+        }
+
+        if (($result['need_user_selection'] ?? false) === true && is_array($result['candidates'] ?? null)) {
+            $lines = [];
+            foreach ($result['candidates'] as $index => $candidate) {
+                $path = (string) ($candidate['path'] ?? $candidate['title'] ?? '');
+                $id = (int) ($candidate['id'] ?? 0);
+                $lines[] = ($index + 1).". {$path}（id: {$id}）";
+            }
+
+            return "找到多个可能的文档，请回复编号后我再修改：\n".implode("\n", $lines);
+        }
+
+        return '修改失败：'.(string) ($result['error'] ?? '未能完成修改');
+    }
+
+    private function extractKnowledgeBaseDocTitle(string $question, array $context): ?string
+    {
+        $texts = array_merge(
+            [$question],
+            array_reverse(array_map(fn ($item) => (string) ($item['content'] ?? ''), array_slice($context, -8)))
+        );
+
+        foreach ($texts as $text) {
+            if (preg_match('/(?:在|向)\s*[「"“\']?(.+?)\s*文档[」"”\']?\s*(?:中|里|内)?/u', $text, $matches) === 1) {
+                $title = trim($matches[1]);
+                if ($title !== '') {
+                    return $title;
+                }
+            }
+
+            if (preg_match('/[「"“\'](.+?)[」"”\']文档/u', $text, $matches) === 1) {
+                $title = trim($matches[1]);
+                if ($title !== '') {
+                    return $title;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private function tryHandleSimpleKnowledgeBaseQuery(string $question): ?string
+    {
+        if (preg_match('/(有哪些|列出|列表|查看|查询).*(知识库|文档)|(知识库|文档).*(有哪些|列表)/u', $question) !== 1) {
+            return null;
+        }
+
+        $result = $this->knowledgeBaseToolService->listGlobalDocs(null, 1, 50);
+        $items = $result['items'] ?? [];
+        if (! is_array($items) || $items === []) {
+            return '当前知识库还没有文档。';
+        }
+
+        $lines = [];
+        foreach ($items as $index => $item) {
+            $id = (int) ($item['id'] ?? 0);
+            $title = (string) ($item['title'] ?? '未命名文档');
+            $updatedAt = (string) ($item['updated_at'] ?? '');
+            $suffix = $updatedAt !== '' ? "，更新于 {$updatedAt}" : '';
+            $lines[] = ($index + 1).". {$title}（id: {$id}{$suffix}）";
+        }
+
+        return "当前知识库文档：\n".implode("\n", $lines);
+    }
+
+    private function filterToolsByPrefix(array $tools, string $prefix): array
+    {
+        return array_filter(
+            $tools,
+            fn ($tool, $name) => str_starts_with((string) $name, $prefix),
+            ARRAY_FILTER_USE_BOTH
+        );
     }
 
     private function shouldDirectAnswer(string $question, $userProjects, array $agents, ?array $conversationFocus): bool
