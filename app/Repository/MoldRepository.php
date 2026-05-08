@@ -169,7 +169,9 @@ class MoldRepository
     {
         $projectPrefix = session('current_project_prefix', 'default');
 
-        $tableName = $projectPrefix.ProjectConstants::MODEL_CONTENT_PREFIX.$tableName;
+        if (! str_starts_with($tableName, $projectPrefix)) {
+            $tableName = $projectPrefix.ProjectConstants::MODEL_CONTENT_PREFIX.$tableName;
+        }
 
         return $tableName;
     }

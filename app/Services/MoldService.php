@@ -224,6 +224,28 @@ class MoldService extends BaseService
         return $this->moldRepository->getAllMold();
     }
 
+    #[AiTool(
+        name: 'add_form',
+        description: '添加内容模型',
+        params: [
+            'field' => '字段数组,字段定义数组。每个元素必须包含 field(字段名)、label(字段标题)、type(字段类型)。支持的type：input(单行文本)、textarea(多行文本)、radio(单选)、switch(开关)、checkbox(复选)、select(下拉选择)、numInput(数字输入)、colorPicker(颜色选择器)、dateTimePicker(日期时间选择器)、datePicker(日期选择器)、timePicker(时间选择器)、fileUpload(文件上传)、picUpload(图片上传)、picGallery(图片集)、richText(富文本编辑器)、dividingLine(分割线)、slider(滑块)、rate(评分)、cascader(级联选择器)、dateRangePicker(日期范围选择器)、tags(标签)。格式示例：[{"field":"title","label":"标题","type":"input"}]',
+            'name' => '模型名称',
+            'tableName' => '模型对应的数据库表名',
+            'moldType' => '模型类型：list(内容模型，多条数据) 或 single(单页模型，单条数据)',
+        ]
+    )]
+    public function addFormForTools(array $field, string $name, string $tableName, string $moldType)
+    {
+        $data = [
+            'name' => $name,
+            'table_name' => $tableName,
+            'mold_type' => $moldType,
+            'fields' => $field,
+        ];
+
+        $this->addForm($data);
+    }
+
     public function addForm($data)
     {
 
@@ -272,6 +294,48 @@ class MoldService extends BaseService
 
         return $moldId;
 
+    }
+
+    #[AiTool(
+        name: 'edit_form',
+        description: '修改内容模型',
+        params: [
+            'arguments' => '数组类型可以修改的字段包含name,table_name,mold_type,fields。name:string类型，模型名称，table_name:string类型，模型的数据表名，mold_type:string类型 值可以为list(内容模型，多条数据) 或 single(单页模型，单条数据)，fields:字段数组,字段定义数组。每个元素必须包含 field(字段名)、label(字段标题)、type(字段类型)。支持的type：input(单行文本)、textarea(多行文本)、radio(单选)、switch(开关)、checkbox(复选)、select(下拉选择)、numInput(数字输入)、colorPicker(颜色选择器)、dateTimePicker(日期时间选择器)、datePicker(日期选择器)、timePicker(时间选择器)、fileUpload(文件上传)、picUpload(图片上传)、picGallery(图片集)、richText(富文本编辑器)、dividingLine(分割线)、slider(滑块)、rate(评分)、cascader(级联选择器)、dateRangePicker(日期范围选择器)、tags(标签)。格式示例：[{"field":"title","label":"标题","type":"input"}]',
+            'moldId' => '模型ID',
+        ]
+    )]
+    public function editFormByIdForTools(array $arguments, int $moldId)
+    {
+
+            $updateData = [];
+            foreach (['name', 'table_name'] as $field) {
+                if (isset($arguments[$field])) {
+                    $updateData[$field] = $arguments[$field];
+                }
+            }
+
+            if (isset($arguments['mold_type'])) {
+                $updateData['mold_type'] = $this->normalizeMoldType($arguments['mold_type']);
+            }
+
+            if (isset($arguments['fields'])) {
+                $fields = $arguments['fields'];
+                if (! is_array($fields)) {
+                    $fields = json_decode((string) $fields, true) ?? [];
+                }
+                $updateData['fields'] = $this->normalizeFields($fields);
+            }
+
+            if (! empty($updateData)) {
+                $this->editFormById($updateData, $moldId);
+
+                if (isset($updateData['mold_type']) && $updateData['mold_type'] === MoldRepository::CONTENT_MOLD_TYPE) {
+                    $this->getTableByField($updateData['table_name'] ?? '', $updateData['fields'] ?? []);
+                }
+            }
+
+
+        return $this->editFormById($updateData, $moldId);
     }
 
     public function editFormById($data, $id)
