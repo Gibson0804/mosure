@@ -17,15 +17,15 @@ class KnowledgeBaseProjectTool extends Tool
 {
     public function description(): string
     {
-        return '项目知识库文档管理。仅允许操作当前 MCP 令牌所属项目目录下的文档。action: list_categories|list_docs|get_doc|create_doc|update_doc|delete_doc';
+        return '项目知识库文档与目录管理。仅允许操作当前 MCP 令牌所属项目目录下的文档和目录。action: list_categories|list_docs|get_doc|create_doc|update_doc|delete_doc|create_category|update_category|delete_category|get_category';
     }
 
     public function schema(ToolInputSchema $schema): ToolInputSchema
     {
-        $schema->string('action')->description('操作类型：list_categories|list_docs|get_doc|create_doc|update_doc|delete_doc')->required();
-        $schema->integer('id')->description('文档 ID（get_doc/update_doc/delete_doc）');
-        $schema->integer('category_id')->description('分类 ID（list_docs/create_doc/update_doc 可选）');
-        $schema->string('title')->description('文档标题（create_doc/update_doc）');
+        $schema->string('action')->description('操作类型：list_categories|list_docs|get_doc|create_doc|update_doc|delete_doc|create_category|update_category|delete_category|get_category')->required();
+        $schema->integer('id')->description('文档 ID（get_doc/update_doc/delete_doc）或目录 ID（update_category/delete_category/get_category）');
+        $schema->integer('category_id')->description('分类/目录 ID（list_docs/create_doc/update_doc/create_category 可选）');
+        $schema->string('title')->description('文档标题（create_doc/update_doc）或目录名称（create_category/update_category）');
         $schema->string('summary')->description('文档摘要（create_doc/update_doc）');
         $schema->string('content')->description('文档 Markdown 内容（create_doc/update_doc）');
         $schema->string('content_html')->description('文档 HTML 内容（create_doc/update_doc）');
@@ -34,6 +34,7 @@ class KnowledgeBaseProjectTool extends Tool
         $schema->integer('page')->description('页码（list_docs 可选，默认 1）');
         $schema->integer('page_size')->description('每页数量（list_docs 可选，默认 20，最大 100）');
         $schema->raw('tags', ['type' => 'array', 'description' => '标签数组（create_doc/update_doc 可选）']);
+        $schema->integer('sort_order')->description('排序权重（create_category/update_category 可选，默认 0）');
 
         return $schema;
     }
@@ -50,9 +51,14 @@ class KnowledgeBaseProjectTool extends Tool
                 'get_doc' => $this->handleGetDoc($ctx, $arguments),
                 'create_doc' => $this->handleCreateDoc($ctx, $arguments),
                 'update_doc' => $this->handleUpdateDoc($ctx, $arguments),
+                'delete_doc' => $this->handleDeleteDoc($ctx, $arguments),
+                'get_category' => $this->handleGetCategory($ctx, $arguments),
+                'create_category' => $this->handleCreateCategory($ctx, $arguments),
+                'update_category' => $this->handleUpdateCategory($ctx, $arguments),
+                'delete_category' => $this->handleDeleteCategory($ctx, $arguments),
                 default => ToolResult::text(json_encode([
                     'success' => false,
-                    'error' => '未知 action，支持：list_categories|list_docs|get_doc|create_doc|update_doc|delete_doc',
+                    'error' => '未知 action，支持：list_categories|list_docs|get_doc|create_doc|update_doc|delete_doc|create_category|update_category|delete_category|get_category',
                 ], JSON_UNESCAPED_UNICODE)),
             };
         } catch (\Throwable $e) {
@@ -234,6 +240,187 @@ class KnowledgeBaseProjectTool extends Tool
         return ToolResult::text(json_encode(['success' => true, 'item' => $article], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
     }
 
+    private function handleDeleteDoc(array $ctx, array $arguments): ToolResult
+    {
+        $id = (int) ($arguments['id'] ?? 0);
+        if ($id <= 0) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => '缺少有效的 id'], JSON_UNESCAPED_UNICODE));
+        }
+
+        $article = KbArticle::query()
+            ->where('id', $id)
+            ->where('user_id', $ctx['user_id'])
+            ->first();
+        if (! $article || ! in_array((int) $article->category_id, $ctx['category_ids'], true)) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => '文档不存在或无访问权限'], JSON_UNESCAPED_UNICODE));
+        }
+
+        $article->delete();
+
+        return ToolResult::text(json_encode(['success' => true, 'message' => '文档已删除', 'id' => $id], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+    }
+
+    private function handleGetCategory(array $ctx, array $arguments): ToolResult
+    {
+        $id = (int) ($arguments['id'] ?? 0);
+        if ($id <= 0) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => '缺少有效的 id'], JSON_UNESCAPED_UNICODE));
+        }
+
+        if (! in_array($id, $ctx['category_ids'], true)) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => '目录不存在或无访问权限'], JSON_UNESCAPED_UNICODE));
+        }
+
+        $category = KbCategory::query()
+            ->where('id', $id)
+            ->where('user_id', $ctx['user_id'])
+            ->first(['id', 'parent_id', 'title', 'slug', 'sort_order', 'created_at', 'updated_at']);
+
+        if (! $category) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => '目录不存在'], JSON_UNESCAPED_UNICODE));
+        }
+
+        $children = KbCategory::query()
+            ->where('user_id', $ctx['user_id'])
+            ->where('parent_id', $id)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get(['id', 'parent_id', 'title', 'slug', 'sort_order', 'created_at', 'updated_at']);
+
+        $articles = KbArticle::query()
+            ->where('user_id', $ctx['user_id'])
+            ->where('category_id', $id)
+            ->orderByDesc('updated_at')
+            ->get(['id', 'category_id', 'title', 'summary', 'slug', 'status', 'tags', 'created_at', 'updated_at']);
+
+        return ToolResult::text(json_encode([
+            'success' => true,
+            'category' => $category,
+            'children' => $children,
+            'articles' => $articles,
+        ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+    }
+
+    private function handleCreateCategory(array $ctx, array $arguments): ToolResult
+    {
+        $title = trim((string) ($arguments['title'] ?? ''));
+        if ($title === '') {
+            return ToolResult::text(json_encode(['success' => false, 'error' => 'title 不能为空'], JSON_UNESCAPED_UNICODE));
+        }
+
+        $parentId = isset($arguments['category_id']) ? (int) $arguments['category_id'] : (int) $ctx['root_category']->id;
+        if (! in_array($parentId, $ctx['category_ids'], true)) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => 'category_id 不属于当前项目知识库目录'], JSON_UNESCAPED_UNICODE));
+        }
+
+        $slug = Str::slug($title);
+        if ($slug === '') {
+            $slug = Str::lower(Str::random(8));
+        }
+
+        $category = KbCategory::query()->create([
+            'user_id' => $ctx['user_id'],
+            'parent_id' => $parentId,
+            'title' => $title,
+            'slug' => $slug,
+            'sort_order' => (int) ($arguments['sort_order'] ?? 0),
+        ]);
+
+        return ToolResult::text(json_encode([
+            'success' => true,
+            'id' => $category->id,
+            'item' => $category->only(['id', 'parent_id', 'title', 'slug', 'sort_order', 'created_at', 'updated_at']),
+        ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+    }
+
+    private function handleUpdateCategory(array $ctx, array $arguments): ToolResult
+    {
+        $id = (int) ($arguments['id'] ?? 0);
+        if ($id <= 0) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => '缺少有效的 id'], JSON_UNESCAPED_UNICODE));
+        }
+
+        if (! in_array($id, $ctx['category_ids'], true)) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => '目录不存在或无访问权限'], JSON_UNESCAPED_UNICODE));
+        }
+
+        $category = KbCategory::query()
+            ->where('id', $id)
+            ->where('user_id', $ctx['user_id'])
+            ->first();
+        if (! $category) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => '目录不存在'], JSON_UNESCAPED_UNICODE));
+        }
+
+        $payload = [];
+        if (array_key_exists('title', $arguments)) {
+            $newTitle = trim((string) $arguments['title']);
+            if ($newTitle !== '') {
+                $payload['title'] = $newTitle;
+                $payload['slug'] = Str::slug($newTitle);
+            }
+        }
+        if (array_key_exists('sort_order', $arguments)) {
+            $payload['sort_order'] = (int) $arguments['sort_order'];
+        }
+        if (array_key_exists('category_id', $arguments)) {
+            $newParentId = (int) $arguments['category_id'];
+            if ($newParentId !== $id && in_array($newParentId, $ctx['category_ids'], true)) {
+                $payload['parent_id'] = $newParentId;
+            }
+        }
+
+        if (! empty($payload)) {
+            $category->update($payload);
+            $category->refresh();
+        }
+
+        return ToolResult::text(json_encode([
+            'success' => true,
+            'item' => $category->only(['id', 'parent_id', 'title', 'slug', 'sort_order', 'created_at', 'updated_at']),
+        ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+    }
+
+    private function handleDeleteCategory(array $ctx, array $arguments): ToolResult
+    {
+        $id = (int) ($arguments['id'] ?? 0);
+        if ($id <= 0) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => '缺少有效的 id'], JSON_UNESCAPED_UNICODE));
+        }
+
+        if ($id === (int) $ctx['root_category']->id) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => '不能删除根目录'], JSON_UNESCAPED_UNICODE));
+        }
+
+        if (! in_array($id, $ctx['category_ids'], true)) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => '目录不存在或无访问权限'], JSON_UNESCAPED_UNICODE));
+        }
+
+        $category = KbCategory::query()
+            ->where('id', $id)
+            ->where('user_id', $ctx['user_id'])
+            ->first();
+        if (! $category) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => '目录不存在'], JSON_UNESCAPED_UNICODE));
+        }
+
+        $descendantIds = $this->getDescendantCategoryIds($ctx['user_id'], $id);
+        if (count($descendantIds) > 1) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => '该目录下存在子目录，请先删除子目录'], JSON_UNESCAPED_UNICODE));
+        }
+
+        $articleCount = KbArticle::query()
+            ->where('user_id', $ctx['user_id'])
+            ->where('category_id', $id)
+            ->count();
+        if ($articleCount > 0) {
+            return ToolResult::text(json_encode(['success' => false, 'error' => "该目录下存在 {$articleCount} 篇文档，请先移走或删除文档"], JSON_UNESCAPED_UNICODE));
+        }
+
+        $category->delete();
+
+        return ToolResult::text(json_encode(['success' => true, 'message' => '目录已删除', 'id' => $id], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+    }
 
     private function resolveContext(): array
     {
