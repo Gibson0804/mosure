@@ -3,9 +3,12 @@
 namespace App\Services;
 
 use App\Ai\Attributes\AiTool;
+use App\Jobs\ProcessSysTaskJob;
 use App\Models\ProjectCron;
 use App\Models\ProjectFunction;
 use App\Models\ProjectTrigger;
+use App\Models\SysTask;
+use App\Repository\SysTaskRepository;
 
 class CloudFunctionService extends BaseService
 {
@@ -208,6 +211,32 @@ class CloudFunctionService extends BaseService
         $fn->save();
 
         return $this->get($id, $type);
+    }
+
+    public function suggestCode(string $question, string $functionType, array $models = [], ?int $requestedBy = null): array
+    {
+        $taskRepository = app(SysTaskRepository::class);
+
+        $task = $taskRepository->createTask([
+            'type' => SysTask::TYPE_FUNCTION_CODE_SUGGEST,
+            'status' => SysTask::STATUS_PENDING,
+            'title' => '函数代码生成: '.mb_substr((string) $question, 0, 50),
+            'payload' => [
+                'suggest' => $question,
+                'function_type' => $functionType,
+                'models' => $models,
+            ],
+            'requested_by' => $requestedBy,
+            'related_type' => 'function',
+            'related_id' => 0,
+        ]);
+
+        ProcessSysTaskJob::dispatch($task->id);
+
+        return [
+            'task_id' => $task->id,
+            'status' => $task->status,
+        ];
     }
 
     public function executions(int $functionId, int $page = 1, int $pageSize = 15): array

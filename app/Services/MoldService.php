@@ -225,7 +225,7 @@ class MoldService extends BaseService
     }
 
     #[AiTool(
-        name: 'add_form',
+        name: 'add_mold',
         description: '添加内容模型',
         params: [
             'field' => '字段数组,字段定义数组。每个元素必须包含 field(字段名)、label(字段标题)、type(字段类型)。支持的type：input(单行文本)、textarea(多行文本)、radio(单选)、switch(开关)、checkbox(复选)、select(下拉选择)、numInput(数字输入)、colorPicker(颜色选择器)、dateTimePicker(日期时间选择器)、datePicker(日期选择器)、timePicker(时间选择器)、fileUpload(文件上传)、picUpload(图片上传)、picGallery(图片集)、richText(富文本编辑器)、dividingLine(分割线)、slider(滑块)、rate(评分)、cascader(级联选择器)、dateRangePicker(日期范围选择器)、tags(标签)。格式示例：[{"field":"title","label":"标题","type":"input"}]',
@@ -297,7 +297,7 @@ class MoldService extends BaseService
     }
 
     #[AiTool(
-        name: 'edit_form',
+        name: 'edit_mold',
         description: '修改内容模型',
         params: [
             'arguments' => '数组类型可以修改的字段包含name,table_name,mold_type,fields。name:string类型，模型名称，table_name:string类型，模型的数据表名，mold_type:string类型 值可以为list(内容模型，多条数据) 或 single(单页模型，单条数据)，fields:字段数组,字段定义数组。每个元素必须包含 field(字段名)、label(字段标题)、type(字段类型)。支持的type：input(单行文本)、textarea(多行文本)、radio(单选)、switch(开关)、checkbox(复选)、select(下拉选择)、numInput(数字输入)、colorPicker(颜色选择器)、dateTimePicker(日期时间选择器)、datePicker(日期选择器)、timePicker(时间选择器)、fileUpload(文件上传)、picUpload(图片上传)、picGallery(图片集)、richText(富文本编辑器)、dividingLine(分割线)、slider(滑块)、rate(评分)、cascader(级联选择器)、dateRangePicker(日期范围选择器)、tags(标签)。格式示例：[{"field":"title","label":"标题","type":"input"}]',

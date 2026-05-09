@@ -144,9 +144,9 @@ class ContentController extends BaseOpenController
             $data = $request->all();
 
             // 调用 ContentService 创建内容（会触发触发器）
-            $this->contentService->addContent($data, $moldId);
+            $res = $this->contentService->addContent($data, $moldId);
 
-            return $this->success(['message' => '创建成功']);
+            return $this->success(['id' => $res['id'],'message' => '创建成功']);
 
         } catch (\Exception $e) {
             return $this->error('创建失败: '.$e->getMessage(), 500);

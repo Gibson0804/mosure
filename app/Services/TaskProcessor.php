@@ -11,6 +11,7 @@ use App\Services\TaskProcessors\ContentGenerationTaskProcessor;
 use App\Services\TaskProcessors\MarkdownEditTaskProcessor;
 use App\Services\TaskProcessors\MediaCaptureTaskProcessor;
 use App\Services\TaskProcessors\MoldSuggestTaskProcessor;
+use App\Services\TaskProcessors\FunctionCodeSuggestTaskProcessor;
 use App\Services\TaskProcessors\PageGenerationTaskProcessor;
 use App\Services\TaskProcessors\RichTextEditTaskProcessor;
 use App\Services\TaskProcessors\TaskProcessorInterface;
@@ -99,6 +100,9 @@ class TaskProcessor
 
             case SysTask::TYPE_PAGE_GENERATION:
                 return app(PageGenerationTaskProcessor::class);
+
+            case SysTask::TYPE_FUNCTION_CODE_SUGGEST:
+                return app(FunctionCodeSuggestTaskProcessor::class);
 
             default:
                 return null;

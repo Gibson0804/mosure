@@ -131,6 +131,8 @@ Route::prefix('manage')->middleware(['auth', EnsureProjectSelected::class])->gro
     Route::post('/functions/test/{id}', [CloudFunctionController::class, 'test'])->name('manage.functions.test');
     // 管理端测试：通过 slug 调用函数（允许测试禁用的函数）
     Route::post('/functions/invoke/{slug}', [CloudFunctionController::class, 'invoke'])->name('manage.functions.invoke');
+    // AI 生成函数代码
+    Route::post('/functions/suggest-code', [CloudFunctionController::class, 'suggestCode'])->name('manage.functions.suggest-code');
 
     // 云函数环境变量
     Route::get('/cloud-env', [CloudEnvController::class, 'index'])->name('manage.cloud-env');

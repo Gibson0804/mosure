@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Input, Space, message, Card, Row, Col, Divider, Alert, Switch, Select } from 'antd';
+import { Button, Form, Input, Space, message, Card, Row, Col, Divider, Alert, Switch, Select, Collapse, Tooltip } from 'antd';
+import { CopyOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import api from '../../util/Service';
 import { usePage } from '@inertiajs/react';
 import Editor from '@monaco-editor/react';
+import AiGenerateModal, { AiButton } from '../../components/AiGenerateModal';
 
 interface FnDetail {
   id: number;
@@ -36,6 +38,7 @@ const FunctionCodePage: React.FC = () => {
   const [result, setResult] = useState<string>('');
   const [err, setErr] = useState<string>('');
   const [editorTheme, setEditorTheme] = useState<'vs' | 'vs-dark'>('vs-dark');
+  const [aiModalOpen, setAiModalOpen] = useState<boolean>(false);
 
   const templates: Record<string, string> = {
     hello: `<?php\nreturn ['message' => 'Hello World', 'time' => time()];` ,
@@ -134,6 +137,113 @@ const FunctionCodePage: React.FC = () => {
     } finally { setTesting(false); }
   };
 
+  // AI 生成相关：提示词模板
+  const generateAiPrompt = () => {
+    const typeDesc = type === 'hook' ? '触发函数' : 'Web 函数（HTTP）';
+    return `你是一名 PHP 后端开发助手。请根据用户需求生成一段可在 Mosure 云函数沙箱中运行的 PHP 代码。
+
+函数类型：${typeDesc}
+
+可用环境变量：
+- $payload: 请求参数（endpoint）或事件数据（hook）
+- $env: 环境变量数组
+- $ctx: 上下文信息
+- $request: HTTP 请求对象（endpoint）
+- $prefix: 项目前缀
+- $Http: 安全的 HTTP 客户端（get/post/send 方法）
+- $db: 安全的数据库操作对象
+  - $db->select($table, $where, $fields, $limit)
+  - $db->insert($table, $data)
+  - $db->update($table, $data, $where)
+  - $db->delete($table, $where)
+  - $db->count($table, $where)
+  - $db->first($table, $where, $fields)
+  - $db->query($table) / $db->table($table) 查询构建器
+
+代码安全约束：
+- 禁止：resolve(, container(, DB::, Storage::, File::, Redis::, Cache::, Auth::, Gate::, Http::
+- 禁止：exec, shell_exec, system(, passthru, proc_open, popen, curl_exec
+- 禁止文件操作函数
+- 禁止 include/require
+
+输出要求：
+1. 仅输出 PHP 代码，以 <?php 开头
+2. 代码必须 return 一个数组
+3. 数据库表名使用 $prefix . '_' 前缀
+4. 包含适当的错误处理
+5. 不要包含解释文字
+
+请在这里描述你想要的函数功能...`;
+  };
+
+  const copyAiPrompt = () => {
+    const text = generateAiPrompt();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(() => {
+        message.success('提示词已复制到剪贴板');
+      }).catch(() => {
+        fallbackCopy(text);
+      });
+    } else {
+      fallbackCopy(text);
+    }
+  };
+
+  const fallbackCopy = (text: string) => {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      message.success(ok ? '提示词已复制到剪贴板' : '复制失败，请手动复制');
+    } catch {
+      document.body.removeChild(ta);
+      message.error('复制失败，请手动复制');
+    }
+  };
+
+  const aiPromptExtraContent = (
+    <Collapse
+      size="small"
+      style={{ marginBottom: 8 }}
+      items={[{
+        key: 'function-ai-prompt',
+        label: (
+          <span>
+            <InfoCircleOutlined style={{ marginRight: 6 }} />
+            外部 AI 工具提示词（复制给 DeepSeek / 豆包 / ChatGPT 等使用）
+          </span>
+        ),
+        children: (
+          <div>
+            <div style={{ marginBottom: 8, color: '#666', fontSize: 13 }}>
+              将以下提示词复制给任意 AI 工具，即可生成符合本系统要求的 PHP 代码，然后粘贴到编辑器中。
+            </div>
+            <div style={{ position: 'relative' }}>
+              <pre style={{
+                background: '#f5f5f5', padding: '12px 40px 12px 12px', borderRadius: 6, fontSize: 12,
+                maxHeight: 300, overflow: 'auto', whiteSpace: 'pre-wrap', wordBreak: 'break-word',
+                lineHeight: 1.6, border: '1px solid #e8e8e8',
+              }}>
+                {generateAiPrompt()}
+              </pre>
+              <Tooltip title="复制提示词">
+                <Button
+                  type="text"
+                  icon={<CopyOutlined />}
+                  onClick={copyAiPrompt}
+                  style={{ position: 'absolute', top: 8, right: 8 }}
+                />
+              </Tooltip>
+            </div>
+          </div>
+        ),
+      }]}
+    />
+  );
+
   return (
     <div style={{ padding: 24 }}>
       <Space style={{ marginBottom: 12 }}>
@@ -159,8 +269,37 @@ const FunctionCodePage: React.FC = () => {
               { label: '插件调用', value: 'plugin' },
             ]}
           />
+          <AiButton onClick={() => setAiModalOpen(true)} text="AI 生成代码" />
         </Space>
       </Space>
+
+      <AiGenerateModal
+        open={aiModalOpen}
+        onOpenChange={setAiModalOpen}
+        title="AI 生成函数代码"
+        description="描述你希望函数实现的功能，AI 将根据当前项目的内容模型生成 PHP 代码"
+        promptPlaceholder="例如：创建一个查询文章列表的接口，支持按标签筛选和分页"
+        hideModelSelect={true}
+        extraContent={aiPromptExtraContent}
+        onConfirm={async ({ prompt }) => {
+          const res = await api.post('/manage/functions/suggest-code', { suggest: prompt, type }, { timeout: 40000 });
+          const taskInfo = res?.data ?? res;
+          const taskId = taskInfo?.task_id ?? taskInfo?.id;
+          if (!taskId) {
+            throw new Error('任务创建失败，请稍后重试');
+          }
+          return taskId;
+        }}
+        onResult={async (result) => {
+          const codeResult = result?.code ?? (Array.isArray(result) ? result[0] : result);
+          if (typeof codeResult === 'string' && codeResult.trim()) {
+            setCode(codeResult);
+            message.success('代码已生成，请检查并保存');
+          } else {
+            throw new Error('未生成有效的代码');
+          }
+        }}
+      />
 
       <Card loading={loading} style={{ marginBottom: 16 }} title={detail ? `函数代码：${detail.name}${detail.slug ? ` (${detail.slug})` : ''}` : '函数代码'}>
         <div style={{ border: '1px solid #f0f0f0', borderRadius: 6, overflow: 'hidden' }}>

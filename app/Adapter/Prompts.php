@@ -545,4 +545,92 @@ single 类型模型方法：
 - single 模型只能使用 getPage/updatePage
 TXT;
     }
+
+    public static function getFunctionCodePrompt(string $question, string $functionType, array $models = []): string
+    {
+        $question = self::formatQuestion($question);
+        $functionType = self::formatQuestion($functionType);
+
+        $modelsInfo = '';
+        if (! empty($models)) {
+            $modelsJson = json_encode($models, JSON_UNESCAPED_UNICODE);
+            $modelsInfo = <<<INFO
+
+当前项目的内容模型（可用于数据库操作，表名已包含前缀）：
+{$modelsJson}
+INFO;
+        }
+
+        $typeDesc = $functionType === 'hook'
+            ? '触发函数（由内容模型事件或定时任务触发执行）'
+            : 'Web 函数（通过 HTTP 请求调用）';
+
+        return <<<HOC
+你是一名 PHP 后端开发助手。请根据用户需求生成一段可在 Mosure 云函数沙箱中运行的 PHP 代码。
+
+函数类型：{$typeDesc}
+
+用户需求：{$question}{$modelsInfo}
+
+## 可用环境变量
+
+- \$payload：请求参数（endpoint）或事件数据（hook）。对于 hook 类型，\$payload 结构为 {"mold_id":内容模型ID,"id":内容ID,"data":传入参数,"before":修改前内容,"after":修改后内容}
+- \$env：环境变量数组，通过 \$env['KEY'] 访问
+- \$ctx：上下文数组，包含 project_id 等信息
+- \$request：HTTP 请求对象（仅 endpoint 类型可用），可通过 \$request->input('key') 获取参数
+- \$prefix：项目前缀字符串，数据库表名前缀为 \$prefix . '_'
+- \$Http：安全的 HTTP 客户端
+  - \$Http->get(\$url, \$query, \$headers)
+  - \$Http->post(\$url, \$data, \$headers)
+  - \$Http->send(\$method, \$url, \$options, \$headers)
+- \$db：安全的数据库操作对象
+  - \$db->select(\$table, \$where, \$fields, \$limit) — 查询多条
+  - \$db->insert(\$table, \$data) — 插入
+  - \$db->update(\$table, \$data, \$where) — 更新
+  - \$db->delete(\$table, \$where) — 删除
+  - \$db->count(\$table, \$where) — 计数
+  - \$db->first(\$table, \$where, \$fields) — 查询单条
+  - \$db->query(\$table) — 返回查询构建器
+  - \$db->table(\$table) — 返回安全查询构建器，支持链式调用：where/orderBy/limit/offset/get/first/count/pluck/value/exists/avg/sum/max/min
+
+## 代码安全约束（以下代码会被系统拒绝）
+
+- 禁止使用：resolve(, container(, DB::, Storage::, File::, Redis::, Cache::, Auth::, Gate::, Http::
+- 禁止使用：exec, shell_exec, system(, passthru, proc_open, popen, curl_exec, curl_multi_exec
+- 禁止使用文件操作函数：fopen, file_put_contents, unlink, rename, mkdir, rmdir, copy
+- 禁止 include / require / namespace
+- 禁止 T_OPEN_TAG_WITH_ECHO (<?=)
+
+## 输出要求
+
+1. 仅输出 PHP 代码，以 <?php 开头
+2. 代码必须 return 一个数组作为结果
+3. 如果涉及数据库操作，表名必须使用 \$prefix . '_' 拼接（如 \$prefix . '_articles'）
+4. 代码应包含适当的错误处理（try-catch），出错时 return ['ok' => false, 'error' => \$e->getMessage()]
+5. 不要包含任何解释文字、注释或 Markdown 代码块
+6. 代码应简洁实用，避免过度工程化
+
+## 示例
+
+需求：查询活跃用户列表，支持分页
+输出：
+<?php
+\$page = (int)(\$payload['page'] ?? 1);
+\$pageSize = (int)(\$payload['page_size'] ?? 10);
+\$table = \$prefix . '_users';
+try {
+    \$items = \$db->select(\$table, ['active' => 1], ['id', 'name', 'email'], \$pageSize);
+    \$total = \$db->count(\$table, ['active' => 1]);
+    return [
+        'ok' => true,
+        'items' => \$items,
+        'total' => \$total,
+        'page' => \$page,
+        'page_size' => \$pageSize,
+    ];
+} catch (\Throwable \$e) {
+    return ['ok' => false, 'error' => \$e->getMessage()];
+}
+HOC;
+    }
 }

@@ -173,6 +173,8 @@ class SysTask extends Model
 
     public const TYPE_PAGE_GENERATION = 'page_generation';
 
+    public const TYPE_FUNCTION_CODE_SUGGEST = 'function_code_suggest';
+
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');

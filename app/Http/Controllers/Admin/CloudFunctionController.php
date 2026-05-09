@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Services\CloudFunctionService;
 use App\Services\FunctionService;
+use App\Services\MoldService;
 use Illuminate\Http\Request;
 
 class CloudFunctionController extends Controller
@@ -158,5 +159,50 @@ class CloudFunctionController extends Controller
         [$code, $payload] = $functionService->invokeBySlugForAdmin($request, $prefix, $slug);
 
         return response()->json($payload, $code);
+    }
+
+    /**
+     * AI 生成函数代码
+     */
+    public function suggestCode(Request $request, CloudFunctionService $service, MoldService $moldService)
+    {
+        $question = (string) $request->input('suggest', '');
+        $functionType = (string) $request->input('type', 'endpoint');
+
+        if ($question === '') {
+            return error([], '请输入功能描述');
+        }
+
+        // 获取当前项目的内容模型信息
+        $models = [];
+        try {
+            $moldList = $moldService->getAllMold();
+            foreach ($moldList as $m) {
+                $fields = [];
+                $arr = is_array($m['fields']) ? $m['fields'] : json_decode($m['fields'] ?? '[]', true);
+                if (is_array($arr)) {
+                    foreach ($arr as $f) {
+                        $fields[] = [
+                            'field' => $f['field'] ?? '',
+                            'label' => $f['label'] ?? ($f['field'] ?? ''),
+                            'type' => $f['type'] ?? 'input',
+                        ];
+                    }
+                }
+                $models[] = [
+                    'name' => $m['name'] ?? $m->name,
+                    'table_name' => removeMcPrefix($m['table_name'] ?? $m->table_name),
+                    'mold_type' => $m['mold_type'] ?? $m->mold_type,
+                    'fields' => $fields,
+                ];
+            }
+        } catch (\Throwable $e) {
+            // 获取模型信息失败不影响代码生成，继续执行
+        }
+
+        $requestedBy = optional($request->user())->id;
+        $res = $service->suggestCode($question, $functionType, $models, $requestedBy);
+
+        return success($res);
     }
 }
