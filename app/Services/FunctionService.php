@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Constants\ProjectConstants;
 use App\Models\FunctionEnv;
 use App\Models\ProjectFunction;
 use App\Models\ProjectFunctionExecution;
@@ -58,16 +59,21 @@ final class SafeDb
         $this->prefix = $prefix;
     }
 
-    private function guardTable(string $table): void
+    private function guardTable(string $table): string
     {
-        if ($this->prefix === '' || ! str_starts_with($table, $this->prefix.'_')) {
+        if ($this->prefix === '') {
             throw new \RuntimeException('Table not allowed');
         }
+        if (! str_starts_with($table, $this->prefix.'_')) {
+            $table = $this->prefix . ProjectConstants::MODEL_CONTENT_PREFIX . $table;
+        }
+
+        return $table;
     }
 
     public function delete(string $table, array $where = [])
     {
-        $this->guardTable($table);
+        $table = $this->guardTable($table);
         $q = DB::table($table);
         foreach ($where as $k => $v) {
             $q->where($k, $v);
@@ -78,14 +84,14 @@ final class SafeDb
 
     public function insert(string $table, array $data)
     {
-        $this->guardTable($table);
+        $table = $this->guardTable($table);
 
         return DB::table($table)->insert($data);
     }
 
     public function update(string $table, array $data, array $where = [])
     {
-        $this->guardTable($table);
+        $table = $this->guardTable($table);
         $q = DB::table($table);
         foreach ($where as $k => $v) {
             $q->where($k, $v);
@@ -96,7 +102,7 @@ final class SafeDb
 
     public function select(string $table, array $where = [], array $fields = ['*'], int $limit = 100)
     {
-        $this->guardTable($table);
+        $table = $this->guardTable($table);
         $q = DB::table($table)->select($fields)->limit(min(max(1, $limit), 1000));
         foreach ($where as $k => $v) {
             $q->where($k, $v);
@@ -107,7 +113,7 @@ final class SafeDb
 
     public function first(string $table, array $where = [], array $fields = ['*'])
     {
-        $this->guardTable($table);
+        $table = $this->guardTable($table);
         $q = DB::table($table)->select($fields);
         foreach ($where as $k => $v) {
             $q->where($k, $v);
@@ -118,7 +124,7 @@ final class SafeDb
 
     public function count(string $table, array $where = [])
     {
-        $this->guardTable($table);
+        $table = $this->guardTable($table);
         $q = DB::table($table);
         foreach ($where as $k => $v) {
             $q->where($k, $v);
@@ -135,7 +141,7 @@ final class SafeDb
      */
     public function query(string $table)
     {
-        $this->guardTable($table);
+        $table = $this->guardTable($table);
 
         return DB::table($table);
     }
@@ -147,7 +153,7 @@ final class SafeDb
      */
     public function table(string $table): SafeQueryBuilder
     {
-        $this->guardTable($table);
+        $table = $this->guardTable($table);
 
         return new SafeQueryBuilder($table);
     }

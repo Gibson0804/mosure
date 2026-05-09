@@ -39,6 +39,7 @@ const FunctionCodePage: React.FC = () => {
   const [err, setErr] = useState<string>('');
   const [editorTheme, setEditorTheme] = useState<'vs' | 'vs-dark'>('vs-dark');
   const [aiModalOpen, setAiModalOpen] = useState<boolean>(false);
+  const [modelsInfo, setModelsInfo] = useState<string>('');
 
   const templates: Record<string, string> = {
     hello: `<?php\nreturn ['message' => 'Hello World', 'time' => time()];` ,
@@ -70,7 +71,25 @@ const FunctionCodePage: React.FC = () => {
     }
   };
 
-  useEffect(() => { fetchDetail(); /* eslint-disable-next-line */ }, [id, type]);
+  // 获取当前项目的内容模型信息，用于外部 AI 提示词
+  const fetchModelsInfo = async () => {
+    try {
+      const res = await api.get('/mold/builder/models_and_fields');
+      const payload = (res?.data && (res.data.data ?? res.data)) || {} as any;
+      const models = Array.isArray(payload.models) ? payload.models : [];
+      if (models.length > 0) {
+        const lines = models.map((m: any) => {
+          const fields = (m.fields || []).map((f: any) => `${f.field}(${f.label})`).join(', ');
+          return `- ${m.name} [${m.mold_type}] 表名: ${m.table_name} | 字段: ${fields || '无'}`;
+        });
+        setModelsInfo('\n当前项目的内容模型（可用于数据库操作）：\n' + lines.join('\n'));
+      }
+    } catch (e) {
+      // 忽略错误，不影响主要功能
+    }
+  };
+
+  useEffect(() => { fetchDetail(); fetchModelsInfo(); /* eslint-disable-next-line */ }, [id, type]);
 
   const saveCode = async () => {
     if (!detail) return;
@@ -142,7 +161,7 @@ const FunctionCodePage: React.FC = () => {
     const typeDesc = type === 'hook' ? '触发函数' : 'Web 函数（HTTP）';
     return `你是一名 PHP 后端开发助手。请根据用户需求生成一段可在 Mosure 云函数沙箱中运行的 PHP 代码。
 
-函数类型：${typeDesc}
+函数类型：${typeDesc}${modelsInfo}
 
 可用环境变量：
 - $payload: 请求参数（endpoint）或事件数据（hook）

@@ -445,11 +445,35 @@ const ProjectConfigPage: React.FC = () => {
                         <Typography.Paragraph copyable style={{ marginBottom: 8 }}>{mcpPreview.serverUrl}</Typography.Paragraph>
                         <Typography.Text type="secondary">当前令牌</Typography.Text>
                         <Typography.Paragraph copyable style={{ marginBottom: 8 }}>{mcpPreview.token || '(未生成)'}</Typography.Paragraph>
+                        <Typography.Text type="secondary">Kimi CLI 添加命令</Typography.Text>
+                        <Input.TextArea
+                          rows={3}
+                          value={`kimi mcp add --transport http mosure ${mcpPreview.serverUrl} \
+  --header "Authorization:Bearer ${mcpPreview.token || 'your-key'}"`}
+                          readOnly
+                          style={{ fontFamily: 'monospace', fontSize: 12 }}
+                        />
+                        <Typography.Text type="secondary">Trae mcp.json 片段</Typography.Text>
+                        <Input.TextArea
+                          rows={8}
+                          value={JSON.stringify({
+                            mcpServers: {
+                              mosure: {
+                                url: mcpPreview.serverUrl,
+                                headers: {
+                                  Authorization: `Bearer ${mcpPreview.token || 'your-key'}`,
+                                },
+                              },
+                            },
+                          }, null, 2)}
+                          readOnly
+                          style={{ fontFamily: 'monospace', fontSize: 12 }}
+                        />
                         <Typography.Text type="secondary">Windsurf mcp.json 片段</Typography.Text>
                         <Input.TextArea rows={8} value={mcpPreview.json} readOnly />
                       </Space>
                     ) : (
-                      <Typography.Text type="secondary">点击“获取配置”预览可直接用于客户端（如 Windsurf）的 MCP 配置。</Typography.Text>
+                      <Typography.Text type="secondary">点击“获取配置”预览可直接用于客户端（如 Windsurf、Kimi、Trae）的 MCP 配置。</Typography.Text>
                     )}
                   </Card>
                 </>

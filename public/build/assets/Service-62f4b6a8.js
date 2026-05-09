@@ -1,1 +1,0 @@
-import{a as o}from"./vendor-inertia-4fcef779.js";const t=o.create({timeout:15e3,withCredentials:!0});t.interceptors.response.use(e=>{const r=e.data;return r.code!==0?Promise.reject(r):r},e=>(console.error("Response error:",e),Promise.reject(e)));const a=t;export{a};

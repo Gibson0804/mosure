@@ -1,115 +1,115 @@
 {
-  "_AiGenerateModal-56bc3656.js": {
-    "file": "assets/AiGenerateModal-56bc3656.js",
+  "_AiGenerateModal-03535e36.js": {
+    "file": "assets/AiGenerateModal-03535e36.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js"
+      "_vendor-react-4af8f23c.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js"
     ]
   },
   "_DefineUtil-335af965.js": {
     "file": "assets/DefineUtil-335af965.js"
   },
-  "_EditContent-2521fe90.js": {
-    "file": "assets/EditContent-2521fe90.js",
+  "_EditContent-a0bceb50.js": {
+    "file": "assets/EditContent-a0bceb50.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_MiddleOne-b43454a4.js",
-      "_Service-62f4b6a8.js",
-      "_AiGenerateModal-56bc3656.js",
-      "_vendor-antd-e89c0c7d.js"
+      "_vendor-react-4af8f23c.js",
+      "_MiddleOne-f04c44b4.js",
+      "_Service-450f2c78.js",
+      "_AiGenerateModal-03535e36.js",
+      "_vendor-antd-18d09d8b.js"
     ]
   },
-  "_Logo-423a8474.js": {
-    "file": "assets/Logo-423a8474.js",
+  "_Logo-6d0f0949.js": {
+    "file": "assets/Logo-6d0f0949.js",
     "imports": [
-      "_vendor-react-5293c662.js"
+      "_vendor-react-4af8f23c.js"
     ]
   },
-  "_Main-5deef086.js": {
-    "file": "assets/Main-5deef086.js",
+  "_Main-6789873b.js": {
+    "file": "assets/Main-6789873b.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-sortable-705d1ecd.js",
-      "_MiddleOne-b43454a4.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_Service-62f4b6a8.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-sortable-b279871e.js",
+      "_MiddleOne-f04c44b4.js",
+      "_vendor-antd-18d09d8b.js",
+      "_Service-450f2c78.js",
       "resources/js/app.jsx",
-      "_AiGenerateModal-56bc3656.js",
-      "_useTranslate-69570f29.js"
+      "_AiGenerateModal-03535e36.js",
+      "_useTranslate-a3aada98.js"
     ]
   },
-  "_MiddleOne-b43454a4.js": {
-    "file": "assets/MiddleOne-b43454a4.js",
+  "_MiddleOne-f04c44b4.js": {
+    "file": "assets/MiddleOne-f04c44b4.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_Service-62f4b6a8.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_Service-450f2c78.js",
       "resources/js/app.jsx",
-      "_vendor-dayjs-8586a5b4.js",
+      "_vendor-dayjs-2ddd460c.js",
       "_DefineUtil-335af965.js",
-      "_vendor-quill-9b5086e4.js"
+      "_vendor-quill-95568cfd.js"
     ]
   },
-  "_PluginDetailModal-9f537b4f.js": {
-    "file": "assets/PluginDetailModal-9f537b4f.js",
+  "_PluginDetailModal-c5909e0e.js": {
+    "file": "assets/PluginDetailModal-c5909e0e.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-antd-e89c0c7d.js"
+      "_vendor-react-4af8f23c.js",
+      "_vendor-antd-18d09d8b.js"
     ]
   },
-  "_Service-62f4b6a8.js": {
-    "file": "assets/Service-62f4b6a8.js",
+  "_Service-450f2c78.js": {
+    "file": "assets/Service-450f2c78.js",
     "imports": [
-      "_vendor-inertia-4fcef779.js"
+      "_vendor-inertia-efb81232.js"
     ]
   },
-  "_mediaTypes-ddeaa7d4.js": {
-    "file": "assets/mediaTypes-ddeaa7d4.js",
+  "_mediaTypes-3ef4f0c4.js": {
+    "file": "assets/mediaTypes-3ef4f0c4.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-antd-e89c0c7d.js"
+      "_vendor-react-4af8f23c.js",
+      "_vendor-antd-18d09d8b.js"
     ]
   },
-  "_useTranslate-69570f29.js": {
-    "file": "assets/useTranslate-69570f29.js",
+  "_useTranslate-a3aada98.js": {
+    "file": "assets/useTranslate-a3aada98.js",
     "imports": [
-      "_vendor-inertia-4fcef779.js"
+      "_vendor-inertia-efb81232.js"
     ]
   },
-  "_vendor-amis-97daef07.js": {
-    "file": "assets/vendor-amis-97daef07.js",
+  "_vendor-amis-19b28984.js": {
+    "file": "assets/vendor-amis-19b28984.js",
     "imports": [
-      "_vendor-misc-43191129.js"
+      "_vendor-misc-5a281d24.js"
     ]
   },
-  "_vendor-antd-e89c0c7d.js": {
-    "file": "assets/vendor-antd-e89c0c7d.js",
+  "_vendor-antd-18d09d8b.js": {
+    "file": "assets/vendor-antd-18d09d8b.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-react-4af8f23c.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-dayjs-2ddd460c.js"
     ]
   },
-  "_vendor-codemirror-b52eec69.js": {
-    "file": "assets/vendor-codemirror-b52eec69.js",
+  "_vendor-codemirror-d246ab50.js": {
+    "file": "assets/vendor-codemirror-d246ab50.js",
     "imports": [
       "_vendor-lezer-19fe8487.js",
-      "_vendor-misc-43191129.js"
+      "_vendor-misc-5a281d24.js"
     ]
   },
-  "_vendor-dayjs-8586a5b4.js": {
-    "file": "assets/vendor-dayjs-8586a5b4.js",
+  "_vendor-dayjs-2ddd460c.js": {
+    "file": "assets/vendor-dayjs-2ddd460c.js",
     "imports": [
-      "_vendor-amis-97daef07.js"
+      "_vendor-amis-19b28984.js"
     ]
   },
-  "_vendor-inertia-4fcef779.js": {
-    "file": "assets/vendor-inertia-4fcef779.js",
+  "_vendor-inertia-efb81232.js": {
+    "file": "assets/vendor-inertia-efb81232.js",
     "imports": [
-      "_vendor-misc-43191129.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-react-5293c662.js"
+      "_vendor-misc-5a281d24.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-react-4af8f23c.js"
     ]
   },
   "_vendor-katex-98160839.js": {
@@ -118,77 +118,77 @@
   "_vendor-lezer-19fe8487.js": {
     "file": "assets/vendor-lezer-19fe8487.js"
   },
-  "_vendor-lodash-cbefa5de.js": {
-    "file": "assets/vendor-lodash-cbefa5de.js",
+  "_vendor-lodash-c7af72dc.js": {
+    "file": "assets/vendor-lodash-c7af72dc.js",
     "imports": [
-      "_vendor-amis-97daef07.js"
+      "_vendor-amis-19b28984.js"
     ]
   },
-  "_vendor-markdown-70ffc934.js": {
-    "file": "assets/vendor-markdown-70ffc934.js",
+  "_vendor-markdown-762f2404.js": {
+    "file": "assets/vendor-markdown-762f2404.js",
     "imports": [
-      "_vendor-misc-43191129.js",
-      "_vendor-react-5293c662.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-react-4af8f23c.js",
       "_vendor-katex-98160839.js"
     ]
   },
-  "_vendor-milkdown-e2af6a5a.js": {
+  "_vendor-milkdown-a6d5ab9c.js": {
     "css": [
       "assets/vendor-milkdown-f5d79ae3.css"
     ],
-    "file": "assets/vendor-milkdown-e2af6a5a.js",
+    "file": "assets/vendor-milkdown-a6d5ab9c.js",
     "imports": [
-      "_vendor-prosemirror-944d53b8.js",
-      "_vendor-codemirror-b52eec69.js",
-      "_vendor-amis-97daef07.js",
+      "_vendor-prosemirror-6aa0cc46.js",
+      "_vendor-codemirror-d246ab50.js",
+      "_vendor-amis-19b28984.js",
       "_vendor-katex-98160839.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js"
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js"
     ]
   },
-  "_vendor-misc-43191129.js": {
-    "file": "assets/vendor-misc-43191129.js",
+  "_vendor-misc-5a281d24.js": {
+    "file": "assets/vendor-misc-5a281d24.js",
     "imports": [
-      "_vendor-amis-97daef07.js",
-      "_vendor-markdown-70ffc934.js"
+      "_vendor-amis-19b28984.js",
+      "_vendor-markdown-762f2404.js"
     ]
   },
-  "_vendor-monaco-2228e498.js": {
-    "file": "assets/vendor-monaco-2228e498.js",
+  "_vendor-monaco-1b45f172.js": {
+    "file": "assets/vendor-monaco-1b45f172.js",
     "imports": [
-      "_vendor-misc-43191129.js",
-      "_vendor-react-5293c662.js"
+      "_vendor-misc-5a281d24.js",
+      "_vendor-react-4af8f23c.js"
     ]
   },
-  "_vendor-prosemirror-944d53b8.js": {
-    "file": "assets/vendor-prosemirror-944d53b8.js",
+  "_vendor-prosemirror-6aa0cc46.js": {
+    "file": "assets/vendor-prosemirror-6aa0cc46.js",
     "imports": [
-      "_vendor-misc-43191129.js"
+      "_vendor-misc-5a281d24.js"
     ]
   },
-  "_vendor-quill-9b5086e4.js": {
+  "_vendor-quill-95568cfd.js": {
     "css": [
       "assets/vendor-quill-cf9a4bd4.css"
     ],
-    "file": "assets/vendor-quill-9b5086e4.js",
+    "file": "assets/vendor-quill-95568cfd.js",
     "imports": [
-      "_vendor-amis-97daef07.js",
-      "_vendor-react-5293c662.js",
-      "_vendor-lodash-cbefa5de.js"
+      "_vendor-amis-19b28984.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-lodash-c7af72dc.js"
     ]
   },
-  "_vendor-react-5293c662.js": {
-    "file": "assets/vendor-react-5293c662.js",
+  "_vendor-react-4af8f23c.js": {
+    "file": "assets/vendor-react-4af8f23c.js",
     "imports": [
-      "_vendor-amis-97daef07.js"
+      "_vendor-amis-19b28984.js"
     ]
   },
-  "_vendor-sortable-705d1ecd.js": {
-    "file": "assets/vendor-sortable-705d1ecd.js",
+  "_vendor-sortable-b279871e.js": {
+    "file": "assets/vendor-sortable-b279871e.js",
     "imports": [
-      "_vendor-amis-97daef07.js",
-      "_vendor-react-5293c662.js",
-      "_vendor-misc-43191129.js"
+      "_vendor-amis-19b28984.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-misc-5a281d24.js"
     ]
   },
   "resources/css/app.css": {
@@ -197,96 +197,96 @@
     "src": "resources/css/app.css"
   },
   "resources/js/Pages/AI/AIChat.tsx": {
-    "file": "assets/AIChat-889673dd.js",
+    "file": "assets/AIChat-ff1d739f.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
       "resources/js/Pages/AI/components/ChatSidebar.tsx",
       "resources/js/Pages/AI/components/ChatMessages.tsx",
       "resources/js/Pages/AI/components/ChatInput.tsx",
       "resources/js/Pages/AI/components/AgentModal.tsx",
       "resources/js/Pages/AI/components/AgentEditModal.tsx",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/AI/AIChat.tsx"
   },
   "resources/js/Pages/AI/components/AgentEditModal.tsx": {
-    "file": "assets/AgentEditModal-ff27bd79.js",
+    "file": "assets/AgentEditModal-ea8f7bbc.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-inertia-4fcef779.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-inertia-efb81232.js",
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/AI/components/AgentEditModal.tsx"
   },
   "resources/js/Pages/AI/components/AgentModal.tsx": {
-    "file": "assets/AgentModal-6be2a29e.js",
+    "file": "assets/AgentModal-b8c68f39.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-inertia-4fcef779.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-inertia-efb81232.js",
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/AI/components/AgentModal.tsx"
   },
   "resources/js/Pages/AI/components/ChatInput.tsx": {
-    "file": "assets/ChatInput-c6049ec6.js",
+    "file": "assets/ChatInput-659cd6ae.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/AI/components/ChatInput.tsx"
   },
   "resources/js/Pages/AI/components/ChatMessages.tsx": {
-    "file": "assets/ChatMessages-04a233c4.js",
+    "file": "assets/ChatMessages-a994cb4c.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-markdown-70ffc934.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-dayjs-8586a5b4.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-markdown-762f2404.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-dayjs-2ddd460c.js",
       "_vendor-katex-98160839.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/AI/components/ChatMessages.tsx"
   },
   "resources/js/Pages/AI/components/ChatSidebar.tsx": {
-    "file": "assets/ChatSidebar-f4cca456.js",
+    "file": "assets/ChatSidebar-4f3d2c96.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/AI/components/ChatSidebar.tsx"
@@ -297,928 +297,928 @@
     "src": "resources/js/Pages/ApiDocumentation/ApiDemo.tsx"
   },
   "resources/js/Pages/ApiDocumentation/Index.tsx": {
-    "file": "assets/Index-cf51ffba.js",
+    "file": "assets/Index-98d22f6f.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
       "resources/js/Pages/ApiDocumentation/ApiDemo.tsx",
-      "_useTranslate-69570f29.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_useTranslate-a3aada98.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/ApiDocumentation/Index.tsx"
   },
   "resources/js/Pages/ApiKey/ApiKeyList.tsx": {
-    "file": "assets/ApiKeyList-be3d6730.js",
+    "file": "assets/ApiKeyList-ac8e8b04.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_Service-62f4b6a8.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_Service-450f2c78.js",
       "resources/js/app.jsx",
-      "_vendor-dayjs-8586a5b4.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-dayjs-2ddd460c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/ApiKey/ApiKeyList.tsx"
   },
   "resources/js/Pages/Auth/ForgotPassword.tsx": {
-    "file": "assets/ForgotPassword-04f43f84.js",
+    "file": "assets/ForgotPassword-9c976815.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_Logo-423a8474.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_Logo-6d0f0949.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ForgotPassword.tsx"
   },
   "resources/js/Pages/Auth/Login.tsx": {
-    "file": "assets/Login-4caa572e.js",
+    "file": "assets/Login-7d7c80f2.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
       "resources/js/app.jsx",
-      "_useTranslate-69570f29.js",
-      "_Logo-423a8474.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_useTranslate-a3aada98.js",
+      "_Logo-6d0f0949.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/Login.tsx"
   },
   "resources/js/Pages/Auth/ResetPassword.tsx": {
-    "file": "assets/ResetPassword-abc3f6d4.js",
+    "file": "assets/ResetPassword-7e2697cd.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_Logo-423a8474.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_Logo-6d0f0949.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Auth/ResetPassword.tsx"
   },
   "resources/js/Pages/Content/ContentAdd.tsx": {
-    "file": "assets/ContentAdd-269f8d3f.js",
+    "file": "assets/ContentAdd-19cf6df2.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_EditContent-2521fe90.js",
-      "_AiGenerateModal-56bc3656.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_EditContent-a0bceb50.js",
+      "_AiGenerateModal-03535e36.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_MiddleOne-b43454a4.js",
-      "_Service-62f4b6a8.js",
+      "_MiddleOne-f04c44b4.js",
+      "_Service-450f2c78.js",
       "resources/js/app.jsx",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js",
+      "_vendor-dayjs-2ddd460c.js",
       "_DefineUtil-335af965.js",
-      "_vendor-quill-9b5086e4.js",
-      "_vendor-lodash-cbefa5de.js"
+      "_vendor-quill-95568cfd.js",
+      "_vendor-lodash-c7af72dc.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Content/ContentAdd.tsx"
   },
   "resources/js/Pages/Content/ContentEdit.tsx": {
-    "file": "assets/ContentEdit-241fab17.js",
+    "file": "assets/ContentEdit-d31b93d6.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_EditContent-2521fe90.js",
-      "_AiGenerateModal-56bc3656.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_EditContent-a0bceb50.js",
+      "_AiGenerateModal-03535e36.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_MiddleOne-b43454a4.js",
-      "_Service-62f4b6a8.js",
+      "_MiddleOne-f04c44b4.js",
+      "_Service-450f2c78.js",
       "resources/js/app.jsx",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js",
+      "_vendor-dayjs-2ddd460c.js",
       "_DefineUtil-335af965.js",
-      "_vendor-quill-9b5086e4.js",
-      "_vendor-lodash-cbefa5de.js"
+      "_vendor-quill-95568cfd.js",
+      "_vendor-lodash-c7af72dc.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Content/ContentEdit.tsx"
   },
   "resources/js/Pages/Content/ContentList.tsx": {
-    "file": "assets/ContentList-70576066.js",
+    "file": "assets/ContentList-4db158cb.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_Service-62f4b6a8.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_Service-450f2c78.js",
       "resources/js/app.jsx",
-      "_AiGenerateModal-56bc3656.js",
-      "_vendor-dayjs-8586a5b4.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_AiGenerateModal-03535e36.js",
+      "_vendor-dayjs-2ddd460c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Content/ContentList.tsx"
   },
   "resources/js/Pages/Dashboard/Dashboard.tsx": {
-    "file": "assets/Dashboard-2dac2e57.js",
+    "file": "assets/Dashboard-12b6345b.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Dashboard/Dashboard.tsx"
   },
   "resources/js/Pages/Install/Step1Requirements.tsx": {
-    "file": "assets/Step1Requirements-6b42c362.js",
+    "file": "assets/Step1Requirements-adc945ed.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_useTranslate-69570f29.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_useTranslate-a3aada98.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Install/Step1Requirements.tsx"
   },
   "resources/js/Pages/Install/Step2Setup.tsx": {
-    "file": "assets/Step2Setup-722d578b.js",
+    "file": "assets/Step2Setup-84ba3d6d.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
       "resources/js/app.jsx",
-      "_useTranslate-69570f29.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_useTranslate-a3aada98.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Install/Step2Setup.tsx"
   },
   "resources/js/Pages/Install/Step3Confirmation.tsx": {
-    "file": "assets/Step3Confirmation-41acc1ac.js",
+    "file": "assets/Step3Confirmation-7254903e.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
       "resources/js/app.jsx",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Install/Step3Confirmation.tsx"
   },
   "resources/js/Pages/KnowledgeBase/KbEditor.tsx": {
-    "file": "assets/KbEditor-c6027363.js",
+    "file": "assets/KbEditor-fa116c2c.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_Service-62f4b6a8.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_Service-450f2c78.js",
       "resources/js/app.jsx",
       "resources/js/Pages/KnowledgeBase/components/MilkdownEditor.tsx",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js",
-      "_vendor-milkdown-e2af6a5a.js",
-      "_vendor-prosemirror-944d53b8.js"
+      "_vendor-dayjs-2ddd460c.js",
+      "_vendor-milkdown-a6d5ab9c.js",
+      "_vendor-prosemirror-6aa0cc46.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/KnowledgeBase/KbEditor.tsx"
   },
   "resources/js/Pages/KnowledgeBase/KbMobileEditor.tsx": {
-    "file": "assets/KbMobileEditor-dbfe4ac8.js",
+    "file": "assets/KbMobileEditor-eb7563e8.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_vendor-milkdown-e2af6a5a.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_vendor-milkdown-a6d5ab9c.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-prosemirror-944d53b8.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-prosemirror-6aa0cc46.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/KnowledgeBase/KbMobileEditor.tsx"
   },
   "resources/js/Pages/KnowledgeBase/KbMobileView.tsx": {
-    "file": "assets/KbMobileView-52ffff96.js",
+    "file": "assets/KbMobileView-c250ba04.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_vendor-milkdown-e2af6a5a.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_vendor-milkdown-a6d5ab9c.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-prosemirror-944d53b8.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-prosemirror-6aa0cc46.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/KnowledgeBase/KbMobileView.tsx"
   },
   "resources/js/Pages/KnowledgeBase/KbPublicView.tsx": {
-    "file": "assets/KbPublicView-9489c4d4.js",
+    "file": "assets/KbPublicView-f0138e6a.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_vendor-milkdown-e2af6a5a.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_vendor-milkdown-a6d5ab9c.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-prosemirror-944d53b8.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-prosemirror-6aa0cc46.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/KnowledgeBase/KbPublicView.tsx"
   },
   "resources/js/Pages/KnowledgeBase/KnowledgeBase.tsx": {
-    "file": "assets/KnowledgeBase-498b529f.js",
+    "file": "assets/KnowledgeBase-6e4c8537.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_Service-62f4b6a8.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_Service-450f2c78.js",
       "resources/js/app.jsx",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/KnowledgeBase/KnowledgeBase.tsx"
   },
   "resources/js/Pages/KnowledgeBase/components/MilkdownEditor.tsx": {
-    "file": "assets/MilkdownEditor-9845d092.js",
+    "file": "assets/MilkdownEditor-35badefe.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-milkdown-e2af6a5a.js",
-      "_Service-62f4b6a8.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-milkdown-a6d5ab9c.js",
+      "_Service-450f2c78.js",
       "resources/js/app.jsx",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-prosemirror-944d53b8.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-prosemirror-6aa0cc46.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-inertia-4fcef779.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-inertia-efb81232.js",
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/KnowledgeBase/components/MilkdownEditor.tsx"
   },
   "resources/js/Pages/Manage/AuditLogs.tsx": {
-    "file": "assets/AuditLogs-3424edd3.js",
+    "file": "assets/AuditLogs-0bc5d269.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-dayjs-8586a5b4.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_Service-450f2c78.js",
+      "_vendor-dayjs-2ddd460c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-inertia-4fcef779.js"
+      "_vendor-inertia-efb81232.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/AuditLogs.tsx"
   },
   "resources/js/Pages/Manage/CloudCrons.tsx": {
-    "file": "assets/CloudCrons-e5d66a34.js",
+    "file": "assets/CloudCrons-acc24ca6.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-dayjs-8586a5b4.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_Service-450f2c78.js",
+      "_vendor-dayjs-2ddd460c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-inertia-4fcef779.js"
+      "_vendor-inertia-efb81232.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/CloudCrons.tsx"
   },
   "resources/js/Pages/Manage/CloudEnv.tsx": {
-    "file": "assets/CloudEnv-d3d5acc9.js",
+    "file": "assets/CloudEnv-305a4b1b.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-inertia-4fcef779.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-inertia-efb81232.js",
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/CloudEnv.tsx"
   },
   "resources/js/Pages/Manage/Export.tsx": {
-    "file": "assets/Export-954360db.js",
+    "file": "assets/Export-d3cbb1f9.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
       "resources/js/app.jsx",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/Export.tsx"
   },
   "resources/js/Pages/Manage/FunctionCode.tsx": {
-    "file": "assets/FunctionCode-70cd360a.js",
+    "file": "assets/FunctionCode-df5d6036.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-inertia-4fcef779.js",
-      "_vendor-monaco-2228e498.js",
-      "_AiGenerateModal-56bc3656.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_Service-450f2c78.js",
+      "_vendor-inertia-efb81232.js",
+      "_vendor-monaco-1b45f172.js",
+      "_AiGenerateModal-03535e36.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/FunctionCode.tsx"
   },
   "resources/js/Pages/Manage/Menus.tsx": {
-    "file": "assets/Menus-ba8d2167.js",
+    "file": "assets/Menus-9de10982.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/Menus.tsx"
   },
   "resources/js/Pages/Manage/PageHosting.tsx": {
-    "file": "assets/PageHosting-40e5dfb4.js",
+    "file": "assets/PageHosting-1ef5c552.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/PageHosting.tsx"
   },
   "resources/js/Pages/Manage/ProjectAuthUsers.tsx": {
-    "file": "assets/ProjectAuthUsers-72fb70d7.js",
+    "file": "assets/ProjectAuthUsers-1db17881.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-inertia-4fcef779.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-inertia-efb81232.js",
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/ProjectAuthUsers.tsx"
   },
   "resources/js/Pages/Manage/ProjectConfig.tsx": {
-    "file": "assets/ProjectConfig-164b5861.js",
+    "file": "assets/ProjectConfig-5e133971.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_Service-450f2c78.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js",
-      "_vendor-inertia-4fcef779.js"
+      "_vendor-dayjs-2ddd460c.js",
+      "_vendor-inertia-efb81232.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/ProjectConfig.tsx"
   },
   "resources/js/Pages/Manage/SysTasks.tsx": {
-    "file": "assets/SysTasks-14962947.js",
+    "file": "assets/SysTasks-316eda69.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-dayjs-8586a5b4.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_Service-450f2c78.js",
+      "_vendor-dayjs-2ddd460c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-inertia-4fcef779.js"
+      "_vendor-inertia-efb81232.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/SysTasks.tsx"
   },
   "resources/js/Pages/Manage/TriggerFunctions.tsx": {
-    "file": "assets/TriggerFunctions-84426808.js",
+    "file": "assets/TriggerFunctions-7f0272ac.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-dayjs-8586a5b4.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_Service-450f2c78.js",
+      "_vendor-dayjs-2ddd460c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-inertia-4fcef779.js"
+      "_vendor-inertia-efb81232.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/TriggerFunctions.tsx"
   },
   "resources/js/Pages/Manage/Triggers.tsx": {
-    "file": "assets/Triggers-6e6f4d83.js",
+    "file": "assets/Triggers-8309d861.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-dayjs-8586a5b4.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_Service-450f2c78.js",
+      "_vendor-dayjs-2ddd460c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-inertia-4fcef779.js"
+      "_vendor-inertia-efb81232.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/Triggers.tsx"
   },
   "resources/js/Pages/Manage/WebFunctions.tsx": {
-    "file": "assets/WebFunctions-f786fbb5.js",
+    "file": "assets/WebFunctions-775722b7.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-dayjs-8586a5b4.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_Service-450f2c78.js",
+      "_vendor-dayjs-2ddd460c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-inertia-4fcef779.js"
+      "_vendor-inertia-efb81232.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Manage/WebFunctions.tsx"
   },
   "resources/js/Pages/Media/MediaDetail.tsx": {
-    "file": "assets/MediaDetail-a1efa863.js",
+    "file": "assets/MediaDetail-d936ce6b.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_mediaTypes-ddeaa7d4.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_mediaTypes-3ef4f0c4.js",
       "resources/js/app.jsx",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Media/MediaDetail.tsx"
   },
   "resources/js/Pages/Media/MediaEdit.tsx": {
-    "file": "assets/MediaEdit-e9bfccbc.js",
+    "file": "assets/MediaEdit-dbe27c58.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
       "resources/js/app.jsx",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Media/MediaEdit.tsx"
   },
   "resources/js/Pages/Media/MediaList.tsx": {
-    "file": "assets/MediaList-89e25557.js",
+    "file": "assets/MediaList-3f52ee33.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_Service-62f4b6a8.js",
-      "_mediaTypes-ddeaa7d4.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_Service-450f2c78.js",
+      "_mediaTypes-3ef4f0c4.js",
       "resources/js/app.jsx",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Media/MediaList.tsx"
   },
   "resources/js/Pages/Media/MediaUpload.tsx": {
-    "file": "assets/MediaUpload-57328d6e.js",
+    "file": "assets/MediaUpload-b119801c.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
       "resources/js/app.jsx",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Media/MediaUpload.tsx"
   },
   "resources/js/Pages/Mold/MoldAdd.tsx": {
-    "file": "assets/MoldAdd-54290988.js",
+    "file": "assets/MoldAdd-09078bc1.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Main-5deef086.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_Main-6789873b.js",
+      "_vendor-inertia-efb81232.js",
       "resources/js/app.jsx",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-sortable-705d1ecd.js",
-      "_MiddleOne-b43454a4.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-dayjs-8586a5b4.js",
+      "_vendor-sortable-b279871e.js",
+      "_MiddleOne-f04c44b4.js",
+      "_Service-450f2c78.js",
+      "_vendor-dayjs-2ddd460c.js",
       "_DefineUtil-335af965.js",
-      "_vendor-quill-9b5086e4.js",
-      "_vendor-lodash-cbefa5de.js",
-      "_AiGenerateModal-56bc3656.js",
-      "_useTranslate-69570f29.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-quill-95568cfd.js",
+      "_vendor-lodash-c7af72dc.js",
+      "_AiGenerateModal-03535e36.js",
+      "_useTranslate-a3aada98.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Mold/MoldAdd.tsx"
   },
   "resources/js/Pages/Mold/MoldEdit.tsx": {
-    "file": "assets/MoldEdit-755fb9bc.js",
+    "file": "assets/MoldEdit-851a09f9.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_Main-5deef086.js",
+      "_vendor-react-4af8f23c.js",
+      "_Main-6789873b.js",
       "resources/js/app.jsx",
-      "_vendor-inertia-4fcef779.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-inertia-efb81232.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-sortable-705d1ecd.js",
-      "_MiddleOne-b43454a4.js",
-      "_Service-62f4b6a8.js",
-      "_vendor-dayjs-8586a5b4.js",
+      "_vendor-sortable-b279871e.js",
+      "_MiddleOne-f04c44b4.js",
+      "_Service-450f2c78.js",
+      "_vendor-dayjs-2ddd460c.js",
       "_DefineUtil-335af965.js",
-      "_vendor-quill-9b5086e4.js",
-      "_vendor-lodash-cbefa5de.js",
-      "_AiGenerateModal-56bc3656.js",
-      "_useTranslate-69570f29.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-quill-95568cfd.js",
+      "_vendor-lodash-c7af72dc.js",
+      "_AiGenerateModal-03535e36.js",
+      "_useTranslate-a3aada98.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Mold/MoldEdit.tsx"
   },
   "resources/js/Pages/Mold/MoldList.tsx": {
-    "file": "assets/MoldList-bff98c5e.js",
+    "file": "assets/MoldList-4c1d0c49.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
       "resources/js/app.jsx",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Mold/MoldList.tsx"
   },
   "resources/js/Pages/Plugins/Marketplace.tsx": {
-    "file": "assets/Marketplace-a0ebcd0f.js",
+    "file": "assets/Marketplace-960f76ec.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_Service-62f4b6a8.js",
-      "_PluginDetailModal-9f537b4f.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_Service-450f2c78.js",
+      "_PluginDetailModal-c5909e0e.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Plugins/Marketplace.tsx"
   },
   "resources/js/Pages/Plugins/PluginsManage.tsx": {
-    "file": "assets/PluginsManage-0e9984a2.js",
+    "file": "assets/PluginsManage-a6535ffe.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_Service-62f4b6a8.js",
-      "_PluginDetailModal-9f537b4f.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_Service-450f2c78.js",
+      "_PluginDetailModal-c5909e0e.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Plugins/PluginsManage.tsx"
   },
   "resources/js/Pages/Project/ProjectCreate.tsx": {
-    "file": "assets/ProjectCreate-384fd343.js",
+    "file": "assets/ProjectCreate-dda7ef6d.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
       "resources/js/app.jsx",
-      "_Service-62f4b6a8.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_Service-450f2c78.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Project/ProjectCreate.tsx"
   },
   "resources/js/Pages/Project/ProjectEdit.tsx": {
-    "file": "assets/ProjectEdit-75629fdf.js",
+    "file": "assets/ProjectEdit-17639575.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
       "resources/js/app.jsx",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Project/ProjectEdit.tsx"
   },
   "resources/js/Pages/Project/ProjectList.tsx": {
-    "file": "assets/ProjectList-b5d1a10b.js",
+    "file": "assets/ProjectList-5d2a12a1.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
       "resources/js/app.jsx",
-      "_vendor-misc-43191129.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Project/ProjectList.tsx"
   },
   "resources/js/Pages/Subject/SubjectEdit.tsx": {
-    "file": "assets/SubjectEdit-7e51d342.js",
+    "file": "assets/SubjectEdit-bd5400f3.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_EditContent-2521fe90.js",
-      "_AiGenerateModal-56bc3656.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_EditContent-a0bceb50.js",
+      "_AiGenerateModal-03535e36.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_MiddleOne-b43454a4.js",
-      "_Service-62f4b6a8.js",
+      "_MiddleOne-f04c44b4.js",
+      "_Service-450f2c78.js",
       "resources/js/app.jsx",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js",
+      "_vendor-dayjs-2ddd460c.js",
       "_DefineUtil-335af965.js",
-      "_vendor-quill-9b5086e4.js",
-      "_vendor-lodash-cbefa5de.js"
+      "_vendor-quill-95568cfd.js",
+      "_vendor-lodash-c7af72dc.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/Subject/SubjectEdit.tsx"
   },
   "resources/js/Pages/System/ChangePassword.tsx": {
-    "file": "assets/ChangePassword-aef4c78d.js",
+    "file": "assets/ChangePassword-4383429b.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/System/ChangePassword.tsx"
   },
   "resources/js/Pages/System/Profile.tsx": {
-    "file": "assets/Profile-867fc641.js",
+    "file": "assets/Profile-7b424207.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
       "_DefineUtil-335af965.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/System/Profile.tsx"
   },
   "resources/js/Pages/System/SystemConfig.tsx": {
-    "file": "assets/SystemConfig-3bbe7b9f.js",
+    "file": "assets/SystemConfig-53ac40d7.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_Service-62f4b6a8.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_Service-450f2c78.js",
       "resources/js/app.jsx",
       "resources/js/Pages/System/components/StorageConfig.tsx",
       "resources/js/Pages/System/components/AiProvidersConfig.tsx",
       "resources/js/Pages/System/components/MailConfig.tsx",
       "resources/js/Pages/System/components/SecurityConfig.tsx",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-codemirror-b52eec69.js",
+      "_vendor-codemirror-d246ab50.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/System/SystemConfig.tsx"
   },
   "resources/js/Pages/System/components/AiProvidersConfig.tsx": {
-    "file": "assets/AiProvidersConfig-f18670fc.js",
+    "file": "assets/AiProvidersConfig-8693d95d.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/System/components/AiProvidersConfig.tsx"
   },
   "resources/js/Pages/System/components/MailConfig.tsx": {
-    "file": "assets/MailConfig-44e11a69.js",
+    "file": "assets/MailConfig-d88d27a8.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/System/components/MailConfig.tsx"
   },
   "resources/js/Pages/System/components/SecurityConfig.tsx": {
-    "file": "assets/SecurityConfig-5798767d.js",
+    "file": "assets/SecurityConfig-157b2320.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/System/components/SecurityConfig.tsx"
   },
   "resources/js/Pages/System/components/StorageConfig.tsx": {
-    "file": "assets/StorageConfig-d827ddfe.js",
+    "file": "assets/StorageConfig-a0950d59.js",
     "imports": [
-      "_vendor-react-5293c662.js",
-      "_vendor-antd-e89c0c7d.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-antd-18d09d8b.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/js/Pages/System/components/StorageConfig.tsx"
@@ -1284,18 +1284,18 @@
       "resources/js/Pages/System/components/SecurityConfig.tsx",
       "resources/js/Pages/System/components/StorageConfig.tsx"
     ],
-    "file": "assets/app-ea368185.js",
+    "file": "assets/app-c984dc94.js",
     "imports": [
-      "_vendor-codemirror-b52eec69.js",
-      "_vendor-react-5293c662.js",
-      "_vendor-inertia-4fcef779.js",
-      "_vendor-antd-e89c0c7d.js",
+      "_vendor-codemirror-d246ab50.js",
+      "_vendor-react-4af8f23c.js",
+      "_vendor-inertia-efb81232.js",
+      "_vendor-antd-18d09d8b.js",
       "_vendor-lezer-19fe8487.js",
-      "_vendor-misc-43191129.js",
-      "_vendor-amis-97daef07.js",
-      "_vendor-markdown-70ffc934.js",
+      "_vendor-misc-5a281d24.js",
+      "_vendor-amis-19b28984.js",
+      "_vendor-markdown-762f2404.js",
       "_vendor-katex-98160839.js",
-      "_vendor-dayjs-8586a5b4.js"
+      "_vendor-dayjs-2ddd460c.js"
     ],
     "isEntry": true,
     "src": "resources/js/app.jsx"
