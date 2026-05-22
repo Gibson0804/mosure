@@ -314,7 +314,7 @@ Route::prefix('media')->middleware(['auth', EnsureProjectSelected::class])->grou
     Route::any('/create', [MediaController::class, 'create'])->name('media.create');
     Route::any('/edit/{id}', [MediaController::class, 'edit'])->name('media.edit');
     Route::get('/show/{id}', [MediaController::class, 'show'])->name('media.show');
-    Route::post('/delete/{id}', [MediaController::class, 'delete'])->name('media.destroy');
+    Route::delete('/delete/{id}', [MediaController::class, 'delete'])->name('media.destroy');
 
     Route::post('/batch-delete', [MediaController::class, 'batchDelete'])->name('media.batchDelete');
     Route::post('/batch-move', [MediaController::class, 'batchMove'])->name('media.batchMove');

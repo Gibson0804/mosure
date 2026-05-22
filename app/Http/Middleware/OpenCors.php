@@ -34,14 +34,6 @@ class OpenCors
             }
 
             if ($request->is('client/*')) {
-                if (! $this->isTrustedClientOrigin($requestOrigin)) {
-                    return response()->json([
-                        'code' => 403,
-                        'message' => 'Client origin not allowed',
-                        'data' => null,
-                    ], 403);
-                }
-
                 $response = response('', 204);
                 $this->applyCorsHeaders($response, $requestOrigin);
 
@@ -57,14 +49,6 @@ class OpenCors
         $response = $next($request);
 
         if ($request->is('client/*')) {
-            if ($requestOrigin !== '' && ! $this->isTrustedClientOrigin($requestOrigin)) {
-                return response()->json([
-                    'code' => 403,
-                    'message' => 'Client origin not allowed',
-                    'data' => null,
-                ], 403);
-            }
-
             if ($requestOrigin !== '') {
                 $this->applyCorsHeaders($response, $requestOrigin);
             }
