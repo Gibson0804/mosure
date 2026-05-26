@@ -31,12 +31,7 @@ if [ "${RUN_MIGRATIONS:-false}" = "true" ]; then
         echo "[entrypoint] First run detected, running mosure:install..."
         php artisan mosure:install --no-interaction \
             --app-url="${APP_URL:-http://localhost:9445}" \
-            --db=mysql \
-            --db-host="${DB_HOST:-mysql}" \
-            --db-port="${DB_PORT:-3306}" \
-            --db-name="${DB_DATABASE:-mosure}" \
-            --db-user="${DB_USERNAME:-mosure}" \
-            --db-password="${DB_PASSWORD:-secret}"
+            --db=sqlite
         echo "[entrypoint] Installation complete."
     fi
 fi

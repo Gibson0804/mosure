@@ -48,7 +48,6 @@ RUN apt-get update \
         libfreetype6-dev \
         libonig-dev \
         libxml2-dev \
-        libpq-dev \
         libicu-dev \
         libsqlite3-dev \
         sqlite3 \
@@ -58,13 +57,9 @@ RUN apt-get update \
         bcmath \
         intl \
         pcntl \
-        pdo_mysql \
-        pdo_pgsql \
         pdo_sqlite \
         gd \
         zip \
-    && pecl install redis \
-    && docker-php-ext-enable redis \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=vendor /var/www/html /var/www/html
