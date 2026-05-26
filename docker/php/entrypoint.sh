@@ -3,6 +3,11 @@ set -e
 
 cd /var/www/html
 
+if [ -d ".locked" ]; then
+    rm -rf .locked
+    touch .locked
+fi
+
 # 初始化 .env
 if [ ! -f ".env" ] && [ -f ".env.example" ]; then
     cp .env.example .env
