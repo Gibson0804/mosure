@@ -6,6 +6,7 @@ use App\Services\ProjectConfigService;
 use App\Support\StructuredLogger;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
 class OpenCors
@@ -19,6 +20,10 @@ class OpenCors
 
     public function handle(Request $request, Closure $next): Response
     {
+        Log::info('OpenCors middleware handle', [
+            'request' => $request->all(),
+        ]);
+        
         // 只对 /open 和 /client 路径启用 CORS
         if (! $request->is('open/*') && ! $request->is('client/*')) {
             return $next($request);

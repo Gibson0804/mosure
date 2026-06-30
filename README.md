@@ -163,7 +163,7 @@ Mosure 的核心链路可以概括为：
 ### 本地安装
 
 ```bash
-git clone https://gitee.com/gibson_0822/mosure.git
+git clone https://github.com/Gibson0804/mosure.git
 cd mosure
 
 # Linux / macOS

@@ -36,7 +36,7 @@ class MediaController extends BaseOpenController
             // 只返回必要的公开信息，过滤敏感字段
             $safeData = $this->filterSensitiveFields($media->toArray());
 
-            return $this->success(['data' => $safeData]);
+            return $this->success($safeData);
 
         } catch (\Exception $e) {
             return $this->error('获取媒体资源失败: '.$e->getMessage(), 500);
@@ -303,10 +303,7 @@ class MediaController extends BaseOpenController
 
             $media = $this->mediaService->createMedia($file, $description, null, $options);
 
-            return $this->success([
-                'data' => $this->filterSensitiveFields($media->toArray()),
-                'message' => '媒体资源创建成功',
-            ], 201);
+            return $this->success($this->filterSensitiveFields($media->toArray()),'媒体资源创建成功');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             return $this->error('验证失败: '.json_encode($e->errors()), 422);
@@ -343,10 +340,7 @@ class MediaController extends BaseOpenController
                 return $this->error('媒体资源不存在', 404);
             }
 
-            return $this->success([
-                'data' => $this->filterSensitiveFields($media->toArray()),
-                'message' => '媒体资源更新成功',
-            ]);
+            return $this->success($this->filterSensitiveFields($media->toArray()),'媒体资源更新成功');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             return $this->error('验证失败: '.json_encode($e->errors()), 422);
@@ -372,9 +366,7 @@ class MediaController extends BaseOpenController
                 return $this->error('媒体资源不存在或删除失败', 404);
             }
 
-            return $this->success([
-                'message' => '媒体资源删除成功',
-            ]);
+            return $this->success(null, '媒体资源删除成功');
 
         } catch (\Exception $e) {
             return $this->error('删除媒体资源失败: '.$e->getMessage(), 500);
